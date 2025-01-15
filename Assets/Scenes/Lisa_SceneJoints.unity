@@ -528,6 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285c28c9ec18e4b4687cbca774d16a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yFirstPointSineWave1: 0
   amplitude1: 1
   frequency1: 6
   offset1: 0
@@ -537,6 +538,7 @@ MonoBehaviour:
   amplitude3: 1
   frequency3: 7
   offset3: 0
+  pointsCount: 1000
   highlightRepetitions: 0
   showSumWave: 1
   showCircles: 0

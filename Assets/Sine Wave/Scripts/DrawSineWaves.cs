@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class DrawSineWaves : MonoBehaviour
 {
+
     [Header("Sine Wave 1")]
     [Range(0f, 1f)] // Slider
     public float amplitude1 = 1f;  // Relative Amplitude of Sine Wave 1
@@ -31,7 +32,7 @@ public class DrawSineWaves : MonoBehaviour
     [Range(0f, 1f)] // Slider
     public float offset3 = 0f;  // Offset of Sine Wave 3
 
-    private int pointsCount = 1000;  // Number of points on the curves
+    [SerializeField]private int pointsCount = 1000;  // Number of points on the curves
 
     private float startYPositionRelative1 = 0.85f;  // Relative Y-position of Sine Wave 1 (top third of the upper half)
     private float startYPositionRelative2 = 0.65f;   // Relative Y-position of Sine Wave 2 (second third of the upper half)
@@ -242,6 +243,8 @@ public class DrawSineWaves : MonoBehaviour
                     Gizmos.color = Color.cyan;
                     Gizmos.DrawSphere(circlePointSum, 0.025f); // Full size
                 }
+
+                yFirstPointSineWave1 = circleY1;
             }
         }
         else
