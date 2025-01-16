@@ -244,7 +244,7 @@ public class DrawSineWaves : MonoBehaviour
                     Gizmos.DrawSphere(circlePointSum, 0.025f); // Full size
                 }
 
-                yFirstPointSineWave1 = circleY1;
+                //yFirstPointSineWave1 = circleY1;
             }
         }
         else

@@ -528,21 +528,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 285c28c9ec18e4b4687cbca774d16a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yFirstPointSineWave1: 0
   amplitude1: 1
-  frequency1: 6
+  frequency1: 10
   offset1: 0
   amplitude2: 1
   frequency2: 6.5
   offset2: 0
   amplitude3: 1
-  frequency3: 7
+  frequency3: 2
   offset3: 0
-  pointsCount: 1000
+  pointsCount: 31
   highlightRepetitions: 0
   showSumWave: 1
-  showCircles: 0
-  animationSpeed: 0
+  showCircles: 1
+  animationSpeed: 25
 --- !u!4 &42218232
 Transform:
   m_ObjectHideFlags: 0
@@ -3119,7 +3118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpace: 0
-  movement: {x: 0, y: 1, z: 0}
+  movement: {x: -1, y: 1, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   scaleChange: {x: 0, y: 0, z: 0}
   strength: 1
@@ -5355,7 +5354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpace: 0
-  movement: {x: 0.2, y: 0, z: 0}
+  movement: {x: 0.5, y: 0, z: 0}
   rotation: {x: 0, y: 50, z: 0}
   scaleChange: {x: 0, y: 0, z: 0}
   strength: 1.13
@@ -7537,7 +7536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpace: 0
-  movement: {x: 0, y: 1, z: 0}
+  movement: {x: 1, y: 1, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   scaleChange: {x: 0, y: 0, z: 0}
   strength: 1
