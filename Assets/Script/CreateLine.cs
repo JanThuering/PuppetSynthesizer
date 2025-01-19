@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CreateLine : MonoBehaviour
 {
-    [Header ("Line Renderer")]
+    [Header ("External References")]
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private GameObject _lineStart;
     [SerializeField] private GameObject _lineEnd;
 
     [Header ("Points")]
     [SerializeField] private int _pointsCount = 2;
-    [SerializeField] private GameObject[] _pointsArray;
+    public GameObject[] _pointsArray;
     private Vector3[] _startPointLocation;
 
     [Header ("Movement")]
@@ -25,7 +26,7 @@ public class CreateLine : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         CreatePoints();
 
