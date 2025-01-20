@@ -1242,7 +1242,7 @@ MonoBehaviour:
   - {fileID: 574047013}
   _closestPointIndex: 
   _csCreateLine: {fileID: 1119259568}
-  _moveTowardsSpeed: 0
+  _moveTowardsSpeed: 10
 --- !u!1 &195133267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1878,7 @@ Transform:
   m_GameObject: {fileID: 370864729}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.7091675, y: 0.42329836, z: -3.4866252}
+  m_LocalPosition: {x: -6, y: 1, z: -1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -6857,10 +6857,118 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc49913d08ce4e9abd1f19a6d19a2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _curveA:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2
+      outSlope: -2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 0
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  _curveB:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.022893831
+      outSlope: 0.022893831
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.7501216
+    - serializedVersion: 3
+      time: 0.27428657
+      value: 0.91922706
+      inSlope: 5.3796797
+      outSlope: 5.3796797
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11446119
+      outWeight: 0.48843414
+    - serializedVersion: 3
+      time: 0.48869142
+      value: 0.19204772
+      inSlope: 0.0379878
+      outSlope: 0.0379878
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.44937864
+    - serializedVersion: 3
+      time: 0.76612025
+      value: 0.5889467
+      inSlope: 0.19963665
+      outSlope: 0.19963665
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.010469459
+      outSlope: -0.010469459
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3465202
+      outWeight: 0
+    m_PreInfinity: 1
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  _curveC:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 0
+    m_PostInfinity: 0
+    m_RotationOrder: 4
   _lineRenderer: {fileID: 1119259566}
   _lineStart: {fileID: 370864729}
   _lineEnd: {fileID: 1406493330}
-  _pointsCount: 40
+  _pointsCount: 184
   _pointsArray: []
   _sineWave: 1
   _squareWave: 0
@@ -8601,7 +8709,7 @@ Transform:
   m_GameObject: {fileID: 1406493330}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.2908325, y: 0.42329836, z: -3.4866252}
+  m_LocalPosition: {x: 6, y: 1, z: -1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -10426,7 +10534,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -10476,7 +10584,7 @@ Transform:
   m_GameObject: {fileID: 1723622471}
   serializedVersion: 2
   m_LocalRotation: {x: 0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 0, y: 2.5, z: -10.1}
+  m_LocalPosition: {x: 0, y: 3.01, z: -11.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

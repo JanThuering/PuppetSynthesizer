@@ -28,18 +28,10 @@ public class MovePuppet : MonoBehaviour
     }
 
     public void ComparePoints(){   //compare which point from the linerenderer is closer to the puppet-controlpoint
-
-        CopyMovement();
         MoveControlPoints();
         
     }
 
-
-    private void CopyMovement(){
-        for (int i = 0; i < _controlPoints.Length; i++){
-            _controlPoints[i].transform.position = _csCreateLine._pointsArray[i].transform.position;
-        }
-    }
 
     private void MoveControlPoints(){
         FindClosestPoint();
@@ -50,22 +42,20 @@ public class MovePuppet : MonoBehaviour
    
 
     private void FindClosestPoint(){
+        
         for (int i = 0; i < _controlPoints.Length; i++){
-            //_controlPoints[i].transform.position = _csCreateLine._pointsArray[i].transform.position;
-            Vector3 controlPoint = new Vector3(_controlPoints[i].transform.position.x, 0, _controlPoints[i].transform.position.z);
-            float closestDistance = float.PositiveInfinity;
+            Vector3 posControlPoint = new Vector3(_controlPoints[i].transform.position.x, 0, _controlPoints[i].transform.position.z);
             int closestIndex = 0;
-
+            float closestDistance = float.PositiveInfinity;
             //find the closest point
             for(int j = 0; j < _csCreateLine._pointsArray.Length; j++){
-                Vector3 horizontalPoint = new Vector3(_csCreateLine._pointsArray[j].transform.position.x, 0, _csCreateLine._pointsArray[j].transform.position.z);
-                Vector3 horizontalDistance = controlPoint - horizontalPoint;
+                Vector3 posPoint = new Vector3(_csCreateLine._pointsArray[j].transform.position.x, 0, _csCreateLine._pointsArray[j].transform.position.z);
+                Vector3 horizontalDistance = posControlPoint - posPoint;
                 if(closestDistance > horizontalDistance.magnitude){
                     closestDistance = horizontalDistance.magnitude;
                     closestIndex = j;
                 }
             }
-
             //save the index of the closest point
             _closestPointIndex[i] = closestIndex;
         }
@@ -76,7 +66,6 @@ public class MovePuppet : MonoBehaviour
         for (int i = 0; i < _controlPoints.Length; i++){    
             //copy the position of the closest HORIZONTAL point to the control point
             _controlPoints[i].transform.position = Vector3.MoveTowards(_controlPoints[i].transform.position ,_csCreateLine._pointsArray[_closestPointIndex[i]].transform.position, _moveTowardsSpeed * Time.deltaTime);   
-             
         }
     }
 

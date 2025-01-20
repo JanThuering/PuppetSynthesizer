@@ -6,6 +6,12 @@ using UnityEngine.Rendering;
 
 public class CreateLine : MonoBehaviour
 {
+    [Header ("Animation Curve")]
+    [SerializeField] private AnimationCurve _curveA;
+    [SerializeField] private AnimationCurve _curveB;
+    [SerializeField] private AnimationCurve _curveC;
+
+
     [Header ("External References")]
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private GameObject _lineStart;
@@ -26,7 +32,7 @@ public class CreateLine : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         CreatePoints();
 
@@ -36,7 +42,8 @@ public class CreateLine : MonoBehaviour
     void Update()
     {
         FillLineRenderer();
-        MovePoints();
+        //MovePoints();
+        MovePointsCurve();
 
     }
 
@@ -85,12 +92,11 @@ public class CreateLine : MonoBehaviour
         for(int i = 0; i < _lineRenderer.positionCount; i++){
 
             _lineRenderer.SetPosition(i, _pointsArray[i].transform.position);
-            if(i == _lineRenderer.positionCount-1){
-            }
+
         }
     }
 
-    public void MovePoints(){
+    public void MovePoints(){   //OLD with sinusoidal movement
         _timeCounter += Time.deltaTime;
 
         //move points
@@ -111,4 +117,33 @@ public class CreateLine : MonoBehaviour
             }
         }
     }
+
+    private void MovePointsCurve(){
+        /*TODO
+        - structure change of curve more easily
+        - move the section of the curves indexes
+        - make curves editable during runtime by player
+
+
+        */
+
+
+        //move first 1/3 of the points in the y axis, acording to the curve  A
+        for(int i = 0; i < _pointsArray.Length/3; i++){ 
+            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.position.x, _startPointLocation[i].y +_curveA.Evaluate((float)i/10), _pointsArray[i].transform.position.z);
+        }
+
+        //move second 1/3 of the points in the y axis, acording to the curve  B
+        for(int i = _pointsArray.Length/3; i < _pointsArray.Length/3*2; i++){ 
+            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.position.x, _startPointLocation[i].y +_curveB.Evaluate((float)i/10), _pointsArray[i].transform.position.z);
+        }
+
+        //move third 1/3 of the points in the y axis, acording to the curve  C
+        for(int i = _pointsArray.Length/3*2; i < _pointsArray.Length; i++){ 
+            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.position.x, _startPointLocation[i].y +_curveC.Evaluate((float)i/10), _pointsArray[i].transform.position.z);
+        }
+
+    }
+
+
 }
