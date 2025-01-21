@@ -1242,7 +1242,7 @@ MonoBehaviour:
   - {fileID: 574047013}
   _closestPointIndex: 
   _csCreateLine: {fileID: 1119259568}
-  _moveTowardsSpeed: 10
+  _moveTowardsSpeed: 20
 --- !u!1 &195133267
 GameObject:
   m_ObjectHideFlags: 0
@@ -1877,8 +1877,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370864729}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 1, z: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.42, y: 2, z: -3.21}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5938,7 +5938,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 32006ab65aa08433b8a5e44c67fa199c, type: 2}
+  - {fileID: 2100000, guid: 3c622103f2fa04ef8916111b8a137d16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6251,7 +6251,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.4, y: -4.5, z: 0}
-  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_LocalScale: {x: 0.15, y: 0.55, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2032270346}
@@ -6778,8 +6778,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.06637192
-        value: 0.087379456
+        time: 0.07543564
+        value: 0.018882751
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -6857,6 +6857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc49913d08ce4e9abd1f19a6d19a2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lineRenderer: {fileID: 1119259566}
+  _lineStart: {fileID: 370864729}
+  _lineEnd: {fileID: 1406493330}
   _curveA:
     serializedVersion: 2
     m_Curve:
@@ -6887,8 +6890,8 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
-    m_PreInfinity: 0
-    m_PostInfinity: 0
+    m_PreInfinity: 1
+    m_PostInfinity: 1
     m_RotationOrder: 4
   _curveB:
     serializedVersion: 2
@@ -6903,8 +6906,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.7501216
     - serializedVersion: 3
-      time: 0.27428657
-      value: 0.91922706
+      time: 0.19329292
+      value: -0.67114407
       inSlope: 5.3796797
       outSlope: 5.3796797
       tangentMode: 0
@@ -6912,8 +6915,8 @@ MonoBehaviour:
       inWeight: 0.11446119
       outWeight: 0.48843414
     - serializedVersion: 3
-      time: 0.48869142
-      value: 0.19204772
+      time: 0.41758546
+      value: -0.56941164
       inSlope: 0.0379878
       outSlope: 0.0379878
       tangentMode: 0
@@ -6921,8 +6924,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.44937864
     - serializedVersion: 3
-      time: 0.76612025
-      value: 0.5889467
+      time: 0.65705043
+      value: -0.686566
       inSlope: 0.19963665
       outSlope: 0.19963665
       tangentMode: 0
@@ -6965,16 +6968,11 @@ MonoBehaviour:
     m_PreInfinity: 0
     m_PostInfinity: 0
     m_RotationOrder: 4
-  _lineRenderer: {fileID: 1119259566}
-  _lineStart: {fileID: 370864729}
-  _lineEnd: {fileID: 1406493330}
-  _pointsCount: 184
+  _slider1Amplitude: 1
+  _slider1Frequency: 1
+  _sliderAmmount: 3
+  _pointsCount: 191
   _pointsArray: []
-  _sineWave: 1
-  _squareWave: 0
-  _movement: {x: 0, y: 0.66, z: 0}
-  _amplitude: 0.5
-  _frequency: 1.19
 --- !u!1 &1124711338
 GameObject:
   m_ObjectHideFlags: 0
@@ -7345,7 +7343,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.75, y: -2.775, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.15, y: 0.5, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 313625255}
@@ -8708,8 +8706,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406493330}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 1, z: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.64, y: 2, z: -3.21}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -9028,7 +9026,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.75, y: -1.7750001, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.15, y: 0.5, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 901699191}
@@ -10169,7 +10167,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.75, y: -1.7750001, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.15, y: 0.5, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 598179031}
@@ -11167,7 +11165,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.4, y: -4.5, z: 0}
-  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_LocalScale: {x: 0.15, y: 0.55, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1551897017}
@@ -11487,8 +11485,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.4, y: -3.4, z: 0}
-  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.15, y: 0.55, z: 0.15}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 422696442}
   - {fileID: 1662287955}
@@ -11885,8 +11883,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.4, y: -3.4, z: 0}
-  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.15, y: 0.55, z: 0.15}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1380142887}
   - {fileID: 1671617304}
@@ -12260,7 +12258,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.75, y: -2.775, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.15, y: 0.5, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1583850574}

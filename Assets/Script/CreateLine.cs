@@ -6,22 +6,33 @@ using UnityEngine.Rendering;
 
 public class CreateLine : MonoBehaviour
 {
-    [Header ("Animation Curve")]
-    [SerializeField] private AnimationCurve _curveA;
-    [SerializeField] private AnimationCurve _curveB;
-    [SerializeField] private AnimationCurve _curveC;
-
-
     [Header ("External References")]
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private GameObject _lineStart;
     [SerializeField] private GameObject _lineEnd;
+
+    [Header ("Animation Curve")]
+    [SerializeField] private AnimationCurve _curveA;
+    [SerializeField] private AnimationCurve _curveB;
+    [SerializeField] private AnimationCurve _curveC;
+    [Range(-1, 1)]
+    [SerializeField] private float _slider1Amplitude = 1;
+    [Range(0.1f, 1)]
+    [SerializeField] private float _slider1Frequency = 1;
+
+    [Header ("Interface Values")]
+    [SerializeField] private int _sliderAmmount = 3;
+
+
+
+
 
     [Header ("Points")]
     [SerializeField] private int _pointsCount = 2;
     public GameObject[] _pointsArray;
     private Vector3[] _startPointLocation;
 
+    /*
     [Header ("Movement")]
     [SerializeField] private bool _sineWave = false;
     [SerializeField] private bool _squareWave = false;
@@ -29,6 +40,7 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private float _amplitude = 1;
     [SerializeField] private float _frequency = 1;
     private float _timeCounter = 0;
+    */
 
 
     // Start is called before the first frame update
@@ -41,15 +53,27 @@ public class CreateLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FillLineRenderer();
-        //MovePoints();
-        MovePointsCurve();
+        
+        FillLineRenderer(); //fill the line renderer with the points
+        
+        //Move the points in the y axis, acording to the curves
+        ControlCurve(_curveA, 1, _slider1Amplitude, _slider1Frequency);
+        ControlCurve(_curveB, 2, _slider1Amplitude, _slider1Frequency);
+        ControlCurve(_curveC, 3, _slider1Amplitude, _slider1Frequency);
+
 
     }
 
 
 
     private void CreatePoints(){
+        //check if (points count + 2) is divisible by slider ammount
+        if((_pointsCount+2)%_sliderAmmount != 0){
+            //if not, add points until it is
+            for(int i = 0; (_pointsCount+2)%_sliderAmmount != 0; i++){
+                _pointsCount++;
+            }
+        }
         //initialize array of points
         _pointsArray = new GameObject[_pointsCount+2];
         _startPointLocation = new Vector3[_pointsCount+2];
@@ -65,18 +89,18 @@ public class CreateLine : MonoBehaviour
         {
             if(i == 0){
                 _pointsArray[i] = _lineStart;
-                _startPointLocation[i] = _lineStart.transform.position;
+                _startPointLocation[i] = _lineStart.transform.localPosition;
                 _pointsArray[i].transform.SetParent(pointParent.transform);
             }
             else if(i == _pointsArray.Length-1){
                 _pointsArray[i] = _lineEnd;
-                _startPointLocation[i] = _lineEnd.transform.position;
+                _startPointLocation[i] = _lineEnd.transform.localPosition;
                 _pointsArray[i].transform.SetParent(pointParent.transform);
             }
             else{
                 _pointsArray[i] = new GameObject("Point " + i);
                 _pointsArray[i].transform.position = _lineStart.transform.position + distancePoints * i;
-                _startPointLocation[i] = _pointsArray[i].transform.position;
+                _startPointLocation[i] = _pointsArray[i].transform.localPosition;
                 _pointsArray[i].transform.SetParent(pointParent.transform);
             }
         }
@@ -96,6 +120,30 @@ public class CreateLine : MonoBehaviour
         }
     }
 
+    private void ControlCurve(AnimationCurve curve, int slider, float amplitude, float frequency){
+        if(slider > _sliderAmmount || slider < 1){
+            Debug.LogError("Slider out of range");
+            return;
+        }
+
+        //calculate range of points
+        int range = _pointsArray.Length / _sliderAmmount;
+        int start = range * (slider-1);
+        int end = range * slider;
+
+        //move points in the y axis, acording to the curve
+        for(int i = start; i < end; i++){
+            float curveValue = curve.Evaluate((float)i/frequency + Time.time) * amplitude;
+            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.localPosition.x, _startPointLocation[i].y + curveValue, _pointsArray[i].transform.localPosition.z);
+        }
+
+        
+    }
+
+
+
+    //CODE GRAVEYARD
+    /*
     public void MovePoints(){   //OLD with sinusoidal movement
         _timeCounter += Time.deltaTime;
 
@@ -118,14 +166,12 @@ public class CreateLine : MonoBehaviour
         }
     }
 
-    private void MovePointsCurve(){
-        /*TODO
-        - structure change of curve more easily
-        - move the section of the curves indexes
-        - make curves editable during runtime by player
+    private void MovePointsCurve(){ //OLD doing everything manually
+        //TODO
+        //- structure change of curve more easily
+        //- move the section of the curves indexes
+        //- make curves editable during runtime by player
 
-
-        */
 
 
         //move first 1/3 of the points in the y axis, acording to the curve  A
@@ -144,6 +190,9 @@ public class CreateLine : MonoBehaviour
         }
 
     }
+
+    */
+
 
 
 }
