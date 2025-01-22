@@ -90,10 +90,12 @@ public class RemainderEditor : Editor
         }
 
         // Repaint
+        /*
         if (Event.current.type == EventType.Repaint)
         {
             HandleUtility.Repaint();
         }
+        */
     }
 }
 #endif

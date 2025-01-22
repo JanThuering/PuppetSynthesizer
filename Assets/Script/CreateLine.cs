@@ -19,11 +19,18 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private float _slider1Amplitude = 1;
     [Range(0.1f, 1)]
     [SerializeField] private float _slider1Frequency = 1;
+    [Range(10f, 100)]
+    [SerializeField] private float _horizontalMovement = 10;
 
     [Header ("Interface Values")]
     [SerializeField] private int _sliderAmmount = 3;
 
-
+    /*TODO
+    1. x curve sequence should move along the line
+        (orient around the two endingpoints)
+    2. combine curve
+    3. Input with MIDI
+    */
 
 
 
@@ -55,7 +62,7 @@ public class CreateLine : MonoBehaviour
     {
         
         FillLineRenderer(); //fill the line renderer with the points
-        
+
         //Move the points in the y axis, acording to the curves
         ControlCurve(_curveA, 1, _slider1Amplitude, _slider1Frequency);
         ControlCurve(_curveB, 2, _slider1Amplitude, _slider1Frequency);
@@ -125,6 +132,7 @@ public class CreateLine : MonoBehaviour
             Debug.LogError("Slider out of range");
             return;
         }
+        float timeCounter = Time.time*_horizontalMovement;  //counts up so the wave moves up the index
 
         //calculate range of points
         int range = _pointsArray.Length / _sliderAmmount;
@@ -132,67 +140,13 @@ public class CreateLine : MonoBehaviour
         int end = range * slider;
 
         //move points in the y axis, acording to the curve
-        for(int i = start; i < end; i++){
+        for(int i = start+(int)timeCounter; i < end+(int)timeCounter; i++){
             float curveValue = curve.Evaluate((float)i/frequency + Time.time) * amplitude;
-            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.localPosition.x, _startPointLocation[i].y + curveValue, _pointsArray[i].transform.localPosition.z);
+            _pointsArray[i%_pointsArray.Length].transform.position =  new Vector3(_pointsArray[i%_pointsArray.Length].transform.localPosition.x, _startPointLocation[i%_pointsArray.Length].y + curveValue, _pointsArray[i%_pointsArray.Length].transform.localPosition.z);
         }
 
         
     }
-
-
-
-    //CODE GRAVEYARD
-    /*
-    public void MovePoints(){   //OLD with sinusoidal movement
-        _timeCounter += Time.deltaTime;
-
-        //move points
-        if(_sineWave){
-            for(int i = 0; i < _pointsArray.Length; i++){
-                //Point 4: 4/4 * 2π = 2π  -> (360°)
-                float phase = (float)i / (_pointsArray.Length - 1) * 2f * Mathf.PI; // 0 to 2π
-                Vector3 wave = _movement * Mathf.Sin((_timeCounter * _frequency) + phase) * _amplitude;
-                _pointsArray[i].transform.position = _startPointLocation[i] + wave;
-            }
-        }
-        else if(_squareWave){
-            for(int i = 0; i < _pointsArray.Length; i++){
-                float phase = (float)i / (_pointsArray.Length - 1) * 2f * Mathf.PI;
-                // Square wave using Sign of Sine
-                Vector3 wave = _movement * Mathf.Sign(Mathf.Sin((_timeCounter * _frequency) + phase)) * _amplitude;
-                _pointsArray[i].transform.position = _startPointLocation[i] + wave;
-            }
-        }
-    }
-
-    private void MovePointsCurve(){ //OLD doing everything manually
-        //TODO
-        //- structure change of curve more easily
-        //- move the section of the curves indexes
-        //- make curves editable during runtime by player
-
-
-
-        //move first 1/3 of the points in the y axis, acording to the curve  A
-        for(int i = 0; i < _pointsArray.Length/3; i++){ 
-            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.position.x, _startPointLocation[i].y +_curveA.Evaluate((float)i/10), _pointsArray[i].transform.position.z);
-        }
-
-        //move second 1/3 of the points in the y axis, acording to the curve  B
-        for(int i = _pointsArray.Length/3; i < _pointsArray.Length/3*2; i++){ 
-            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.position.x, _startPointLocation[i].y +_curveB.Evaluate((float)i/10), _pointsArray[i].transform.position.z);
-        }
-
-        //move third 1/3 of the points in the y axis, acording to the curve  C
-        for(int i = _pointsArray.Length/3*2; i < _pointsArray.Length; i++){ 
-            _pointsArray[i].transform.position =  new Vector3(_pointsArray[i].transform.position.x, _startPointLocation[i].y +_curveC.Evaluate((float)i/10), _pointsArray[i].transform.position.z);
-        }
-
-    }
-
-    */
-
 
 
 }

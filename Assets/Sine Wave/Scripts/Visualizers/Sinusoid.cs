@@ -77,10 +77,12 @@ public class SinusoidEditor : Editor
         }
 
         // Repaint
+        /*
         if (Event.current.type == EventType.Repaint)
         {
             HandleUtility.Repaint();
         }
+        */
     }
 }
 #endif
