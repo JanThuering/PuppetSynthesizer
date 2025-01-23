@@ -35,9 +35,6 @@ public class PositionToBevel : MonoBehaviour
         float t = 0;
         t += smoothness * Time.deltaTime;
         generativeMesh.bevel = Mathf.Lerp(generativeMesh.bevel, normalYMove, t);
-
-        //generativeMesh.bevel = normalYMove;
-
     }
 
 }
