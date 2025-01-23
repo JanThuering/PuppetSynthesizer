@@ -14,9 +14,9 @@ public class CreateLine : MonoBehaviour
     [Header ("ANIMATION VALUES")]
     [SerializeField] private Vector3 _movement = new Vector3(0,1,0);
 
-    [Range(-10, 10)]
-    [SerializeField] private float _amplitude = 1;
-    [Range(0.1f, 1)]
+    [Range(-5, 5)]
+    [SerializeField] private float _totalAmplitude = 1;
+    [Range(1f, 10)]
     [SerializeField] private float _frequency = 1;
     [Range(0f, 500f)]
     [SerializeField] private float _horizontalMovement = 10;
@@ -86,12 +86,12 @@ public class CreateLine : MonoBehaviour
         FillLineRenderer(); //fill the line renderer with the points
 
         //Move the points in the defined axis, acording to the curves
-        ControlCurve(_curveA, "Curve A", 1, _amplitudeA, _frequency);
-        ControlCurve(_curveB, "Curve B", 2, _amplitudeB, _frequency);
-        ControlCurve(_curveC, "Curve C", 3, _amplitudeC, _frequency);
-        ControlCurve(_curveD, "Curve D", 4, _amplitudeD, _frequency);
-        ControlCurve(_curveE, "Curve E", 5, _amplitudeE, _frequency);
-        ControlCurve(_curveF, "Curve F", 6, _amplitudeF, _frequency);
+        ControlCurve(1, _curveA, "Curve A", _amplitudeA, _frequency);
+        ControlCurve(2, _curveB, "Curve B", _amplitudeB, _frequency);
+        ControlCurve(3, _curveC, "Curve C", _amplitudeC, _frequency);
+        ControlCurve(4, _curveD, "Curve D", _amplitudeD, _frequency);
+        ControlCurve(5, _curveE, "Curve E", _amplitudeE, _frequency);
+        ControlCurve(6, _curveF, "Curve F", _amplitudeF, _frequency);
 
     }
 
@@ -145,22 +145,19 @@ public class CreateLine : MonoBehaviour
 
         //set points to line renderer
         for(int i = 0; i < _lineRenderer.positionCount; i++){
-
             _lineRenderer.SetPosition(i, _pointsArray[i].transform.position);
-
         }
     }
 
-    private void ControlCurve(AnimationCurve curve, string curveName, int slider, float amplitude, float frequency){
-        //todo
-        //wellen sollen sich natürlich nach vorne bewegen 
-
+    private void ControlCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
+        //check if slider is in range
         if(slider > _sliderAmmount || slider < 1){
             Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
             return;
         }
 
-        float timeCounter = Time.time*_horizontalMovement;  //counts up so the wave moves up the index
+        //counts up so the wave moves up the index
+        float timeCounter = Time.time*_horizontalMovement;
 
         //calculate range of points
         int range = _pointsArray.Length / _sliderAmmount;
@@ -169,16 +166,15 @@ public class CreateLine : MonoBehaviour
 
         //move points in the y axis, according to the curve
         for(int i = start+(int)timeCounter; i < end+(int)timeCounter; i++){
-            /*  //combine curves
-            float curveValue1 = _curveA.Evaluate((float)i/frequency + Time.time) * amplitude * _curveAStrength;
-            float curveValue2 = _curveB.Evaluate((float)i/frequency + Time.time) * amplitude * _curveBStrength;
-            float curveValue3 = _curveC.Evaluate((float)i/frequency + Time.time) * amplitude * _curveCStrength;
-            float curveValue = curveValue1 + curveValue2 + curveValue3;
-            */
            
             int currentIndex = i%_pointsArray.Length;
-            //float curveValue = curve.Evaluate((float)i/frequency + Time.time) * amplitude;
-            float curveValue = curve.Evaluate(currentIndex/frequency) * amplitude;
+            
+            // Normalize evaluation value between 0 and 1 for current segment
+            float normalizedT = ((float)(i - (start+(int)timeCounter)) / range) * frequency;
+            // Use modulo to wrap value between 0-1
+            normalizedT = normalizedT % 1.0f;
+            
+            float curveValue = curve.Evaluate(normalizedT) * amplitude * _totalAmplitude;
             
             Vector3 right = _pointsArray[currentIndex].transform.right * curveValue * _movement.x;
             Vector3 up = _pointsArray[currentIndex].transform.up * curveValue * _movement.y;
