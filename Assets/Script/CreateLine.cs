@@ -194,44 +194,6 @@ public class CreateLine : MonoBehaviour
  
     }
 
-    private void WaveGenerator(AnimationCurve curve, int slider, float amplitude, float frequency){
-        if(slider > _sliderAmmount || slider < 1){
-            Debug.LogError("Slider out of range");
-            return;
-        }
-        float timeCounter = Time.time*_horizontalMovement;  //counts up so the wave moves up the index
-
-        //calculate range of points
-        int range = _pointsArray.Length / _sliderAmmount;
-        int start = range * (slider-1);
-        int end = range * slider;
-
-
-        //move points in the y axis, according to the curve
-        for(int i = start+(int)timeCounter; i < end+(int)timeCounter; i++){
-            
-            float curveValue1 = _curveA.Evaluate((float)i/frequency + Time.time) * amplitude * _curveAStrength;
-            float curveValue2 = _curveB.Evaluate((float)i/frequency + Time.time) * amplitude * _curveBStrength;
-            float curveValue3 = _curveC.Evaluate((float)i/frequency + Time.time) * amplitude * _curveCStrength;
-            //float curveValue = curve.Evaluate((float)i/frequency + Time.time) * amplitude;
-            float curveValue = curveValue1 + curveValue2 + curveValue3;
-            int currentIndex = i%_pointsArray.Length;
-
-            Vector3 right = _pointsArray[currentIndex].transform.right * curveValue * _movement.x;
-            Vector3 up = _pointsArray[currentIndex].transform.up * curveValue * _movement.y;
-            Vector3 forward = _pointsArray[currentIndex].transform.forward * curveValue * _movement.z;
-            Vector3 movement = up + right + forward;
-
-            if(currentIndex == 0 || currentIndex == _pointsArray.Length-1){ //dont move start and end point
-                movement = new Vector3(0,0,0);
-            }
-            else{   //move all other points
-                _pointsArray[currentIndex].transform.position =  _startPointLocation[currentIndex] + movement;
-            }
-
-        }
- 
-    }
 
 
 }
