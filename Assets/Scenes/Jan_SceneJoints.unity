@@ -1249,6 +1249,9 @@ GameObject:
   m_Component:
   - component: {fileID: 190131896}
   - component: {fileID: 190131897}
+  - component: {fileID: 190131900}
+  - component: {fileID: 190131898}
+  - component: {fileID: 190131899}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1292,6 +1295,62 @@ MonoBehaviour:
   _closestPointIndex: 
   _csCreateLine: {fileID: 1119259568}
   _moveTowardsSpeed: 40
+--- !u!114 &190131898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190131895}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11a8377eb2df46c69006c4883eeb232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &190131899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190131895}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9a223c1e7de4f2cb1cbd2908a05d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions:
+  - name: NoteDown 0
+    eventType: 0
+    noteOrCC: 0
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &190131900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190131895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2d0817ed0e740a6940d7d6eb18b8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _csCreateLine: {fileID: 1119259568}
 --- !u!1 &195133267
 GameObject:
   m_ObjectHideFlags: 0
@@ -6841,6 +6900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc49913d08ce4e9abd1f19a6d19a2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debug: 0
+  _debugMidiValue: 0
   _lineRenderer: {fileID: 1119259566}
   _lineStart: {fileID: 370864729}
   _lineEnd: {fileID: 1406493330}
