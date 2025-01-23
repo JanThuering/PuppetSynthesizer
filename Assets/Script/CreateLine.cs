@@ -6,6 +6,10 @@ using UnityEngine.Rendering;
 
 public class CreateLine : MonoBehaviour
 {
+    [Header ("DEBUGGING")]
+    [SerializeField] private bool _debug = true;
+    public float _debugMidiValue = 0;
+
     [Header ("EXTERNAL REFERENCES")]
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField] private GameObject _lineStart;
@@ -152,7 +156,9 @@ public class CreateLine : MonoBehaviour
     private void ControlCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
         //check if slider is in range
         if(slider > _sliderAmmount || slider < 1){
+            if(_debug){
             Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
+            }
             return;
         }
 
