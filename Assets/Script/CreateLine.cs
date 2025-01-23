@@ -13,6 +13,7 @@ public class CreateLine : MonoBehaviour
 
     [Header ("ANIMATION VALUES")]
     [SerializeField] private Vector3 _movement = new Vector3(0,1,0);
+
     [Range(-10, 10)]
     [SerializeField] private float _amplitude = 1;
     [Range(0.1f, 1)]
@@ -22,20 +23,36 @@ public class CreateLine : MonoBehaviour
 
     [Header ("CURVES")]
     [SerializeField] private AnimationCurve _curveA;
-    [SerializeField] private AnimationCurve _curveB;
-    [SerializeField] private AnimationCurve _curveC;
-    /*
-    [Range(0, 1)]
-    [SerializeField] private float _curveAStrength = 1;
-    [Range(0, 1)]
-    [SerializeField] private float _curveBStrength = 1;
-    [Range(0, 1)]
-    [SerializeField] private float _curveCStrength = 1;
-    */
-    
+    [Range(-10, 10)]
+    [SerializeField] private float _amplitudeA = 1;
 
+    [SerializeField] private AnimationCurve _curveB;
+    [Range(-10, 10)]
+    [SerializeField] private float _amplitudeB = 1;
+
+    [SerializeField] private AnimationCurve _curveC;
+    [Range(-10, 10)]
+    [SerializeField] private float _amplitudeC = 1;
+
+    [SerializeField] private AnimationCurve _curveD;
+    [Range(-10, 10)]
+    [SerializeField] private float _amplitudeD = 1;
+
+    [SerializeField] private AnimationCurve _curveE;
+    [Range(-10, 10)]
+    [SerializeField] private float _amplitudeE = 1;
+
+    [SerializeField] private AnimationCurve _curveF;
+    [Range(-10, 10)]
+    [SerializeField] private float _amplitudeF = 1;
+    
     [Header ("INTERFACE VALUES")]
     [SerializeField] private int _sliderAmmount = 3;
+
+    [Header ("Points")]
+    [SerializeField] private int _pointsCount = 2;
+    public GameObject[] _pointsArray;
+    private Vector3[] _startPointLocation;
 
     /*TODO
     1. x curve sequence should move along the line
@@ -57,23 +74,6 @@ public class CreateLine : MonoBehaviour
     */
 
 
-
-    [Header ("Points")]
-    [SerializeField] private int _pointsCount = 2;
-    public GameObject[] _pointsArray;
-    private Vector3[] _startPointLocation;
-
-    /*
-    [Header ("Movement")]
-    [SerializeField] private bool _sineWave = false;
-    [SerializeField] private bool _squareWave = false;
-    [SerializeField] private Vector3 _movement;
-    [SerializeField] private float _amplitude = 1;
-    [SerializeField] private float _frequency = 1;
-    private float _timeCounter = 0;
-    */
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -82,17 +82,16 @@ public class CreateLine : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
         FillLineRenderer(); //fill the line renderer with the points
 
-        //Move the points in the y axis, acording to the curves
-        ControlCurve(_curveA, 1, _amplitude, _frequency);
-        ControlCurve(_curveB, 2, _amplitude, _frequency);
-        ControlCurve(_curveC, 3, _amplitude, _frequency);
-
-        _pointsArray[0].transform.position = _lineStart.transform.position;
-
+        //Move the points in the defined axis, acording to the curves
+        ControlCurve(_curveA, "Curve A", 1, _amplitudeA, _frequency);
+        ControlCurve(_curveB, "Curve B", 2, _amplitudeB, _frequency);
+        ControlCurve(_curveC, "Curve C", 3, _amplitudeC, _frequency);
+        ControlCurve(_curveD, "Curve D", 4, _amplitudeD, _frequency);
+        ControlCurve(_curveE, "Curve E", 5, _amplitudeE, _frequency);
+        ControlCurve(_curveF, "Curve F", 6, _amplitudeF, _frequency);
 
     }
 
@@ -152,11 +151,15 @@ public class CreateLine : MonoBehaviour
         }
     }
 
-    private void ControlCurve(AnimationCurve curve, int slider, float amplitude, float frequency){
+    private void ControlCurve(AnimationCurve curve, string curveName, int slider, float amplitude, float frequency){
+        //todo
+        //wellen sollen sich natürlich nach vorne bewegen 
+
         if(slider > _sliderAmmount || slider < 1){
-            Debug.LogError("Slider out of range");
+            Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
             return;
         }
+
         float timeCounter = Time.time*_horizontalMovement;  //counts up so the wave moves up the index
 
         //calculate range of points
@@ -164,20 +167,19 @@ public class CreateLine : MonoBehaviour
         int start = range * (slider-1);
         int end = range * slider;
 
-
         //move points in the y axis, according to the curve
         for(int i = start+(int)timeCounter; i < end+(int)timeCounter; i++){
-            /*
+            /*  //combine curves
             float curveValue1 = _curveA.Evaluate((float)i/frequency + Time.time) * amplitude * _curveAStrength;
             float curveValue2 = _curveB.Evaluate((float)i/frequency + Time.time) * amplitude * _curveBStrength;
             float curveValue3 = _curveC.Evaluate((float)i/frequency + Time.time) * amplitude * _curveCStrength;
             float curveValue = curveValue1 + curveValue2 + curveValue3;
             */
-            float curveValue = curve.Evaluate((float)i/frequency + Time.time) * amplitude;
+           
             int currentIndex = i%_pointsArray.Length;
+            //float curveValue = curve.Evaluate((float)i/frequency + Time.time) * amplitude;
+            float curveValue = curve.Evaluate(currentIndex/frequency) * amplitude;
             
-            
-
             Vector3 right = _pointsArray[currentIndex].transform.right * curveValue * _movement.x;
             Vector3 up = _pointsArray[currentIndex].transform.up * curveValue * _movement.y;
             Vector3 forward = _pointsArray[currentIndex].transform.forward * curveValue * _movement.z;
@@ -189,7 +191,6 @@ public class CreateLine : MonoBehaviour
             else{   //move all other points
                 _pointsArray[currentIndex].transform.position =  _startPointLocation[currentIndex] + movement;
             }
-
         }
  
     }

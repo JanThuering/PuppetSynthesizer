@@ -6857,6 +6857,10 @@ MonoBehaviour:
   _lineRenderer: {fileID: 1119259566}
   _lineStart: {fileID: 370864729}
   _lineEnd: {fileID: 1406493330}
+  _movement: {x: 0, y: 1, z: 0}
+  _amplitude: 1
+  _frequency: 0.976
+  _horizontalMovement: 0
   _curveA:
     serializedVersion: 2
     m_Curve:
@@ -6965,10 +6969,6 @@ MonoBehaviour:
     m_PreInfinity: 1
     m_PostInfinity: 1
     m_RotationOrder: 4
-  _movement: {x: 0, y: 1, z: 0.43}
-  _slider1Amplitude: 1
-  _slider1Frequency: 0.975
-  _horizontalMovement: 10
   _sliderAmmount: 3
   _pointsCount: 221
   _pointsArray: []
