@@ -21,34 +21,34 @@ public class CreateLine : MonoBehaviour
     [Range(-5, 5)]
     [SerializeField] private float _totalAmplitude = 1;
     [Range(1f, 10)]
-    [SerializeField] private float _frequency = 1;
+    public float _frequency = 1;
     [Range(0f, 500f)]
-    [SerializeField] private float _horizontalMovement = 10;
+    public float _horizontalMovement = 10;
 
     [Header ("CURVES")]
     [SerializeField] private AnimationCurve _curveA;
     [Range(-10, 10)]
-    [SerializeField] private float _amplitudeA = 1;
+    public float _amplitudeA = 1;
 
     [SerializeField] private AnimationCurve _curveB;
     [Range(-10, 10)]
-    [SerializeField] private float _amplitudeB = 1;
+    public float _amplitudeB = 1;
 
     [SerializeField] private AnimationCurve _curveC;
     [Range(-10, 10)]
-    [SerializeField] private float _amplitudeC = 1;
+    public float _amplitudeC = 1;
 
     [SerializeField] private AnimationCurve _curveD;
     [Range(-10, 10)]
-    [SerializeField] private float _amplitudeD = 1;
+    public float _amplitudeD = 1;
 
     [SerializeField] private AnimationCurve _curveE;
     [Range(-10, 10)]
-    [SerializeField] private float _amplitudeE = 1;
+    public float _amplitudeE = 1;
 
     [SerializeField] private AnimationCurve _curveF;
     [Range(-10, 10)]
-    [SerializeField] private float _amplitudeF = 1;
+    public float _amplitudeF = 1;
     
     [Header ("INTERFACE VALUES")]
     [SerializeField] private int _sliderAmmount = 3;
