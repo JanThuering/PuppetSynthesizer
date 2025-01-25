@@ -1345,7 +1345,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190131895}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c2d0817ed0e740a6940d7d6eb18b8da, type: 3}
   m_Name: 
@@ -6901,14 +6901,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _debug: 0
-  _debugMidiValue: 0
   _lineRenderer: {fileID: 1119259566}
   _lineStart: {fileID: 370864729}
   _lineEnd: {fileID: 1406493330}
   _movement: {x: 0, y: 1, z: 0}
   _totalAmplitude: 1
-  _frequency: 1
+  _frequency: 1.02
   _horizontalMovement: 71
+  _curveArray: []
+  _amplitudeArray: []
+  _globalCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _curveA:
     serializedVersion: 2
     m_Curve:
@@ -7230,7 +7237,7 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   _amplitudeF: 1
-  _sliderAmmount: 5
+  _sliderAmmount: 6
   _pointsCount: 148
   _pointsArray: []
 --- !u!1 &1124711338
