@@ -76,31 +76,10 @@ public class CreateLine : MonoBehaviour
     public GameObject[] _pointsArray;
     private Vector3[] _startPointLocation;
 
-    /*TODO
-    1. x curve sequence should move along the line
-        (orient around the two endingpoints)
-    2. combine curve
-    3. Input with MIDI
-
-
-    - x 3D Linie (in alle Vectoren movement einbauen)
-    - Kurven segmente interpolieren
-        (immer die selbe Frequenz so dass Form der Kurve ersichtlich bleibt)
-    - Speed Horizontal der Kurve muss zur Wellenfrequenzpassen
-
-    - Midi
-    - DryWetMidi
-
-    - Wellen kombinieren
-
-    */
-
-
     // Start is called before the first frame update
     void Start()
     {
         CreatePoints();
-        
     }
 
     // Update is called once per frame
@@ -116,7 +95,8 @@ public class CreateLine : MonoBehaviour
             ControlCurve(5, _curveE, "Curve E", _amplitudeE, _frequency);
             ControlCurve(6, _curveF, "Curve F", _amplitudeF, _frequency);
 
-        }else{  //new curvesystem
+        }
+        else{  //new curvesystem
             FillCurveArray(); //fill the curve array with the curves and amplitudes
             ControlGlobalCurve(); //Move the points in the defined axis, acording to the curves
         }
@@ -159,7 +139,6 @@ public class CreateLine : MonoBehaviour
         _amplitudeArray[6] = _amplitudeF;
         _speedArray[6] = _speedF;
     }
-
     private void CreatePoints(){    
         //check if (points count + 2) is divisible by slider ammount
         if((_pointsCount+2)%_sliderAmmount != 0){
@@ -200,7 +179,6 @@ public class CreateLine : MonoBehaviour
         }
 
     }
-
     public void FillLineRenderer()
     {
         //initialize line renderer
@@ -212,11 +190,23 @@ public class CreateLine : MonoBehaviour
         }
     }
 
-    public void InputToValues(int controlNumber, float controlValue){
-        AnimationCurve curve = _curveArray[controlNumber];
-        _amplitudeArray[controlNumber] = controlValue; 
+    public void InputToValues(int controlNumber, float controlValue, float valueAmmount){
+        float increments = controlValue / valueAmmount * 10 - 5;
+
+        _amplitudeArray[controlNumber] = increments * controlValue; 
+
+        //test if controlNumber is in range
+        //Needs to be improved when wprking with midi
+        if(controlNumber > _sliderAmmount || controlNumber < 1){
+            if(_debug){
+                Debug.LogWarning("Slider out of range. Curve " + controlNumber + " will be ignored.");
+            }
+            return;
+        }
+
     }
 
+    //SEGMENTED CURVES
     private void ControlCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
         //check if slider is in range
         if(slider > _sliderAmmount || slider < 1){
@@ -262,7 +252,7 @@ public class CreateLine : MonoBehaviour
  
     }
 
-
+    //NEW CURVESYSTEM
     private void ControlGlobalCurve(){
         // counts up so the wave moves up the index
         float timeCounter = Time.time * _horizontalMovement;
