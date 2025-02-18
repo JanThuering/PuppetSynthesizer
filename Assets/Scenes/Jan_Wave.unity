@@ -1354,6 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 190131896}
   - component: {fileID: 190131897}
+  - component: {fileID: 190131898}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1385,7 +1386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190131895}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 999b5ce95d6054399af56cebef2c72a1, type: 3}
   m_Name: 
@@ -1396,6 +1397,34 @@ MonoBehaviour:
   _closestPointIndex: 
   _csCreateLine: {fileID: 1119259568}
   _moveTowardsSpeed: 40
+--- !u!114 &190131898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190131895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321e879e85c9166469122d8424ca5a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _csCreateLine: {fileID: 0}
+  _armLDelay: 1
+  _armRDelay: 1
+  _legLDelay: 1
+  _legRDelay: 1
+  _torsoDelay: 1
+  _armLControlPoint: {fileID: 0}
+  _armL: []
+  _armRControlPoint: {fileID: 0}
+  _armR: []
+  _legLControlPoint: {fileID: 0}
+  _legL: []
+  _legRControlPoint: {fileID: 0}
+  _legR: []
+  _torsoControlPoint: {fileID: 0}
+  _torso: []
 --- !u!1 &195133267
 GameObject:
   m_ObjectHideFlags: 0
@@ -2739,7 +2768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &430717667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3273,7 +3302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &574047014
 Transform:
   m_ObjectHideFlags: 0
@@ -7968,7 +7997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1322309442
 Transform:
   m_ObjectHideFlags: 0
