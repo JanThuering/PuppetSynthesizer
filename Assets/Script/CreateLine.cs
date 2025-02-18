@@ -8,7 +8,7 @@ public class CreateLine : MonoBehaviour
 {
     [Header ("DEBUGGING")]
     [SerializeField] private bool _debug = true;
-    [SerializeField] private bool segmentedCurves = false;
+    [SerializeField] private bool _segmentedCurves = false;
 
     [Header ("EXTERNAL REFERENCES")]
     [SerializeField] private LineRenderer _lineRenderer;
@@ -25,6 +25,15 @@ public class CreateLine : MonoBehaviour
     public float _frequency = 1;
     [Range(0f, 5)]
     public float _horizontalMovement = 10;
+
+    [Header ("INTERFACE VALUES")]
+    [SerializeField] private int _sliderAmmount = 3;
+
+    [Header ("Points")]
+    [SerializeField] private int _pointsCount = 2;
+    public GameObject[] _pointsArray;
+    private Vector3[] _startPointLocation;
+
 
     [Header ("CURVES")]
     [SerializeField] private AnimationCurve [] _curveArray;
@@ -68,16 +77,9 @@ public class CreateLine : MonoBehaviour
     [Range(-5, 5)]
     [SerializeField] float _speedF = 1;
     
-    [Header ("INTERFACE VALUES")]
-    [SerializeField] private int _sliderAmmount = 3;
-
-    [Header ("Points")]
-    [SerializeField] private int _pointsCount = 2;
-    public GameObject[] _pointsArray;
-    private Vector3[] _startPointLocation;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         CreatePoints();
     }
@@ -86,7 +88,7 @@ public class CreateLine : MonoBehaviour
     void Update()
     { 
         FillLineRenderer(); //fill the line renderer with the points
-        if(segmentedCurves){    //old curvesystem
+        if(_segmentedCurves){    //old curvesystem
             // Move the points in the defined axis, acording to the curves
             ControlCurve(1, _curveA, "Curve A", _amplitudeA, _frequency);
             ControlCurve(2, _curveB, "Curve B", _amplitudeB, _frequency);
@@ -191,17 +193,27 @@ public class CreateLine : MonoBehaviour
     }
 
     public void InputToValues(int controlNumber, float controlValue, float valueAmmount){
-        float increments = controlValue / valueAmmount * 10 - 5;
+        if(_debug){ 
+            //Debug.Log("Control Number: " + controlNumber + " Control Value: " + controlValue + " Value Ammount: " + valueAmmount); 
+            Debug.Log("Amplitude: " +_amplitudeArray[controlNumber]);
+            //Debug.Log("ControlNumber: " + controlNumber);
+        }
+        
+        float increments = controlValue / valueAmmount * 10 - 5;    //calculate the value of the slider / knob
 
-        _amplitudeArray[controlNumber] = increments * controlValue; 
-
-        //test if controlNumber is in range
-        //Needs to be improved when wprking with midi
-        if(controlNumber > _sliderAmmount || controlNumber < 1){
-            if(_debug){
-                Debug.LogWarning("Slider out of range. Curve " + controlNumber + " will be ignored.");
-            }
-            return;
+        switch(controlNumber){
+            case 1: _amplitudeA = increments; break;
+            case 2: _amplitudeB = increments; break;
+            case 3: _amplitudeC = increments; break;
+            case 4: _amplitudeD = increments; break;
+            case 5: _amplitudeE = increments; break;
+            case 6: _amplitudeF = increments; break;
+            case 11: _speedA = increments; break;
+            case 12: _speedB = increments; break;
+            case 13: _speedC = increments; break;
+            case 14: _speedD = increments; break;
+            case 15: _speedE = increments; break;
+            case 16: _speedF = increments; break;
         }
 
     }

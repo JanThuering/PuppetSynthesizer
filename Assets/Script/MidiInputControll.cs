@@ -8,7 +8,8 @@ public class MidiInputControll : MonoBehaviour {
 
 
     void OnEnable() {
-        input = InputDevice.GetByName("X-TOUCH COMPACT");
+        //input = InputDevice.GetByName("X-TOUCH COMPACT"); // X-TOUCH COMPACT
+        input = InputDevice.GetByName("Launch Control XL"); // Launch Control XL
         if(input == null){
             Debug.LogError("MIDI device not found");
         }
@@ -22,7 +23,7 @@ public class MidiInputControll : MonoBehaviour {
     void OnEventReceived(object sender, MidiEventReceivedEventArgs e) {
         var midiDevice = (MidiDevice)sender;
         //Debug.Log($"Received MIDI event {e.Event} from {midiDevice.Name}");
-        Debug.Log(e.Event);
+        //Debug.Log(e.Event);
         
         // if (e.Event is NoteOnEvent noteOn) {
         //     Debug.Log($"Note {noteOn.NoteNumber} pressed with velocity {noteOn.Velocity}");
@@ -33,9 +34,9 @@ public class MidiInputControll : MonoBehaviour {
             if (e.Event.EventType == MidiEventType.ControlChange){
 
             }
-            Debug.Log($"Control {controlChange.ControlNumber} changed to {controlChange.ControlValue}");
+            //Debug.Log($"Control {controlChange.ControlNumber} changed to {controlChange.ControlValue}");
 
-            
+            //Control the curve in _csCreateLine
             _csCreateLine.InputToValues(controlChange.ControlNumber, controlChange.ControlValue, 127f);
 
             
