@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using System.Numerics;
 using UnityEngine;
 
 public class MovePuppet : MonoBehaviour
@@ -22,12 +21,6 @@ public class MovePuppet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ComparePoints();    //call the function to compare the points
-
-        
-    }
-
-    public void ComparePoints(){   //compare which point from the linerenderer is closer to the puppet-controlpoint
         MoveControlPoints();
         
     }
