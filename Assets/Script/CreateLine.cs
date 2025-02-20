@@ -35,7 +35,6 @@ public class CreateLine : MonoBehaviour
     private GameObject lineEnd;
 
     [Header ("ANIMATION VALUES")]
-  
     [SerializeField] private Vector3 movement = new Vector3(0,1,0);
 
     [Range(-5, 5)]
@@ -110,13 +109,14 @@ public class CreateLine : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         
-        // Existing Awake functionality
-        CreatePoints();
+
     }
 
     private void Start()
     {
         GetVariables();
+        // Existing Awake functionality
+        CreatePoints();
     }
 
     // Update is called once per frame
