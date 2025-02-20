@@ -37,8 +37,8 @@ public class MoveControlPoints : MonoBehaviour
             float closestDistance = float.PositiveInfinity;
             //find the closest point
             
-            for(int j = 0; j < createLineScript._pointsArray.Length; j++){
-                Vector3 posPoint = new Vector3(createLineScript._pointsArray[j].transform.position.x, 0, createLineScript._pointsArray[j].transform.position.z);
+            for(int j = 0; j < createLineScript.pointsArray.Length; j++){
+                Vector3 posPoint = new Vector3(createLineScript.pointsArray[j].transform.position.x, 0, createLineScript.pointsArray[j].transform.position.z);
                 Vector3 horizontalDistance = posControlPoint - posPoint;
                 if(closestDistance > horizontalDistance.magnitude){
                     closestDistance = horizontalDistance.magnitude;
@@ -53,7 +53,7 @@ public class MoveControlPoints : MonoBehaviour
      private void CopyLineMovement(){
         //go trough all control points  
         //copy the position of the closest HORIZONTAL point to the control point
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position ,createLineScript._pointsArray[closestPointIndex].transform.position, moveTowardsSpeed * Time.deltaTime);   
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position ,createLineScript.pointsArray[closestPointIndex].transform.position, moveTowardsSpeed * Time.deltaTime);   
     }
 
 

@@ -41,8 +41,8 @@ public class MovePuppet : MonoBehaviour
             int closestIndex = 0;
             float closestDistance = float.PositiveInfinity;
             //find the closest point
-            for(int j = 0; j < _csCreateLine._pointsArray.Length; j++){
-                Vector3 posPoint = new Vector3(_csCreateLine._pointsArray[j].transform.position.x, 0, _csCreateLine._pointsArray[j].transform.position.z);
+            for(int j = 0; j < _csCreateLine.pointsArray.Length; j++){
+                Vector3 posPoint = new Vector3(_csCreateLine.pointsArray[j].transform.position.x, 0, _csCreateLine.pointsArray[j].transform.position.z);
                 Vector3 horizontalDistance = posControlPoint - posPoint;
                 if(closestDistance > horizontalDistance.magnitude){
                     closestDistance = horizontalDistance.magnitude;
@@ -58,7 +58,7 @@ public class MovePuppet : MonoBehaviour
         //go trough all control points
         for (int i = 0; i < _controlPoints.Length; i++){    
             //copy the position of the closest HORIZONTAL point to the control point
-            _controlPoints[i].transform.position = Vector3.MoveTowards(_controlPoints[i].transform.position ,_csCreateLine._pointsArray[_closestPointIndex[i]].transform.position, _moveTowardsSpeed * Time.deltaTime);   
+            _controlPoints[i].transform.position = Vector3.MoveTowards(_controlPoints[i].transform.position ,_csCreateLine.pointsArray[_closestPointIndex[i]].transform.position, _moveTowardsSpeed * Time.deltaTime);   
         }
     }
 
