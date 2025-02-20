@@ -25,8 +25,7 @@ public class CreateLine : MonoBehaviour
         }
     }
 
-    [Header ("DEBUGGING")]
-    [SerializeField] private bool debug = false;
+    [Header ("CHECKS")]
     [SerializeField] private bool segmentedCurves = true;
 
     [Header ("EXTERNAL REFERENCES")]
@@ -54,42 +53,41 @@ public class CreateLine : MonoBehaviour
 
 
     [Header ("CURVES")]
+    [SerializeField] private AnimationCurve [] curveTypes;
     [SerializeField] private AnimationCurve [] curveArray;
     [SerializeField] private float [] amplitudeArray;
     [SerializeField] private float [] speedArray;
 
 
-    [SerializeField] private AnimationCurve curveA;
+
     [Range(-5, 5)]
     [SerializeField] float amplitudeA = 1;
     [Range(-5, 5)]
     [SerializeField] float speedA = 1;
 
-    [SerializeField] private AnimationCurve curveB;
+
     [Range(-5, 5)]
     [SerializeField] float amplitudeB = 1;
     [Range(-5, 5)]
     [SerializeField] float speedB = 1;
 
-    [SerializeField] private AnimationCurve curveC;
+
     [Range(-5, 5)]
     [SerializeField] float amplitudeC = 1;
     [Range(-5, 5)]
     [SerializeField] float speedC = 1;
 
-    [SerializeField] private AnimationCurve curveD;
+
     [Range(-5, 5)]
     [SerializeField] float amplitudeD = 1;
     [Range(-5, 5)]
     [SerializeField] float speedD = 1;
 
-    [SerializeField] private AnimationCurve curveE;
     [Range(-5, 5)]
     [SerializeField] float amplitudeE = 1;
     [Range(-5, 5)]
     [SerializeField] float speedE = 1;
 
-    [SerializeField] private AnimationCurve curveF;
     [Range(-5, 5)]
     [SerializeField] float amplitudeF = 1;
     [Range(-5, 5)]
@@ -117,6 +115,7 @@ public class CreateLine : MonoBehaviour
         GetVariables();
         // Existing Awake functionality
         CreatePoints();
+        CreateArrays();
     }
 
     // Update is called once per frame
@@ -136,47 +135,52 @@ public class CreateLine : MonoBehaviour
 
     private void SegmentedCurve(){
             // Move the points in the defined axis, acording to the curves
-            ControlCurve(1, curveA, "Curve A", amplitudeA, frequency);
-            ControlCurve(2, curveB, "Curve B", amplitudeB, frequency);
-            ControlCurve(3, curveC, "Curve C", amplitudeC, frequency);
-            ControlCurve(4, curveD, "Curve D", amplitudeD, frequency);
-            ControlCurve(5, curveE, "Curve E", amplitudeE, frequency);
-            ControlCurve(6, curveF, "Curve F", amplitudeF, frequency);
+            ControlCurve(1, curveArray[0], "Curve A", amplitudeArray[0], frequency);
+            ControlCurve(2, curveArray[1], "Curve B", amplitudeArray[1], frequency);
+            ControlCurve(3, curveArray[2], "Curve C", amplitudeArray[2], frequency);
+            ControlCurve(4, curveArray[3], "Curve D", amplitudeArray[3], frequency);
+            ControlCurve(5, curveArray[4], "Curve E", amplitudeArray[4], frequency);
+            ControlCurve(6, curveArray[5], "Curve F", amplitudeArray[5], frequency);
+    }
+
+    private void CreateArrays(){
+        curveArray = new AnimationCurve[6];
+        amplitudeArray = new float[6];
+        speedArray = new float[6];
+
+        for(int i = 0; i < curveArray.Length; i++){
+            curveArray[i] = curveTypes[1];
+        }
+
+
     }
 
     private void FillCurveArray(){
         //Fills the arrays with the curves and amplitudes
         //easiere access to the values for the MIDI input
-        curveArray = new AnimationCurve[7];
-        amplitudeArray = new float[7];
-        speedArray = new float[7];
 
-        amplitudeArray [0] = totalAmplitude;
-        speedArray[0] = horizontalMovement;
+        amplitudeArray[0] = amplitudeA;
+        speedArray[0] = speedA;
 
-        curveArray[1] = curveA;
-        amplitudeArray[1] = amplitudeA;
-        speedArray[1] = speedA;
 
-        curveArray[2] = curveB;
-        amplitudeArray[2] = amplitudeB;
-        speedArray[2] = speedB;
+        amplitudeArray[1] = amplitudeB;
+        speedArray[1] = speedB;
 
-        curveArray[3] = curveC;
-        amplitudeArray[3] = amplitudeC;
-        speedArray[3] = speedC;
 
-        curveArray[4] = curveD;
-        amplitudeArray[4] = amplitudeD;
-        speedArray[4] = speedD;
+        amplitudeArray[2] = amplitudeC;
+        speedArray[2] = speedC;
 
-        curveArray[5] = curveE;
-        amplitudeArray[5] = amplitudeE;
-        speedArray[5] = speedE;
 
-        curveArray[6] = curveF;  
-        amplitudeArray[6] = amplitudeF;
-        speedArray[6] = speedF;
+        amplitudeArray[3] = amplitudeD;
+        speedArray[3] = speedD;
+
+
+        amplitudeArray[4] = amplitudeE;
+        speedArray[4] = speedE;
+
+
+        amplitudeArray[5] = amplitudeF;
+        speedArray[5] = speedF;
     }
     private void CreatePoints(){    
         //check if (points count + 2) is divisible by slider ammount
@@ -250,24 +254,29 @@ public class CreateLine : MonoBehaviour
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
 
-        float increments = controlValue / valueAmmount * 10 - 5;
+        //float increments = controlValue / valueAmmount * 10 - 5;
+        int curveTypeIndex;
+        float steps = valueAmmount / sliderAmmount;
+        int slider = 1;
 
         switch(controlNumber){
-            // case 1: amplitudeA = increments; break;
-            // case 2: amplitudeB = increments; break;
-            // case 3: amplitudeC = increments; break;
-            // case 4: amplitudeD = increments; break;
-            // case 5: amplitudeE = increments; break;
-            // case 6: amplitudeF = increments; break;
-            // case 11: speedA = increments; break;
-            // case 12: speedB = increments; break;
-            // case 13: speedC = increments; break;
-            // case 14: speedD = increments; break;
-            // case 15: speedE = increments; break;
-            // case 16: speedF = increments; break;
+            case 21: slider = 1; break;
+            case 22: slider = 2; break;
+            case 23: slider = 3; break;
+            case 24: slider = 4; break;
+            case 25: slider = 5; break;
+            case 26: slider = 6; break;
+
         }
 
+        //assign curve to slider depending on value
+        for(int i = 1; i <= sliderAmmount; i++){
+            if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
+                curveTypeIndex = i-1;
+                curveArray[slider-1] = curveTypes[curveTypeIndex];
+            }
 
+        }
 
     }
     
@@ -278,12 +287,6 @@ public class CreateLine : MonoBehaviour
             controlValue -> waveType (amplitude or speed of the curve)
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
-
-        if(debug){ 
-            //Debug.Log("Control Number: " + controlNumber + " Control Value: " + controlValue + " Value Ammount: " + valueAmmount); 
-            Debug.Log("Amplitude: " +amplitudeArray[controlNumber]);
-            //Debug.Log("ControlNumber: " + controlNumber);
-        }
         
         float increments = controlValue / valueAmmount * 10 - 5;    //calculate the value of the slider / knob
 
@@ -314,13 +317,12 @@ public class CreateLine : MonoBehaviour
             frequency -> the frequency of the curve
         */
 
-        //check if slider is in range
-        if(slider > sliderAmmount || slider < 1){
-            if(debug){
-            Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
-            }
-            return;
-        }
+        // //check if slider is in range
+        // if(slider > sliderAmmount || slider < 1){
+        //     Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
+            
+        //     return;
+        // }
 
         //counts up so the wave moves up the index
         float timeCounter = Time.time*horizontalMovement*100;
@@ -369,7 +371,7 @@ public class CreateLine : MonoBehaviour
             float combinedCurveValue = 0;
 
             //Combine all curves
-            for (int j = 1; j < sliderAmmount + 1; j++) {  // Evaluate the curve based on the current index and frequency
+            for (int j = 0; j < sliderAmmount ; j++) {  // Evaluate the curve based on the current index and frequency
                 float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * frequency + timeCounter * speedArray[j]);
                 combinedCurveValue += curveEvaluation * amplitudeArray[j] * totalAmplitude;
             }
