@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePuppet : MonoBehaviour
+public class MoveControlPoints : MonoBehaviour
 {
     [Header ("External References")]
     [SerializeField] private GameObject[] _controlPoints; //fill in the inspector with the target points
