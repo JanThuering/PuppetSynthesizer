@@ -26,8 +26,8 @@ public class CreateLine : MonoBehaviour
     }
 
     [Header ("DEBUGGING")]
-    [SerializeField] private bool debug = true;
-    [SerializeField] private bool segmentedCurves = false;
+    [SerializeField] private bool debug = false;
+    [SerializeField] private bool segmentedCurves = true;
 
     [Header ("EXTERNAL REFERENCES")]
     [SerializeField] private LineRenderer lineRenderer;
@@ -49,7 +49,7 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private int sliderAmmount = 3;
 
     [Header ("Points")]
-    [SerializeField] private int pointsCount = 2;
+    [SerializeField] private int pointsCount = 300;
     public GameObject[] pointsArray;
     private Vector3[] startPointLocation;
 
@@ -114,18 +114,17 @@ public class CreateLine : MonoBehaviour
         CreatePoints();
     }
 
+    private void Start()
+    {
+        GetVariables();
+    }
+
     // Update is called once per frame
     void Update()
     { 
         FillLineRenderer(); //fill the line renderer with the points
         if(segmentedCurves){    //old curvesystem
-            // Move the points in the defined axis, acording to the curves
-            ControlCurve(1, curveA, "Curve A", amplitudeA, frequency);
-            ControlCurve(2, curveB, "Curve B", amplitudeB, frequency);
-            ControlCurve(3, curveC, "Curve C", amplitudeC, frequency);
-            ControlCurve(4, curveD, "Curve D", amplitudeD, frequency);
-            ControlCurve(5, curveE, "Curve E", amplitudeE, frequency);
-            ControlCurve(6, curveF, "Curve F", amplitudeF, frequency);
+            SegmentedCurve();
 
         }
         else{  //new curvesystem
@@ -133,8 +132,16 @@ public class CreateLine : MonoBehaviour
             ControlGlobalCurve(); //Move the points in the defined axis, acording to the curves
         }
 
+    }
 
-
+    private void SegmentedCurve(){
+            // Move the points in the defined axis, acording to the curves
+            ControlCurve(1, curveA, "Curve A", amplitudeA, frequency);
+            ControlCurve(2, curveB, "Curve B", amplitudeB, frequency);
+            ControlCurve(3, curveC, "Curve C", amplitudeC, frequency);
+            ControlCurve(4, curveD, "Curve D", amplitudeD, frequency);
+            ControlCurve(5, curveE, "Curve E", amplitudeE, frequency);
+            ControlCurve(6, curveF, "Curve F", amplitudeF, frequency);
     }
 
     private void FillCurveArray(){
@@ -211,6 +218,20 @@ public class CreateLine : MonoBehaviour
         }
 
     }
+    private void GetVariables(){
+        lineRenderer = GetComponent<LineRenderer>();
+        if(lineRenderer == null){
+            Debug.LogError("LineRenderer not found");
+        }
+        lineStart = GameObject.Find("LineStart");
+        if(lineStart == null){
+            Debug.LogError("LineStart not found");
+        }
+        lineEnd = GameObject.Find("LineEnd");
+        if(lineEnd == null){
+            Debug.LogError("LineEnd not found");
+        }
+    }
     public void FillLineRenderer()
     {
         //initialize line renderer
@@ -222,7 +243,42 @@ public class CreateLine : MonoBehaviour
         }
     }
 
-    public void InputToValues(int controlNumber, float controlValue, float valueAmmount){
+    public void MidiDefineWaveType(int controlNumber, float controlValue, float valueAmmount){
+        /*VALUE EXPLANATION
+            controlNumber -> slider (for which slider the curve is)
+            controlValue -> waveType (which curve is selected)
+            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+        */
+
+        float increments = controlValue / valueAmmount * 10 - 5;
+
+        switch(controlNumber){
+            // case 1: amplitudeA = increments; break;
+            // case 2: amplitudeB = increments; break;
+            // case 3: amplitudeC = increments; break;
+            // case 4: amplitudeD = increments; break;
+            // case 5: amplitudeE = increments; break;
+            // case 6: amplitudeF = increments; break;
+            // case 11: speedA = increments; break;
+            // case 12: speedB = increments; break;
+            // case 13: speedC = increments; break;
+            // case 14: speedD = increments; break;
+            // case 15: speedE = increments; break;
+            // case 16: speedF = increments; break;
+        }
+
+
+
+    }
+    
+    
+    public void MidiControlWave(int controlNumber, float controlValue, float valueAmmount){
+        /*VALUE EXPLANATION
+            controlNumber -> segment (which curve is selected)
+            controlValue -> waveType (amplitude or speed of the curve)
+            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+        */
+
         if(debug){ 
             //Debug.Log("Control Number: " + controlNumber + " Control Value: " + controlValue + " Value Ammount: " + valueAmmount); 
             Debug.Log("Amplitude: " +amplitudeArray[controlNumber]);

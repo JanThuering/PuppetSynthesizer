@@ -40,8 +40,9 @@ public class MidiInputControll : MonoBehaviour {
             }
             //Debug.Log($"Control {controlChange.ControlNumber} changed to {controlChange.ControlValue}");
 
-            //Control the curve in _csCreateLine
-            createLineScript.InputToValues(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+
+            //Control the curve in CreateLineScript
+            createLineScript.MidiControlWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
 
             
         }
