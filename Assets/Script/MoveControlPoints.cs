@@ -5,24 +5,21 @@ using UnityEngine;
 public class MoveControlPoints : MonoBehaviour
 {
     [Header ("External References")]
-    [SerializeField] private GameObject[] _controlPoints; //fill in the inspector with the target points
-    public int [] _closestPointIndex; //fill in the inspector with the closest point to the control point
-    [SerializeField] public CreateLine _csCreateLine; //fill in the inspector with the line renderer
+    public int closestPointIndex;
+    private CreateLine createLineScript;
 
     [Header ("Movement")]
-    [SerializeField] private float _moveTowardsSpeed = 1;
+    [SerializeField] private float moveTowardsSpeed = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        _closestPointIndex = new int[_controlPoints.Length];
+        createLineScript = CreateLine.Instance;
     }
-
     // Update is called once per frame
     void Update()
     {
         MoveControlPoint();
-        
     }
 
 
@@ -32,17 +29,16 @@ public class MoveControlPoints : MonoBehaviour
     }
 
 
-   
-
     private void FindClosestPoint(){
         
-        for (int i = 0; i < _controlPoints.Length; i++){
-            Vector3 posControlPoint = new Vector3(_controlPoints[i].transform.position.x, 0, _controlPoints[i].transform.position.z);
+
+            Vector3 posControlPoint = new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z);
             int closestIndex = 0;
             float closestDistance = float.PositiveInfinity;
             //find the closest point
-            for(int j = 0; j < _csCreateLine._pointsArray.Length; j++){
-                Vector3 posPoint = new Vector3(_csCreateLine._pointsArray[j].transform.position.x, 0, _csCreateLine._pointsArray[j].transform.position.z);
+            
+            for(int j = 0; j < createLineScript._pointsArray.Length; j++){
+                Vector3 posPoint = new Vector3(createLineScript._pointsArray[j].transform.position.x, 0, createLineScript._pointsArray[j].transform.position.z);
                 Vector3 horizontalDistance = posControlPoint - posPoint;
                 if(closestDistance > horizontalDistance.magnitude){
                     closestDistance = horizontalDistance.magnitude;
@@ -50,17 +46,16 @@ public class MoveControlPoints : MonoBehaviour
                 }
             }
             //save the index of the closest point
-            _closestPointIndex[i] = closestIndex;
-        }
+            closestPointIndex = closestIndex;
+        
     }
 
      private void CopyLineMovement(){
-        //go trough all control points
-        for (int i = 0; i < _controlPoints.Length; i++){    
-            //copy the position of the closest HORIZONTAL point to the control point
-            _controlPoints[i].transform.position = Vector3.MoveTowards(_controlPoints[i].transform.position ,_csCreateLine._pointsArray[_closestPointIndex[i]].transform.position, _moveTowardsSpeed * Time.deltaTime);   
-        }
+        //go trough all control points  
+        //copy the position of the closest HORIZONTAL point to the control point
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position ,createLineScript._pointsArray[closestPointIndex].transform.position, moveTowardsSpeed * Time.deltaTime);   
     }
+
 
 
 }

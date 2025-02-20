@@ -6,8 +6,27 @@ using UnityEngine.Rendering;
 
 public class CreateLine : MonoBehaviour
 {
+    // Singleton instance
+    private static CreateLine instance;
+    public static CreateLine Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<CreateLine>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject("CreateLine");
+                    instance = go.AddComponent<CreateLine>();
+                }
+            }
+            return instance;
+        }
+    }
+
     [Header ("DEBUGGING")]
-    [SerializeField] private bool _debug = true;
+    [SerializeField] private bool debug = true;
     [SerializeField] private bool _segmentedCurves = false;
 
     [Header ("EXTERNAL REFERENCES")]
@@ -79,8 +98,19 @@ public class CreateLine : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
+        // Ensure only one instance exists
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        
+        // Existing Awake functionality
         CreatePoints();
     }
 
@@ -193,7 +223,7 @@ public class CreateLine : MonoBehaviour
     }
 
     public void InputToValues(int controlNumber, float controlValue, float valueAmmount){
-        if(_debug){ 
+        if(debug){ 
             //Debug.Log("Control Number: " + controlNumber + " Control Value: " + controlValue + " Value Ammount: " + valueAmmount); 
             Debug.Log("Amplitude: " +_amplitudeArray[controlNumber]);
             //Debug.Log("ControlNumber: " + controlNumber);
@@ -222,7 +252,7 @@ public class CreateLine : MonoBehaviour
     private void ControlCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
         //check if slider is in range
         if(slider > _sliderAmmount || slider < 1){
-            if(_debug){
+            if(debug){
             Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
             }
             return;

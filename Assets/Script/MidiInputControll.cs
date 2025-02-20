@@ -4,8 +4,12 @@ using Melanchall.DryWetMidi.Core;
 
 public class MidiInputControll : MonoBehaviour {
     [SerializeField] InputDevice input;
-    [SerializeField] CreateLine _csCreateLine;
+    CreateLine createLineScript;
 
+    private void Start()
+    {
+        createLineScript = CreateLine.Instance;
+    }
 
     void OnEnable() {
         //input = InputDevice.GetByName("X-TOUCH COMPACT"); // X-TOUCH COMPACT
@@ -37,7 +41,7 @@ public class MidiInputControll : MonoBehaviour {
             //Debug.Log($"Control {controlChange.ControlNumber} changed to {controlChange.ControlValue}");
 
             //Control the curve in _csCreateLine
-            _csCreateLine.InputToValues(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            createLineScript.InputToValues(controlChange.ControlNumber, controlChange.ControlValue, 127f);
 
             
         }
