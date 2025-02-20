@@ -43,8 +43,8 @@ public class MoveAlongCurve : MonoBehaviour
             int closestIndex = 0;
             float closestDistance = float.PositiveInfinity;
             //find the closest point
-            for(int j = 0; j < _csCreateLine._pointsArray.Length; j++){
-                Vector3 posPoint = new Vector3(_csCreateLine._pointsArray[j].transform.position.x, 0, _csCreateLine._pointsArray[j].transform.position.z);
+            for(int j = 0; j < _csCreateLine.pointsArray.Length; j++){
+                Vector3 posPoint = new Vector3(_csCreateLine.pointsArray[j].transform.position.x, 0, _csCreateLine.pointsArray[j].transform.position.z);
                 Vector3 horizontalDistance = posControlPoint - posPoint;
                 if(closestDistance > horizontalDistance.magnitude){
                     closestDistance = horizontalDistance.magnitude;
@@ -52,7 +52,7 @@ public class MoveAlongCurve : MonoBehaviour
                 }
             }
             //save the index of the closest point
-            _controlPoints[i].transform.position = _csCreateLine._pointsArray[closestIndex].transform.position;
+            _controlPoints[i].transform.position = _csCreateLine.pointsArray[closestIndex].transform.position;
             _currentPointIndex[i] = closestIndex;
         }
     }
@@ -69,13 +69,13 @@ public class MoveAlongCurve : MonoBehaviour
         for(int i = 0; i < _controlPoints.Length; i++){
             
             //if the index is bigger than the length of the array, reset the index
-            if(_currentPointIndex[i] >= _csCreateLine._pointsArray.Length-1){
+            if(_currentPointIndex[i] >= _csCreateLine.pointsArray.Length-1){
                 _currentPointIndex[i] = 0;
-                _controlPoints[i].transform.position = _csCreateLine._pointsArray[_currentPointIndex[i]].transform.position;
+                _controlPoints[i].transform.position = _csCreateLine.pointsArray[_currentPointIndex[i]].transform.position;
             }
 
             //calculate the distance between the controlpoint and the next point in the linerenderer
-            float distance = Vector3.Distance(_controlPoints[i].transform.position, _csCreateLine._pointsArray[_currentPointIndex[i]].transform.position);
+            float distance = Vector3.Distance(_controlPoints[i].transform.position, _csCreateLine.pointsArray[_currentPointIndex[i]].transform.position);
             
             //if the distance is smaller than the treshhold, increase the index
             if(distance <= _moveTreshhold/100){
@@ -83,7 +83,7 @@ public class MoveAlongCurve : MonoBehaviour
             }
             
             //move the controlpoint to the next point in the linerenderer
-            _controlPoints[i].transform.position = Vector3.MoveTowards(_controlPoints[i].transform.position, _csCreateLine._pointsArray[_currentPointIndex[i]].transform.position, _moveSpeed*Time.deltaTime );
+            _controlPoints[i].transform.position = Vector3.MoveTowards(_controlPoints[i].transform.position, _csCreateLine.pointsArray[_currentPointIndex[i]].transform.position, _moveSpeed*Time.deltaTime );
         
 
 
