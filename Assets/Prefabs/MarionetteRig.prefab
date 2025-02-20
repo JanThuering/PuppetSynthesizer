@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8692560979313879058}
   - component: {fileID: 5050968685457130012}
   m_Layer: 0
-  m_Name: HandL
+  m_Name: HandR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closestPointIndex: 0
-  _moveTowardsSpeed: 55
+  closestPointIndex: 0
+  moveTowardsSpeed: 43
 --- !u!1 &8498719814996123248
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 8190026561108198257}
   - component: {fileID: 7174460453365407179}
   m_Layer: 0
-  m_Name: HandR
+  m_Name: HandL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,8 +227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closestPointIndex: 0
-  _moveTowardsSpeed: 55
+  closestPointIndex: 0
+  moveTowardsSpeed: 55
 --- !u!1001 &8409742575202417081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -265,7 +265,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -280,7 +280,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -420,6 +420,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 189759442029557260}
   m_SourcePrefab: {fileID: 100100000, guid: 171ea688bd0529c43a471de7e48484ad, type: 3}
+--- !u!1 &632676537624520722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -255896325726514773, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1397583445998653432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1742788679667255743, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2333812678618492011 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3110239030471518766, guid: 171ea688bd0529c43a471de7e48484ad,
@@ -456,16 +468,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ec595bb29742048852f9063f11e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _armLDelay: 1
-  _rotationValueArmL: {x: 70, y: 0, z: 0}
-  _armLControlPoint: {fileID: 918701929169346446}
-  _armLBones:
+  lineStart: {fileID: 0}
+  armLDelay: 1
+  rotationMultiplier: {x: 50, y: 50, z: 50}
+  armLControlPoint: {fileID: 4745458968334610511}
+  armLBones:
   - {fileID: 4775834703225419572}
   - {fileID: 8828494990974140791}
   - {fileID: 2333812678618492011}
+  armRControlPoint: {fileID: 918701929169346446}
+  armRBones:
+  - {fileID: 1397583445998653432}
+  - {fileID: 632676537624520722}
+  - {fileID: 9202176702040890363}
 --- !u!1 &8828494990974140791 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1022446013845043406, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9202176702040890363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 793155408157925954, guid: 171ea688bd0529c43a471de7e48484ad,
     type: 3}
   m_PrefabInstance: {fileID: 8409742575202417081}
   m_PrefabAsset: {fileID: 0}
