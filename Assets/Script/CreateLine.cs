@@ -30,9 +30,9 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private bool segmentedCurves = true;
 
     [Header ("EXTERNAL REFERENCES")]
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private GameObject lineStart;
-    [SerializeField] private GameObject lineEnd;
+    private LineRenderer lineRenderer;
+    private GameObject lineStart;
+    private GameObject lineEnd;
 
     [Header ("ANIMATION VALUES")]
   
@@ -306,6 +306,14 @@ public class CreateLine : MonoBehaviour
 
     //SEGMENTED CURVES
     private void ControlCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
+        /*EXPLANATION
+            slider -> which slider is selected
+            curve -> the curve that is selected
+            curveName -> the name of the curve
+            amplitude -> the amplitude of the curve
+            frequency -> the frequency of the curve
+        */
+
         //check if slider is in range
         if(slider > sliderAmmount || slider < 1){
             if(debug){
