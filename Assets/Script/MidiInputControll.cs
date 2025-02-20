@@ -42,7 +42,13 @@ public class MidiInputControll : MonoBehaviour {
 
 
             //Control the curve in CreateLineScript
-            createLineScript.MidiControlWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            if (controlChange.ControlNumber < 20){
+                createLineScript.MidiControlWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            }
+            if(controlChange.ControlNumber > 20){
+                createLineScript.MidiDefineWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            }
+            
 
             
         }
