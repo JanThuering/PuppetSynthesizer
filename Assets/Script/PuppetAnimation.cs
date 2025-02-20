@@ -34,6 +34,7 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private Transform baseControlPoint;
     [SerializeField] private GameObject baseBone;
     private bool notStarted = true;
+    private bool isCoRoutineing = false;
 
 
     // Start is called before the first frame update
@@ -52,10 +53,10 @@ public class PuppetAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateWithDelay(armLBones, armLStartRotation, armLControlPoint, multiplierL);
+        Rotate(armLBones, armLStartRotation, armLControlPoint, multiplierL);
         Rotate(armRBones, armRStartRotation, armRControlPoint, multiplierR);
         //Rotate(torsoBones, torsoStartRotation, torsoControlPoint, torsoMultiplier);
-        //Pirouette();
+        Pirouette();
     }
 
     private void Rotate(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Vector3 multiplier)
@@ -63,43 +64,30 @@ public class PuppetAnimation : MonoBehaviour
         //nehme die startposition des point aus dem createline script
         //nimm den Abstand von der startposition um den _rotaionValueArmL zu berechnen
         //evt schreibe eine funktion in den anderen Scripts die die Startposition der Punkte zurückgibt)
-        multiplier = torsoMultiplier * normalizer;
-
-        for (int i = 0; i < bodypart.Length; i++)
+        if (controlPoint.name == "Torso")
         {
-            distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
-            bodypart[i].transform.localEulerAngles = (multiplier * distanceZeroToLine) + startRot[i];
+            multiplier = torsoMultiplier * normalizer;
         }
-    }
-
-    IEnumerator RotateWithDelay(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Vector3 multiplier)
-    {
-        multiplier = torsoMultiplier * normalizer;
 
         for (int i = 0; i < bodypart.Length; i++)
         {
             distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
             bodypart[i].transform.localEulerAngles = (multiplier * distanceZeroToLine) + startRot[i];
-            yield return new WaitForSeconds(delay);
         }
     }
 
     private void Pirouette()
     {
         distanceZeroToLine = lineStart.position.y - baseControlPoint.position.y;
-      
+
         if (distanceZeroToLine < -1.006f && notStarted == true)
-        {   
-            float yRot;
-            if(baseBone.transform.localEulerAngles.y == 0)
-            {
-                yRot = 360;
-            } else {
-                yRot = 0;
-            }
+        {
+            float yRot = 30;
+            // if (baseBone.transform.localEulerAngles.y == 0) yRot = 360;
+            // else yRot = 0;
 
             {
-                baseBone.transform.DORotate(new Vector3(0, yRot, 0), 1);
+                baseBone.transform.DORotate(new Vector3(0, baseBone.transform.localEulerAngles.y + yRot, 0), 1);
             }
             baseBone.transform.DORotate(new Vector3(0, 0, 0), 1)
             .OnStart(() =>
