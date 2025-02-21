@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor.Rendering;
 
 public class PuppetAnimation : MonoBehaviour
 {
-    [Header("EXTERNAL REFERENCES")]
-    [SerializeField] private Transform lineStart;
+    //Nullpunkt und Abstand von der Linie
+    private Transform lineStart;
     private float distanceZeroToLine;
 
     [Header("ROTATION VALUES")]
-    [SerializeField] private float delay = 1.0f;
+    [SerializeField] private float delay = 0.1f;
     //[Range(-90f, 90f)] // Slider 
-    [SerializeField] private Vector3 rotationMultiplier = new Vector3(50, 50, 50);
-    [SerializeField] private Vector3 torsoMultiplier = new Vector3(50, 0, 50);
+    [SerializeField] private Vector3 armRotationMultiplier = new Vector3(80, 50, 80);
+    [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 50, 80);
+    [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
+    [SerializeField] private bool affectScale = false;
     private Vector3 multiplierL;
     private Vector3 multiplierR;
     private Tween normalizerTween;
@@ -33,17 +36,26 @@ public class PuppetAnimation : MonoBehaviour
     private Vector3[] torsoStartRotation;
     [SerializeField] private Transform baseControlPoint;
     [SerializeField] private GameObject baseBone;
+    [SerializeField] private Transform legLControlPoint;
+    [SerializeField] private GameObject[] legLBones;
+    private Vector3[] legLStartRotation;
+    [SerializeField] private Transform legRControlPoint;
+    [SerializeField] private GameObject[] legRBones;
+    private Vector3[] legRStartRotation;
+    private bool isTweening = false;
     private bool notStarted = true;
-    private bool isCoRoutineing = false;
+    private float timeElapsed; // Keeps track of time
 
 
     // Start is called before the first frame update
     void Start()
     {
-        CheckStartRotation();
+        lineStart = CreateLine.Instance.LineStart.transform;
 
-        multiplierL = rotationMultiplier;
-        multiplierR = rotationMultiplier * -1;
+        InitializeStartRotations();
+
+        multiplierL = armRotationMultiplier;
+        multiplierR = armRotationMultiplier * -1;
 
         normalizerTween = DOTween.To(() => normalizer, x => normalizer = x, -1, 2)
                .SetEase(Ease.InOutSine)
@@ -53,10 +65,15 @@ public class PuppetAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeElapsed += Time.deltaTime; // Time tracker
+
         Rotate(armLBones, armLStartRotation, armLControlPoint, multiplierL);
         Rotate(armRBones, armRStartRotation, armRControlPoint, multiplierR);
-        //Rotate(torsoBones, torsoStartRotation, torsoControlPoint, torsoMultiplier);
-        Pirouette();
+        Rotate(legLBones, legLStartRotation, legLControlPoint, multiplierL);
+        Rotate(legRBones, legRStartRotation, legRControlPoint, multiplierR);
+        Rotate(torsoBones, torsoStartRotation, torsoControlPoint, torsoMultiplier);
+        Bounce();
+        //Pirouette();
     }
 
     private void Rotate(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Vector3 multiplier)
@@ -64,17 +81,57 @@ public class PuppetAnimation : MonoBehaviour
         //nehme die startposition des point aus dem createline script
         //nimm den Abstand von der startposition um den _rotaionValueArmL zu berechnen
         //evt schreibe eine funktion in den anderen Scripts die die Startposition der Punkte zurückgibt)
-        if (controlPoint.name == "Torso")
+        distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
+
+        if (controlPoint == torsoControlPoint)
         {
             multiplier = torsoMultiplier * normalizer;
         }
 
+        float smoothFactor = 20f; // Controls the smoothness of delay
+
         for (int i = 0; i < bodypart.Length; i++)
         {
-            distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
-            bodypart[i].transform.localEulerAngles = (multiplier * distanceZeroToLine) + startRot[i];
+            float offsetTime = timeElapsed - (i * delay); // Continuous delay per bone
+            float smoothDelay = Mathf.Lerp(1f, 0.9f, Mathf.PingPong(offsetTime * smoothFactor, 1f)); // Smooth motion
+
+            Vector3 targetRotation = (multiplier * distanceZeroToLine * smoothDelay) + startRot[i];
+
+            bodypart[i].transform.localEulerAngles = targetRotation;
+            //bodypart[i].transform.localEulerAngles = (multiplier * distanceZeroToLine) + startRot[i];
+            if (affectScale)
+            {
+                Vector3 scaleAdjustment = Vector3.one * distanceZeroToLine;
+
+                bodypart[i].transform.localScale = Vector3.one + scaleAdjustment;
+            }
         }
     }
+
+    private void Bounce()
+    {
+        float t = 0;
+        float speed = 20f;
+        float posY = baseBone.transform.position.y;
+
+        t += speed * Time.deltaTime;
+        distanceZeroToLine = lineStart.position.y - baseControlPoint.position.y;
+
+        if (isTweening == false)
+        {
+            baseBone.transform.DOShakePosition(distanceZeroToLine * -1 * speed, 0.05f, 0, 50, false, false, ShakeRandomnessMode.Harmonic)
+                    .SetEase(Ease.InOutSine)
+                    .OnStart(() =>
+                    {
+                        isTweening = true;
+                    })
+                    .OnComplete(() =>
+                    {
+                        isTweening = false;
+                    });
+        }
+    }
+
 
     private void Pirouette()
     {
@@ -102,32 +159,22 @@ public class PuppetAnimation : MonoBehaviour
         }
     }
 
-
-    private void CheckStartRotation()
+    private void InitializeStartRotations()
     {
-        //instantiate Array
-        armLStartRotation = new Vector3[armLBones.Length];
+        armLStartRotation = GetStartRotations(armLBones);
+        armRStartRotation = GetStartRotations(armRBones);
+        torsoStartRotation = GetStartRotations(torsoBones);
+        legLStartRotation = GetStartRotations(legLBones);
+        legRStartRotation = GetStartRotations(legRBones);
+    }
 
-        //fill the array with the start rotation
-        for (int i = 0; i < armLBones.Length; i++)
+    private Vector3[] GetStartRotations(GameObject[] bodypart)
+    {
+        Vector3[] rotations = new Vector3[bodypart.Length];
+        for (int i = 0; i < bodypart.Length; i++)
         {
-            armLStartRotation[i] = armLBones[i].transform.localEulerAngles;
+            rotations[i] = bodypart[i].transform.localEulerAngles;
         }
-        //instantiate Array
-        armRStartRotation = new Vector3[armRBones.Length];
-
-        //fill the array with the start rotation
-        for (int i = 0; i < armRBones.Length; i++)
-        {
-            armRStartRotation[i] = armRBones[i].transform.localEulerAngles;
-        }
-        //instantiate Array
-        torsoStartRotation = new Vector3[torsoBones.Length];
-
-        //fill the array with the start rotation
-        for (int i = 0; i < torsoBones.Length; i++)
-        {
-            torsoStartRotation[i] = torsoBones[i].transform.localEulerAngles;
-        }
+        return rotations;
     }
 }

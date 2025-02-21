@@ -30,7 +30,7 @@ public class CreateLine : MonoBehaviour
 
     [Header ("EXTERNAL REFERENCES")]
     private LineRenderer lineRenderer;
-    private GameObject lineStart;
+    [HideInInspector] public GameObject LineStart;
     private GameObject lineEnd;
 
     [Header ("ANIMATION VALUES")]
@@ -195,7 +195,7 @@ public class CreateLine : MonoBehaviour
         startPointLocation = new Vector3[pointsCount+2];
 
         //calculate distance between line start and line end
-        Vector3 distancePoints = (lineEnd.transform.position - lineStart.transform.position) / (pointsArray.Length-1);
+        Vector3 distancePoints = (lineEnd.transform.position - LineStart.transform.position) / (pointsArray.Length-1);
 
         //create parent for points
         GameObject pointParent = new GameObject("Point Parent");
@@ -204,8 +204,8 @@ public class CreateLine : MonoBehaviour
         for(int i = 0; i < pointsArray.Length; i++)
         {
             if(i == 0){
-                pointsArray[i] = lineStart;
-                startPointLocation[i] = lineStart.transform.position;
+                pointsArray[i] = LineStart;
+                startPointLocation[i] = LineStart.transform.position;
                 pointsArray[i].transform.SetParent(pointParent.transform);
             }
             else if(i == pointsArray.Length-1){
@@ -215,7 +215,7 @@ public class CreateLine : MonoBehaviour
             }
             else{
                 pointsArray[i] = new GameObject("Point " + i);
-                pointsArray[i].transform.position = lineStart.transform.position + distancePoints * i;
+                pointsArray[i].transform.position = LineStart.transform.position + distancePoints * i;
                 startPointLocation[i] = pointsArray[i].transform.localPosition;
                 pointsArray[i].transform.SetParent(pointParent.transform);
             }
@@ -227,8 +227,8 @@ public class CreateLine : MonoBehaviour
         if(lineRenderer == null){
             Debug.LogError("LineRenderer not found");
         }
-        lineStart = GameObject.Find("LineStart");
-        if(lineStart == null){
+        LineStart = GameObject.Find("LineStart");
+        if(LineStart == null){
             Debug.LogError("LineStart not found");
         }
         lineEnd = GameObject.Find("LineEnd");

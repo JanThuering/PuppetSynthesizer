@@ -2954,6 +2954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segmentedCurves: 0
+  LineStart: {fileID: 0}
   movement: {x: 0, y: 1, z: 0}
   totalAmplitude: 0.04
   frequency: 4.09
@@ -6092,7 +6093,7 @@ PrefabInstance:
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
@@ -6102,7 +6103,7 @@ PrefabInstance:
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
@@ -6117,7 +6118,7 @@ PrefabInstance:
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
