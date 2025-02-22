@@ -31,7 +31,10 @@ public class CreateLine : MonoBehaviour
     [Header ("EXTERNAL REFERENCES")]
     private LineRenderer lineRenderer;
     [HideInInspector] public GameObject LineStart;
-    private GameObject lineEnd;
+    public GameObject LineEnd;
+    public Vector3 LineDirection { get { return (LineEnd.transform.position - LineStart.transform.position).normalized; } }
+
+
 
     [Header ("ANIMATION VALUES")]
     [SerializeField] private Vector3 movement = new Vector3(0,1,0);
@@ -135,12 +138,12 @@ public class CreateLine : MonoBehaviour
 
     private void SegmentedCurve(){
             // Move the points in the defined axis, acording to the curves
-            ControlCurve(1, curveArray[0], "Curve A", amplitudeArray[0], frequency);
-            ControlCurve(2, curveArray[1], "Curve B", amplitudeArray[1], frequency);
-            ControlCurve(3, curveArray[2], "Curve C", amplitudeArray[2], frequency);
-            ControlCurve(4, curveArray[3], "Curve D", amplitudeArray[3], frequency);
-            ControlCurve(5, curveArray[4], "Curve E", amplitudeArray[4], frequency);
-            ControlCurve(6, curveArray[5], "Curve F", amplitudeArray[5], frequency);
+            ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], frequency);
+            ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], frequency);
+            ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], frequency);
+            ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], frequency);
+            ControlSegmentedCurve(5, curveArray[4], "Curve E", amplitudeArray[4], frequency);
+            ControlSegmentedCurve(6, curveArray[5], "Curve F", amplitudeArray[5], frequency);
     }
 
     private void CreateArrays(){
@@ -195,7 +198,7 @@ public class CreateLine : MonoBehaviour
         startPointLocation = new Vector3[pointsCount+2];
 
         //calculate distance between line start and line end
-        Vector3 distancePoints = (lineEnd.transform.position - LineStart.transform.position) / (pointsArray.Length-1);
+        Vector3 distancePoints = (LineEnd.transform.position - LineStart.transform.position) / (pointsArray.Length-1);
 
         //create parent for points
         GameObject pointParent = new GameObject("Point Parent");
@@ -209,8 +212,8 @@ public class CreateLine : MonoBehaviour
                 pointsArray[i].transform.SetParent(pointParent.transform);
             }
             else if(i == pointsArray.Length-1){
-                pointsArray[i] = lineEnd;
-                startPointLocation[i] = lineEnd.transform.position;
+                pointsArray[i] = LineEnd;
+                startPointLocation[i] = LineEnd.transform.position;
                 pointsArray[i].transform.SetParent(pointParent.transform);
             }
             else{
@@ -231,8 +234,8 @@ public class CreateLine : MonoBehaviour
         if(LineStart == null){
             Debug.LogError("LineStart not found");
         }
-        lineEnd = GameObject.Find("LineEnd");
-        if(lineEnd == null){
+        LineEnd = GameObject.Find("LineEnd");
+        if(LineEnd == null){
             Debug.LogError("LineEnd not found");
         }
     }
@@ -308,7 +311,7 @@ public class CreateLine : MonoBehaviour
     }
 
     //SEGMENTED CURVES
-    private void ControlCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
+    private void ControlSegmentedCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
         /*EXPLANATION
             slider -> which slider is selected
             curve -> the curve that is selected
@@ -316,13 +319,6 @@ public class CreateLine : MonoBehaviour
             amplitude -> the amplitude of the curve
             frequency -> the frequency of the curve
         */
-
-        // //check if slider is in range
-        // if(slider > sliderAmmount || slider < 1){
-        //     Debug.LogWarning("Slider out of range. Curve " + curveName + " will be ignored.");
-            
-        //     return;
-        // }
 
         //counts up so the wave moves up the index
         float timeCounter = Time.time*horizontalMovement*100;

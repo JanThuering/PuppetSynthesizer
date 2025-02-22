@@ -13,7 +13,6 @@ public class MoveAlongCurve : MonoBehaviour
     [Header ("Movement")]
     [SerializeField] private float _moveSpeed = 1.0f;
     [SerializeField] private float _moveTreshhold = 1.0f;
-    private int index = 0;
     private int [] _currentPointIndex; //fill in the inspector with the closest point to the control point
 
 
