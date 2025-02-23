@@ -93,6 +93,7 @@ public class PuppetAnimation : MonoBehaviour
             if (i == 0) distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
             else distanceZeroToLine = lineStart.position.y - controlPointDelay.position.y;
 
+            //TODO sollte mit startPos gemacht werden, nicht mit bodypart pos
             // bewegungsrichtung von links und rechts gedreht
             if (bodypart[i].transform.position.x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
             else if (bodypart[i].transform.position.x > 0) multiplier = rotationMultiplier;
