@@ -45,6 +45,7 @@ public class CreateLine : MonoBehaviour
     public float frequency = 1;
     [Range(0f, 5)]
     public float horizontalMovement = 10;
+    private float accumulatedTime = 0;
 
 
     [Header ("INTERFACE VALUES")]
@@ -122,12 +123,14 @@ public class CreateLine : MonoBehaviour
     { 
         FillLineRenderer(); //fill the line renderer with the points
         UpdateCurves(); //update the curves
+        FillCurveArray(); //fill the curve array with the curves and amplitudes
+
         if(segmentedCurves){    //old curvesystem
             SegmentedCurve();
 
         }
         else{  //new curvesystem
-            FillCurveArray(); //fill the curve array with the curves and amplitudes
+            
             ControlGlobalCurve(); //Move the points in the defined axis, acording to the curves
         }
 
@@ -278,16 +281,6 @@ public class CreateLine : MonoBehaviour
 
         }
 
-        // //assign curve to slider depending on value
-        // for(int i = 1; i <= sliderAmmount; i++){
-        //     if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
-
-        //         curveTypeIndex = i-1;
-        //         curveArray[slider-1] = curveTypes[curveTypeIndex];
-        //     }
-
-        // }
-
         //assign curve to slider depending on value
         for(int i = 1; i <= sliderAmmount; i++){
             if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
@@ -337,8 +330,13 @@ public class CreateLine : MonoBehaviour
             frequency -> the frequency of the curve
         */
 
-        //counts up so the wave moves up the index
-        float timeCounter = Time.time*horizontalMovement*100;
+        if(slider > sliderAmmount){
+            Debug.LogWarning($"Slider{slider} out of range. {curveName} will be ignored");
+            return;
+        }
+
+        //counts up so the wave moves up the index (multiplied by 10 for better movement)
+        accumulatedTime += Time.deltaTime * horizontalMovement * 10;
 
         //calculate range of points
         int range = pointsArray.Length / sliderAmmount;
@@ -346,12 +344,12 @@ public class CreateLine : MonoBehaviour
         int end = range * slider;
 
         //move points in the y axis, according to the curve
-        for(int i = start+(int)timeCounter; i < end+(int)timeCounter; i++){
+        for(int i = start+(int)accumulatedTime; i < end+(int)accumulatedTime; i++){
            
             int currentIndex = i%pointsArray.Length;
             
             // Normalize evaluation value between 0 and 1 for current segment
-            float normalizedT = ((float)(i - (start+(int)timeCounter)) / range) * frequency;
+            float normalizedT = ((float)(i - (start+(int)accumulatedTime)) / range) * (int)frequency;
 
             // Use modulo to wrap value between 0-1
             normalizedT = normalizedT % 1.0f;
@@ -376,7 +374,7 @@ public class CreateLine : MonoBehaviour
     //NEW CURVESYSTEM
     private void ControlGlobalCurve(){
         // counts up so the wave moves up the index
-        float timeCounter = Time.time * horizontalMovement;
+        accumulatedTime += Time.deltaTime * horizontalMovement;
 
         // Move points in the defined axis, according to the curves
         for (int i = 0; i < pointsArray.Length; i++) {
@@ -385,7 +383,7 @@ public class CreateLine : MonoBehaviour
 
             //Combine all curves
             for (int j = 0; j < sliderAmmount ; j++) {  // Evaluate the curve based on the current index and frequency
-                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * frequency + timeCounter * speedArray[j]);
+                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * frequency + accumulatedTime * speedArray[j]);
                 combinedCurveValue += curveEvaluation * amplitudeArray[j] * totalAmplitude;
             }
 
