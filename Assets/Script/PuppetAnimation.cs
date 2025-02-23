@@ -18,39 +18,42 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
     [SerializeField] private bool affectScale = false;
-    private Vector3 multiplierL;
-    private Vector3 multiplierR;
+    private Vector3 multiplier;
     private Tween normalizerTween;
     private float normalizer = 1;
+    private bool isTweening = false;
 
-    [Header("ROTATEABLE OBJECTS")]  //rotates the limbs
-    //fill in the inspector with the joints
+    [Header("ROTATEABLE OBJECTS")]  //rotates the limbs, fill in the inspector with the joints
+
+    //ARMS
     [SerializeField] private Transform armLControlPoint;
     [SerializeField] private Transform armLControlPointDelay;
-    [SerializeField] private GameObject[] armLBones;
+    [SerializeField] private GameObject[] armLEffectors;
     private Vector3[] armLStartRotation;
     [SerializeField] private Transform armRControlPoint;
     [SerializeField] private Transform armRControlPointDelay;
-    [SerializeField] private GameObject[] armRBones;
+    [SerializeField] private GameObject[] armREffectors;
     private Vector3[] armRStartRotation;
-    [SerializeField] private Transform torsoControlPoint;
-    [SerializeField] private Transform torsoControlPointDelay;
-    [SerializeField] private GameObject[] torsoBones;
-    private Vector3[] torsoStartRotation;
-    [SerializeField] private Transform baseControlPoint;
-    [SerializeField] private GameObject baseBone;
+
+    //LEGS
     [SerializeField] private Transform legLControlPoint;
     [SerializeField] private Transform legLControlPointDelay;
-    [SerializeField] private GameObject[] legLBones;
+    [SerializeField] private GameObject[] legLEffectors;
     private Vector3[] legLStartRotation;
     [SerializeField] private Transform legRControlPoint;
     [SerializeField] private Transform legRControlPointDelay;
-    [SerializeField] private GameObject[] legRBones;
+    [SerializeField] private GameObject[] legREffectors;
     private Vector3[] legRStartRotation;
-    private bool isTweening = false;
-    private bool notStarted = true;
-    private float timeElapsed; // Keeps track of time
-    private Vector3 boneRotation;
+
+    //TORSO
+    [SerializeField] private Transform torsoControlPoint;
+    [SerializeField] private Transform torsoControlPointDelay;
+    [SerializeField] private GameObject[] torsoEffectors;
+    private Vector3[] torsoStartRotation;
+
+    //BASE
+    [SerializeField] private Transform baseControlPoint;
+    [SerializeField] private GameObject baseBone;
 
 
     // Start is called before the first frame update
@@ -60,9 +63,6 @@ public class PuppetAnimation : MonoBehaviour
 
         InitializeStartRotations();
 
-        multiplierR = armRotationMultiplier;
-        multiplierL = armRotationMultiplier * -1;
-
         normalizerTween = DOTween.To(() => normalizer, x => normalizer = x, -1, 2)
                .SetEase(Ease.InOutSine)
                .SetLoops(-1, LoopType.Yoyo);
@@ -71,36 +71,37 @@ public class PuppetAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeElapsed += Time.deltaTime; // Time tracker
-
-        Rotate(armLBones, armLStartRotation, armLControlPoint, armLControlPointDelay, multiplierL);
-        Rotate(armRBones, armRStartRotation, armRControlPoint, armRControlPointDelay, multiplierR);
-        Rotate(legLBones, legLStartRotation, legLControlPoint, legLControlPointDelay, multiplierL);
-        Rotate(legRBones, legRStartRotation, legRControlPoint, legRControlPointDelay, multiplierR);
-        Rotate(torsoBones, torsoStartRotation, torsoControlPoint, torsoControlPointDelay, torsoMultiplier);
+        Rotate(armLEffectors, armLStartRotation, armLControlPoint, armLControlPointDelay, armRotationMultiplier);
+        Rotate(armREffectors, armRStartRotation, armRControlPoint, armRControlPointDelay, armRotationMultiplier);
+        Rotate(legLEffectors, legLStartRotation, legLControlPoint, legLControlPointDelay, legRotationMultiplier);
+        Rotate(legREffectors, legRStartRotation, legRControlPoint, legRControlPointDelay, legRotationMultiplier);
+        Rotate(torsoEffectors, torsoStartRotation, torsoControlPoint, torsoControlPointDelay, torsoMultiplier);
         // Bounce();
-
     }
 
-    private void Rotate(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Transform controlPointDelay, Vector3 multiplier)
+    private void Rotate(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Transform controlPointDelay, Vector3 rotationMultiplier)
     {
-        //nehme die startposition des point aus dem createline script
-        //nimm den Abstand von der startposition um den _rotaionValueArmL zu berechnen
-        //evt schreibe eine funktion in den anderen Scripts die die Startposition der Punkte zurückgibt)
+        //TODO schreibe eine funktion in den anderen Scripts die die Startposition der Punkte zurückgibt)
 
-        // if (controlPoint == torsoControlPoint)
-        // {
-        //     multiplier = torsoMultiplier * normalizer;
-        // }
+        // torso auf beide seiten der x achse drehen lassen 
+        // TODO ohne normalizer (bewegt sich von links nach rechts mit dem value und nicht natürlich)
+        if (controlPoint == torsoControlPoint) multiplier = torsoMultiplier * normalizer;
 
         for (int i = 0; i < bodypart.Length; i++)
         {
+            // y distanz von der welle zum controlpoint
             if (i == 0) distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
             else distanceZeroToLine = lineStart.position.y - controlPointDelay.position.y;
 
-            Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i]; //targetRotation 
+            // bewegungsrichtung von links und rechts gedreht
+            if (bodypart[i].transform.position.x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
+            else if (bodypart[i].transform.position.x > 0) multiplier = rotationMultiplier;
+
+            //targetRotation 
+            Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i];
             bodypart[i].transform.localEulerAngles = targetRotation;
 
+            //scale
             if (affectScale)
             {
                 Vector3 scaleAdjustment = Vector3.one * distanceZeroToLine;
@@ -110,41 +111,6 @@ public class PuppetAnimation : MonoBehaviour
         }
     }
 
-    private void RotateNew(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Vector3 multiplier)
-    {
-        //nehme die startposition des point aus dem createline script
-        //nimm den Abstand von der startposition um den _rotaionValueArmL zu berechnen
-        //evt schreibe eine funktion in den anderen Scripts die die Startposition der Punkte zurückgibt)
-        distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
-
-        Vector3 targetRotation = multiplier * distanceZeroToLine;
-
-        if (controlPoint == torsoControlPoint)
-        {
-            multiplier = torsoMultiplier * normalizer;
-        }
-
-        for (int i = 0; i < bodypart.Length; i++)
-        {
-            boneRotation = targetRotation + startRot[i];
-
-            StartCoroutine(RotateWithDelay(bodypart[i], i, boneRotation));
-
-            if (affectScale)
-            {
-                Vector3 scaleAdjustment = Vector3.one * distanceZeroToLine;
-
-                bodypart[i].transform.localScale = Vector3.one + scaleAdjustment;
-            }
-        }
-    }
-
-    private IEnumerator RotateWithDelay(GameObject bone, int i, Vector3 rotation)
-    {
-        yield return new WaitForSeconds(i * 2f);
-        //if (i > 1) Debug.Log("Bone: " + bone.name + " Rotation: " + rotation);
-        bone.transform.localEulerAngles = rotation;
-    }
 
     private void Bounce()
     {
@@ -170,13 +136,14 @@ public class PuppetAnimation : MonoBehaviour
         }
     }
 
+    //Start position der controlpoints
     private void InitializeStartRotations()
     {
-        armLStartRotation = GetStartRotations(armLBones);
-        armRStartRotation = GetStartRotations(armRBones);
-        torsoStartRotation = GetStartRotations(torsoBones);
-        legLStartRotation = GetStartRotations(legLBones);
-        legRStartRotation = GetStartRotations(legRBones);
+        armLStartRotation = GetStartRotations(armLEffectors);
+        armRStartRotation = GetStartRotations(armREffectors);
+        torsoStartRotation = GetStartRotations(torsoEffectors);
+        legLStartRotation = GetStartRotations(legLEffectors);
+        legRStartRotation = GetStartRotations(legREffectors);
     }
 
     private Vector3[] GetStartRotations(GameObject[] bodypart)

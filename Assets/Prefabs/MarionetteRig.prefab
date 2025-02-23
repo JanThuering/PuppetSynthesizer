@@ -2521,31 +2521,31 @@ MonoBehaviour:
   affectScale: 0
   armLControlPoint: {fileID: 918701929169346446}
   armLControlPointDelay: {fileID: 6185896517121161809}
-  armLBones:
+  armLEffectors:
   - {fileID: 4229666630624040015}
   - {fileID: 1458790915272449407}
   armRControlPoint: {fileID: 4745458968334610511}
   armRControlPointDelay: {fileID: 7565040613378743595}
-  armRBones:
+  armREffectors:
   - {fileID: 2988170581426764349}
   - {fileID: 7853734363915938171}
-  torsoControlPoint: {fileID: 5879559579789112731}
-  torsoControlPointDelay: {fileID: 1614559123478554053}
-  torsoBones:
-  - {fileID: 9214305739383955611}
-  - {fileID: 60587654236450463}
-  baseControlPoint: {fileID: 6665463367560472297}
-  baseBone: {fileID: 777792294228600662}
   legLControlPoint: {fileID: 8395599973592070232}
   legLControlPointDelay: {fileID: 1497977214805969854}
-  legLBones:
+  legLEffectors:
   - {fileID: 308212141736103852}
   - {fileID: 5595896172838564381}
   legRControlPoint: {fileID: 6566061705212437514}
   legRControlPointDelay: {fileID: 457081094934837578}
-  legRBones:
+  legREffectors:
   - {fileID: 6060143375726659257}
   - {fileID: 2564406420934798024}
+  torsoControlPoint: {fileID: 5879559579789112731}
+  torsoControlPointDelay: {fileID: 1614559123478554053}
+  torsoEffectors:
+  - {fileID: 9214305739383955611}
+  - {fileID: 60587654236450463}
+  baseControlPoint: {fileID: 6665463367560472297}
+  baseBone: {fileID: 777792294228600662}
 --- !u!95 &3497660791963558702
 Animator:
   serializedVersion: 5
