@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEditor.Rendering;
+using Unity.Mathematics;
 
 public class PuppetAnimation : MonoBehaviour
 {
@@ -55,6 +56,10 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private Transform baseControlPoint;
     [SerializeField] private GameObject baseBone;
 
+    [Header("SCALE OBJECTS")]
+
+    //ALL OBJECTS WHICH WILL BE SCALED
+    [SerializeField] private GameObject[] bones;
 
     // Start is called before the first frame update
     void Start()
@@ -71,23 +76,32 @@ public class PuppetAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RotateLimbs();
+    }
+
+    void LateUpdate()
+    {
+        if (affectScale) Scale(bones, armLControlPoint, armLControlPointDelay);
+    }
+
+    private void RotateLimbs()
+    {
         Rotate(armLEffectors, armLStartRotation, armLControlPoint, armLControlPointDelay, armRotationMultiplier);
         Rotate(armREffectors, armRStartRotation, armRControlPoint, armRControlPointDelay, armRotationMultiplier);
         Rotate(legLEffectors, legLStartRotation, legLControlPoint, legLControlPointDelay, legRotationMultiplier);
         Rotate(legREffectors, legRStartRotation, legRControlPoint, legRControlPointDelay, legRotationMultiplier);
         Rotate(torsoEffectors, torsoStartRotation, torsoControlPoint, torsoControlPointDelay, torsoMultiplier);
-        // Bounce();
     }
 
-    private void Rotate(GameObject[] bodypart, Vector3[] startRot, Transform controlPoint, Transform controlPointDelay, Vector3 rotationMultiplier)
+    private void Rotate(GameObject[] effectors, Vector3[] startRot, Transform controlPoint, Transform controlPointDelay, Vector3 rotationMultiplier)
     {
-        //TODO schreibe eine funktion in den anderen Scripts die die Startposition der Punkte zurückgibt)
+        //TODO schreibe eine funktion im movepoints Script die die Startposition der Punkte zurückgibt
 
         // torso auf beide seiten der x achse drehen lassen 
         // TODO ohne normalizer (bewegt sich von links nach rechts mit dem value und nicht natürlich)
         if (controlPoint == torsoControlPoint) multiplier = torsoMultiplier * normalizer;
 
-        for (int i = 0; i < bodypart.Length; i++)
+        for (int i = 0; i < effectors.Length; i++)
         {
             // y distanz von der welle zum controlpoint
             if (i == 0) distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
@@ -95,45 +109,27 @@ public class PuppetAnimation : MonoBehaviour
 
             //TODO sollte mit startPos gemacht werden, nicht mit bodypart pos
             // bewegungsrichtung von links und rechts gedreht
-            if (bodypart[i].transform.position.x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
-            else if (bodypart[i].transform.position.x > 0) multiplier = rotationMultiplier;
+            if (effectors[i].transform.position.x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
+            else if (effectors[i].transform.position.x > 0) multiplier = rotationMultiplier;
 
             //targetRotation 
             Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i];
-            bodypart[i].transform.localEulerAngles = targetRotation;
-
-            //scale
-            if (affectScale)
-            {
-                Vector3 scaleAdjustment = Vector3.one * distanceZeroToLine;
-
-                bodypart[i].transform.localScale = Vector3.one + scaleAdjustment;
-            }
+            effectors[i].transform.localEulerAngles = targetRotation;
         }
     }
 
-
-    private void Bounce()
+    //!Is forced in lateupdate after animation rigging has applied constraints
+    private void Scale(GameObject[] bones, Transform controlPoint, Transform controlPointDelay)
     {
-        float t = 0;
-        float speed = 20f;
-        float posY = baseBone.transform.position.y;
-
-        t += speed * Time.deltaTime;
-        distanceZeroToLine = lineStart.position.y - baseControlPoint.position.y;
-
-        if (isTweening == false)
+        for (int i = 0; i < bones.Length; i++)
         {
-            baseBone.transform.DOShakePosition(distanceZeroToLine * -1 * speed, 0.05f, 0, 50, false, false, ShakeRandomnessMode.Harmonic)
-                    .SetEase(Ease.InOutSine)
-                    .OnStart(() =>
-                    {
-                        isTweening = true;
-                    })
-                    .OnComplete(() =>
-                    {
-                        isTweening = false;
-                    });
+            // y distanz von der welle zum controlpoint
+            distanceZeroToLine = Math.Abs(lineStart.position.y - controlPoint.position.y);
+            // mapped
+            distanceZeroToLine = Mathf.Lerp(0.3f, 1, Mathf.InverseLerp(0, 0.2f, distanceZeroToLine));
+
+            Vector3 targetScale = Vector3.one * distanceZeroToLine;
+            bones[i].transform.localScale = targetScale;
         }
     }
 
