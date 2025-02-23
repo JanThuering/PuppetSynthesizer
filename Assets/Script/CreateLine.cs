@@ -46,8 +46,10 @@ public class CreateLine : MonoBehaviour
     [Range(0f, 5)]
     public float horizontalMovement = 10;
 
+
     [Header ("INTERFACE VALUES")]
     [SerializeField] private int sliderAmmount = 3;
+
 
     [Header ("Points")]
     [SerializeField] private int pointsCount = 300;
@@ -58,39 +60,33 @@ public class CreateLine : MonoBehaviour
     [Header ("CURVES")]
     [SerializeField] private AnimationCurve [] curveTypes;
     [SerializeField] private AnimationCurve [] curveArray;
+    [SerializeField] private bool changeCurvesInInspector = false;
+    [Range(0, 5)]
+    [SerializeField] private int [] curveTypeIndex; //needed to change wave type in the inspector
     [SerializeField] private float [] amplitudeArray;
     [SerializeField] private float [] speedArray;
 
-
-
+    [Header ("CURVE PROPERTIES")]
     [Range(-5, 5)]
     [SerializeField] float amplitudeA = 1;
     [Range(-5, 5)]
     [SerializeField] float speedA = 1;
-
-
     [Range(-5, 5)]
     [SerializeField] float amplitudeB = 1;
     [Range(-5, 5)]
     [SerializeField] float speedB = 1;
-
-
     [Range(-5, 5)]
     [SerializeField] float amplitudeC = 1;
     [Range(-5, 5)]
     [SerializeField] float speedC = 1;
-
-
     [Range(-5, 5)]
     [SerializeField] float amplitudeD = 1;
     [Range(-5, 5)]
     [SerializeField] float speedD = 1;
-
     [Range(-5, 5)]
     [SerializeField] float amplitudeE = 1;
     [Range(-5, 5)]
     [SerializeField] float speedE = 1;
-
     [Range(-5, 5)]
     [SerializeField] float amplitudeF = 1;
     [Range(-5, 5)]
@@ -125,6 +121,7 @@ public class CreateLine : MonoBehaviour
     void Update()
     { 
         FillLineRenderer(); //fill the line renderer with the points
+        UpdateCurves(); //update the curves
         if(segmentedCurves){    //old curvesystem
             SegmentedCurve();
 
@@ -134,6 +131,14 @@ public class CreateLine : MonoBehaviour
             ControlGlobalCurve(); //Move the points in the defined axis, acording to the curves
         }
 
+    }
+
+    private void UpdateCurves(){
+        if(changeCurvesInInspector){
+            for(int i = 0; i < curveArray.Length; i++){
+                curveArray[i] = curveTypes[curveTypeIndex[i]];
+            }
+        }
     }
 
     private void SegmentedCurve(){
@@ -148,6 +153,7 @@ public class CreateLine : MonoBehaviour
 
     private void CreateArrays(){
         curveArray = new AnimationCurve[6];
+        curveTypeIndex = new int[6];
         amplitudeArray = new float[6];
         speedArray = new float[6];
 
@@ -202,6 +208,7 @@ public class CreateLine : MonoBehaviour
 
         //create parent for points
         GameObject pointParent = new GameObject("Point Parent");
+        pointParent.transform.SetParent(this.transform);
 
         //create points
         for(int i = 0; i < pointsArray.Length; i++)
@@ -257,8 +264,7 @@ public class CreateLine : MonoBehaviour
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
 
-        //float increments = controlValue / valueAmmount * 10 - 5;
-        int curveTypeIndex;
+        // int curveTypeIndex;
         float steps = valueAmmount / sliderAmmount;
         int slider = 1;
 
@@ -272,11 +278,22 @@ public class CreateLine : MonoBehaviour
 
         }
 
+        // //assign curve to slider depending on value
+        // for(int i = 1; i <= sliderAmmount; i++){
+        //     if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
+
+        //         curveTypeIndex = i-1;
+        //         curveArray[slider-1] = curveTypes[curveTypeIndex];
+        //     }
+
+        // }
+
         //assign curve to slider depending on value
         for(int i = 1; i <= sliderAmmount; i++){
             if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
-                curveTypeIndex = i-1;
-                curveArray[slider-1] = curveTypes[curveTypeIndex];
+
+                curveTypeIndex[slider-1] = i-1;
+                curveArray[slider-1] = curveTypes[curveTypeIndex[slider-1]];
             }
 
         }
