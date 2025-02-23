@@ -2382,6 +2382,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8409742575202417081}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2333812678618492011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3110239030471518766, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3120894297443777785 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6916065048104699200, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3268773294281331194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6478546461985810499, guid: 171ea688bd0529c43a471de7e48484ad,
@@ -2439,6 +2451,12 @@ Transform:
 --- !u!4 &6941655424095660630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1504446937632969711, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7098938460365598246 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1599084331938617247, guid: 171ea688bd0529c43a471de7e48484ad,
     type: 3}
   m_PrefabInstance: {fileID: 8409742575202417081}
   m_PrefabAsset: {fileID: 0}
@@ -2518,7 +2536,7 @@ MonoBehaviour:
   armRotationMultiplier: {x: 80, y: 50, z: 80}
   legRotationMultiplier: {x: 80, y: 50, z: 80}
   torsoMultiplier: {x: 20, y: 100, z: 20}
-  affectScale: 0
+  affectScale: 1
   armLControlPoint: {fileID: 918701929169346446}
   armLControlPointDelay: {fileID: 6185896517121161809}
   armLEffectors:
@@ -2546,6 +2564,11 @@ MonoBehaviour:
   - {fileID: 60587654236450463}
   baseControlPoint: {fileID: 6665463367560472297}
   baseBone: {fileID: 777792294228600662}
+  bones:
+  - {fileID: 2333812678618492011}
+  - {fileID: 9202176702040890363}
+  - {fileID: 7098938460365598246}
+  - {fileID: 3120894297443777785}
 --- !u!95 &3497660791963558702
 Animator:
   serializedVersion: 5
@@ -2624,3 +2647,9 @@ MonoBehaviour:
   - {fileID: 545995200929131050}
   - {fileID: 8523407163424407251}
   - {fileID: 7830287350334334333}
+--- !u!1 &9202176702040890363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 793155408157925954, guid: 171ea688bd0529c43a471de7e48484ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8409742575202417081}
+  m_PrefabAsset: {fileID: 0}
