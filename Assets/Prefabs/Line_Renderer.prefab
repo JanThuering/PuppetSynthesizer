@@ -45,122 +45,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc49913d08ce4e9abd1f19a6d19a2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineRenderer: {fileID: 4832848477920765837}
-  _lineStart: {fileID: 0}
-  _lineEnd: {fileID: 0}
-  _curveA:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -2
-      outSlope: -2
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 1
-    m_PostInfinity: 1
-    m_RotationOrder: 4
-  _curveB:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.022893831
-      outSlope: 0.022893831
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.7501216
-    - serializedVersion: 3
-      time: 0.19329292
-      value: -0.67114407
-      inSlope: 5.3796797
-      outSlope: 5.3796797
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.11446119
-      outWeight: 0.48843414
-    - serializedVersion: 3
-      time: 0.41758546
-      value: -0.56941164
-      inSlope: 0.0379878
-      outSlope: 0.0379878
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.44937864
-    - serializedVersion: 3
-      time: 0.65705043
-      value: -0.686566
-      inSlope: 0.19963665
-      outSlope: 0.19963665
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.010469459
-      outSlope: -0.010469459
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3465202
-      outWeight: 0
-    m_PreInfinity: 1
-    m_PostInfinity: 1
-    m_RotationOrder: 4
-  _curveC:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 0
-    m_PostInfinity: 0
-    m_RotationOrder: 4
-  _slider1Amplitude: 1
-  _slider1Frequency: 1
-  _sliderAmmount: 3
-  _pointsCount: 191
-  _pointsArray: []
+  segmentedCurves: 1
+  LineStart: {fileID: 0}
+  LineEnd: {fileID: 0}
+  movement: {x: 0, y: 1, z: 0}
+  totalAmplitude: 1
+  frequency: 1
+  horizontalMovement: 5
+  sliderAmmount: 3
+  pointsCount: 300
+  pointsArray: []
+  curveTypes: []
+  curveArray: []
+  changeCurvesInInspector: 0
+  curveTypeIndex: 
+  amplitudeArray: []
+  speedArray: []
+  amplitudeA: 1
+  speedA: 1
+  amplitudeB: 1
+  speedB: 1
+  amplitudeC: 1
+  speedC: 1
+  amplitudeD: 1
+  speedD: 1
+  amplitudeE: 1
+  speedE: 1
+  amplitudeF: 1
+  speedF: 1
 --- !u!120 &4832848477920765837
 LineRenderer:
   serializedVersion: 2

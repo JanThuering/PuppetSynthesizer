@@ -3494,13 +3494,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc49913d08ce4e9abd1f19a6d19a2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentedCurves: 0
+  segmentedCurves: 1
   LineStart: {fileID: 0}
   LineEnd: {fileID: 0}
   movement: {x: 0, y: 1, z: 0}
   totalAmplitude: 0.04
-  frequency: 1
-  horizontalMovement: 0
+  frequency: 3
+  horizontalMovement: 0.91
   sliderAmmount: 3
   pointsCount: 300
   pointsArray: []
