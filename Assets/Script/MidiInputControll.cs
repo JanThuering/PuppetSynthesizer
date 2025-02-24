@@ -13,7 +13,8 @@ public class MidiInputControll : MonoBehaviour {
 
     void OnEnable() {
         //input = InputDevice.GetByName("X-TOUCH COMPACT"); // X-TOUCH COMPACT
-        input = InputDevice.GetByName("Launch Control XL"); // Launch Control XL
+        //input = InputDevice.GetByName("Launch Control XL"); // Launch Control XL
+        input = InputDevice.GetByName("Arduino Leonardo"); // Arduino Leonardo
         if(input == null){
             Debug.LogError("MIDI device not found");
         }
