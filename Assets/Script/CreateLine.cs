@@ -66,6 +66,7 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private int [] curveTypeIndex; //needed to change wave type in the inspector
     [SerializeField] private float [] amplitudeArray;
     [SerializeField] private float [] speedArray;
+    
 
     [Header ("CURVE PROPERTIES")]
     [Range(-5, 5)]
