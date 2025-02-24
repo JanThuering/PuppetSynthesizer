@@ -18,7 +18,7 @@ public class MoveControlPoints : MonoBehaviour
     private Vector3 startPosition;
 
     // DELAY VARIABLES
-    [SerializeField] private int animationDelayPointOnWave = 50;
+    private int animationDelayPointOnWave = 50;
     private int initialAnimationDelay;  // Store initial delay value
     [HideInInspector] public Vector3 DelayPosition;
     private int closestPointDelayIndex;
