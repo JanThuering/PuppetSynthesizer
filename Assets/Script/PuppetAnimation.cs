@@ -31,26 +31,32 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private Transform armLControlPointDelay;
     [SerializeField] private GameObject[] armLEffectors;
     private Vector3[] armLStartRotation;
+    private Vector3[] armLStartPositions;
     [SerializeField] private Transform armRControlPoint;
     [SerializeField] private Transform armRControlPointDelay;
     [SerializeField] private GameObject[] armREffectors;
     private Vector3[] armRStartRotation;
+    private Vector3[] armRStartPositions;
 
     //LEGS
     [SerializeField] private Transform legLControlPoint;
     [SerializeField] private Transform legLControlPointDelay;
     [SerializeField] private GameObject[] legLEffectors;
     private Vector3[] legLStartRotation;
+    private Vector3[] legLStartPositions;
     [SerializeField] private Transform legRControlPoint;
     [SerializeField] private Transform legRControlPointDelay;
     [SerializeField] private GameObject[] legREffectors;
     private Vector3[] legRStartRotation;
+    private Vector3[] legRStartPositions;
 
     //TORSO
     [SerializeField] private Transform torsoControlPoint;
     [SerializeField] private Transform torsoControlPointDelay;
     [SerializeField] private GameObject[] torsoEffectors;
     private Vector3[] torsoStartRotation;
+    private Vector3[] torsoStartPositions;
+    
 
     //BASE
     [SerializeField] private Transform baseControlPoint;
@@ -67,6 +73,7 @@ public class PuppetAnimation : MonoBehaviour
         lineStart = CreateLine.Instance.LineStart.transform;
 
         InitializeStartRotations();
+        InitializeStartPositions();
 
         normalizerTween = DOTween.To(() => normalizer, x => normalizer = x, -1, 2)
                .SetEase(Ease.InOutSine)
@@ -86,14 +93,14 @@ public class PuppetAnimation : MonoBehaviour
 
     private void RotateLimbs()
     {
-        Rotate(armLEffectors, armLStartRotation, armLControlPoint, armLControlPointDelay, armRotationMultiplier);
-        Rotate(armREffectors, armRStartRotation, armRControlPoint, armRControlPointDelay, armRotationMultiplier);
-        Rotate(legLEffectors, legLStartRotation, legLControlPoint, legLControlPointDelay, legRotationMultiplier);
-        Rotate(legREffectors, legRStartRotation, legRControlPoint, legRControlPointDelay, legRotationMultiplier);
-        Rotate(torsoEffectors, torsoStartRotation, torsoControlPoint, torsoControlPointDelay, torsoMultiplier);
+        Rotate(armLEffectors, armLStartRotation, armLStartPositions, armLControlPoint, armLControlPointDelay, armRotationMultiplier);
+        Rotate(armREffectors, armRStartRotation, armRStartPositions, armRControlPoint, armRControlPointDelay, armRotationMultiplier);
+        Rotate(legLEffectors, legLStartRotation, legLStartPositions, legLControlPoint, legLControlPointDelay, legRotationMultiplier);
+        Rotate(legREffectors, legRStartRotation, legRStartPositions, legRControlPoint, legRControlPointDelay, legRotationMultiplier);
+        Rotate(torsoEffectors, torsoStartRotation, torsoStartPositions, torsoControlPoint, torsoControlPointDelay, torsoMultiplier);
     }
 
-    private void Rotate(GameObject[] effectors, Vector3[] startRot, Transform controlPoint, Transform controlPointDelay, Vector3 rotationMultiplier)
+    private void Rotate(GameObject[] effectors, Vector3[] startRot, Vector3[] startPos, Transform controlPoint, Transform controlPointDelay, Vector3 rotationMultiplier)
     {
         //TODO schreibe eine funktion im movepoints Script die die Startposition der Punkte zurückgibt
 
@@ -107,9 +114,8 @@ public class PuppetAnimation : MonoBehaviour
             if (i == 0) distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
             else distanceZeroToLine = lineStart.position.y - controlPointDelay.position.y;
 
-            //TODO sollte mit startPos gemacht werden, nicht mit bodypart pos
             // bewegungsrichtung von links und rechts gedreht
-            if (effectors[i].transform.position.x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
+            if (startPos[i].x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
             else if (effectors[i].transform.position.x > 0) multiplier = rotationMultiplier;
 
             //targetRotation 
@@ -118,7 +124,7 @@ public class PuppetAnimation : MonoBehaviour
         }
     }
 
-    //!Is forced in lateupdate after animation rigging has applied constraints
+    //!Is forced in lateupdate after animation rigging has applied constraints!
     private void Scale(GameObject[] bones, Transform controlPoint, Transform controlPointDelay)
     {
         for (int i = 0; i < bones.Length; i++)
@@ -133,6 +139,7 @@ public class PuppetAnimation : MonoBehaviour
         }
     }
 
+    //TODO initialize rotation und position in einer funktion mergen
     //Start position der controlpoints
     private void InitializeStartRotations()
     {
@@ -151,5 +158,24 @@ public class PuppetAnimation : MonoBehaviour
             rotations[i] = bodypart[i].transform.localEulerAngles;
         }
         return rotations;
+    }
+
+    private void InitializeStartPositions()
+    {
+        armLStartPositions = GetStartPosition(armLEffectors);
+        armRStartPositions = GetStartPosition(armREffectors);
+        torsoStartPositions = GetStartPosition(torsoEffectors);
+        legLStartPositions = GetStartPosition(legLEffectors);
+        legRStartPositions = GetStartPosition(legREffectors);
+    }
+
+    private Vector3[] GetStartPosition(GameObject[] bodypart)
+    {
+        Vector3[] positions = new Vector3[bodypart.Length];
+        for (int i = 0; i < bodypart.Length; i++)
+        {
+            positions[i] = bodypart[i].transform.position;
+        }
+        return positions;
     }
 }

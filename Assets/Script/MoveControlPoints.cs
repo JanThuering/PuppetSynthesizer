@@ -28,13 +28,11 @@ public class MoveControlPoints : MonoBehaviour
         MoveControlPoint();
     }
 
-
     private void MoveControlPoint(){
         FindClosestPoint();
         MoveHorizontally();
         CopyLineMovement();
     }
-
 
     private void FindClosestPoint(){
         
@@ -89,7 +87,4 @@ public class MoveControlPoints : MonoBehaviour
             }
         }
     }
-
-
-
 }
