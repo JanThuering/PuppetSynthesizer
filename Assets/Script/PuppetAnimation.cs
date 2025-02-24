@@ -8,6 +8,8 @@ using Unity.Mathematics;
 
 public class PuppetAnimation : MonoBehaviour
 {
+    //References
+    private CreateLine createLineScript;
     //Nullpunkt und Abstand von der Linie
     private Transform lineStart;
     private float distanceZeroToLine;
@@ -28,31 +30,26 @@ public class PuppetAnimation : MonoBehaviour
 
     //ARMS
     [SerializeField] private Transform armLControlPoint;
-    [SerializeField] private Transform armLControlPointDelay;
     [SerializeField] private GameObject[] armLEffectors;
     private Vector3[] armLStartRotation;
     private Vector3[] armLStartPositions;
     [SerializeField] private Transform armRControlPoint;
-    [SerializeField] private Transform armRControlPointDelay;
     [SerializeField] private GameObject[] armREffectors;
     private Vector3[] armRStartRotation;
     private Vector3[] armRStartPositions;
 
     //LEGS
     [SerializeField] private Transform legLControlPoint;
-    [SerializeField] private Transform legLControlPointDelay;
     [SerializeField] private GameObject[] legLEffectors;
     private Vector3[] legLStartRotation;
     private Vector3[] legLStartPositions;
     [SerializeField] private Transform legRControlPoint;
-    [SerializeField] private Transform legRControlPointDelay;
     [SerializeField] private GameObject[] legREffectors;
     private Vector3[] legRStartRotation;
     private Vector3[] legRStartPositions;
 
     //TORSO
     [SerializeField] private Transform torsoControlPoint;
-    [SerializeField] private Transform torsoControlPointDelay;
     [SerializeField] private GameObject[] torsoEffectors;
     private Vector3[] torsoStartRotation;
     private Vector3[] torsoStartPositions;
@@ -70,7 +67,8 @@ public class PuppetAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lineStart = CreateLine.Instance.LineStart.transform;
+        createLineScript = CreateLine.Instance;
+        lineStart = createLineScript.LineStart.transform;
 
         InitializeStartRotations();
         InitializeStartPositions();
@@ -88,19 +86,19 @@ public class PuppetAnimation : MonoBehaviour
 
     void LateUpdate()
     {
-        if (affectScale) Scale(bones, armLControlPoint, armLControlPointDelay);
+        if (affectScale) Scale(bones, armLControlPoint);
     }
 
     private void RotateLimbs()
     {
-        Rotate(armLEffectors, armLStartRotation, armLStartPositions, armLControlPoint, armLControlPointDelay, armRotationMultiplier);
-        Rotate(armREffectors, armRStartRotation, armRStartPositions, armRControlPoint, armRControlPointDelay, armRotationMultiplier);
-        Rotate(legLEffectors, legLStartRotation, legLStartPositions, legLControlPoint, legLControlPointDelay, legRotationMultiplier);
-        Rotate(legREffectors, legRStartRotation, legRStartPositions, legRControlPoint, legRControlPointDelay, legRotationMultiplier);
-        Rotate(torsoEffectors, torsoStartRotation, torsoStartPositions, torsoControlPoint, torsoControlPointDelay, torsoMultiplier);
+        Rotate(armLEffectors, armLStartRotation, armLStartPositions, armLControlPoint, armRotationMultiplier);
+        Rotate(armREffectors, armRStartRotation, armRStartPositions, armRControlPoint, armRotationMultiplier);
+        Rotate(legLEffectors, legLStartRotation, legLStartPositions, legLControlPoint, legRotationMultiplier);
+        Rotate(legREffectors, legRStartRotation, legRStartPositions, legRControlPoint, legRotationMultiplier);
+        Rotate(torsoEffectors, torsoStartRotation, torsoStartPositions, torsoControlPoint, torsoMultiplier);
     }
 
-    private void Rotate(GameObject[] effectors, Vector3[] startRot, Vector3[] startPos, Transform controlPoint, Transform controlPointDelay, Vector3 rotationMultiplier)
+    private void Rotate(GameObject[] effectors, Vector3[] startRot, Vector3[] startPos, Transform controlPoint, Vector3 rotationMultiplier)
     {
         //TODO schreibe eine funktion im movepoints Script die die Startposition der Punkte zurückgibt
 
@@ -112,7 +110,7 @@ public class PuppetAnimation : MonoBehaviour
         {
             // y distanz von der welle zum controlpoint
             if (i == 0) distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
-            else distanceZeroToLine = lineStart.position.y - controlPointDelay.position.y;
+            else distanceZeroToLine = lineStart.position.y - controlPoint.GetComponent<MoveControlPoints>().DelayPosition.y;
 
             // bewegungsrichtung von links und rechts gedreht
             if (startPos[i].x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
@@ -125,7 +123,7 @@ public class PuppetAnimation : MonoBehaviour
     }
 
     //!Is forced in lateupdate after animation rigging has applied constraints!
-    private void Scale(GameObject[] bones, Transform controlPoint, Transform controlPointDelay)
+    private void Scale(GameObject[] bones, Transform controlPoint)
     {
         for (int i = 0; i < bones.Length; i++)
         {
