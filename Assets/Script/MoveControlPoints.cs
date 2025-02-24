@@ -9,7 +9,6 @@ public class MoveControlPoints : MonoBehaviour
     private CreateLine createLineScript;
     private GameObject[] linePointsArray;
     private int closestPointIndex;
-    [SerializeField] private GameObject delayObj;
 
     [Header("Movement")]
     [SerializeField] private float moveTowardsSpeed = 1;
@@ -17,7 +16,8 @@ public class MoveControlPoints : MonoBehaviour
     [SerializeField] private float xPosition;
     private Vector3 startPosition;
 
-    // DELAY VARIABLES
+    [Header("Delay Variables")]
+    // [SerializeField] private GameObject delayObj; //for visualizing the delay
     private int animationDelayPointOnWave = 50;
     private int initialAnimationDelay;  // Store initial delay value
     [HideInInspector] public Vector3 DelayPosition;
@@ -94,7 +94,7 @@ public class MoveControlPoints : MonoBehaviour
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, linePointsArray[closestPointIndex].transform.position, moveTowardsSpeed * Time.deltaTime);
 
         DelayPosition = Vector3.MoveTowards(gameObject.transform.position, linePointsArray[closestPointDelayIndex].transform.position, moveTowardsSpeed * Time.deltaTime);
-        if (delayObj != null) delayObj.transform.position = DelayPosition;
+        // if (delayObj != null) delayObj.transform.position = DelayPosition; //for visualizing the delay
     }
 
     private void MoveHorizontally()

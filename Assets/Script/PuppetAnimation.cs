@@ -53,7 +53,7 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private GameObject[] torsoEffectors;
     private Vector3[] torsoStartRotation;
     private Vector3[] torsoStartPositions;
-    
+
 
     //BASE
     [SerializeField] private Transform baseControlPoint;
@@ -104,7 +104,7 @@ public class PuppetAnimation : MonoBehaviour
 
         // torso auf beide seiten der x achse drehen lassen 
         // TODO ohne normalizer (bewegt sich von links nach rechts mit dem value und nicht natürlich)
-        if (controlPoint == torsoControlPoint) multiplier = torsoMultiplier * normalizer;
+        //if (controlPoint == torsoControlPoint) multiplier = torsoMultiplier * normalizer;
 
         for (int i = 0; i < effectors.Length; i++)
         {
@@ -113,9 +113,11 @@ public class PuppetAnimation : MonoBehaviour
             else distanceZeroToLine = lineStart.position.y - controlPoint.GetComponent<MoveControlPoints>().DelayPosition.y;
 
             // bewegungsrichtung von links und rechts gedreht
-            if (startPos[i].x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
-            else if (effectors[i].transform.position.x > 0) multiplier = rotationMultiplier;
+            // if (startPos[i].x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
+            // else if (effectors[i].transform.position.x > 0) multiplier = rotationMultiplier;
 
+            multiplier = rotationMultiplier;
+            
             //targetRotation 
             Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i];
             effectors[i].transform.localEulerAngles = targetRotation;
@@ -130,7 +132,7 @@ public class PuppetAnimation : MonoBehaviour
             // y distanz von der welle zum controlpoint
             distanceZeroToLine = Math.Abs(lineStart.position.y - controlPoint.position.y);
             // mapped
-            distanceZeroToLine = Mathf.Lerp(0.3f, 1, Mathf.InverseLerp(0, 0.2f, distanceZeroToLine));
+            distanceZeroToLine = Mathf.Lerp(0.5f, 1, Mathf.InverseLerp(0, 0.2f, distanceZeroToLine));
 
             Vector3 targetScale = Vector3.one * distanceZeroToLine;
             bones[i].transform.localScale = targetScale;
