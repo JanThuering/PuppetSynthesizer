@@ -19,6 +19,7 @@ public class MoveControlPoints : MonoBehaviour
 
     // DELAY VARIABLES
     [SerializeField] private int animationDelayPointOnWave = 50;
+    private int initialAnimationDelay;  // Store initial delay value
     [HideInInspector] public Vector3 DelayPosition;
     private int closestPointDelayIndex;
     private float mapFreq;
@@ -33,10 +34,8 @@ public class MoveControlPoints : MonoBehaviour
         startPosition = gameObject.transform.position;
         xPosition = startPosition.x;
 
-        FrequencyMap();
-        int initalDelay = Mathf.CeilToInt(animationDelayPointOnWave / mapFreq);
-        animationDelayPointOnWave = initalDelay;
-        print(this.gameObject.name + animationDelayPointOnWave);
+        // Store the initial delay to ensure it always remains 50 when frequency is 1
+        initialAnimationDelay = animationDelayPointOnWave;
     }
     // Update is called once per frame
     void Update()
@@ -56,7 +55,7 @@ public class MoveControlPoints : MonoBehaviour
     private void FrequencyMap()
     {
         mapFreq = Mathf.Lerp(1, 5, Mathf.InverseLerp(1, 10, createLineScript.frequency));
-        delay = Mathf.CeilToInt(animationDelayPointOnWave / mapFreq);
+        delay = Mathf.CeilToInt(initialAnimationDelay / mapFreq);
     }
 
     private void FindClosestPoint()
