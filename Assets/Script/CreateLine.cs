@@ -31,7 +31,7 @@ public class CreateLine : MonoBehaviour
     [Header ("EXTERNAL REFERENCES")]
     private LineRenderer lineRenderer;
     [HideInInspector] public GameObject LineStart;
-    public GameObject LineEnd;
+    [HideInInspector] public GameObject LineEnd;
     public Vector3 LineDirection { get { return (LineEnd.transform.position - LineStart.transform.position).normalized; } }
 
 
@@ -39,7 +39,7 @@ public class CreateLine : MonoBehaviour
     [Header ("ANIMATION VALUES")]
     [SerializeField] private Vector3 movement = new Vector3(0,1,0);
 
-    [Range(-5, 5)]
+    [Range(0, 5)]
     [SerializeField] private float totalAmplitude = 1;
     [Range(1f, 10)]
     public float frequency = 1;
@@ -49,6 +49,7 @@ public class CreateLine : MonoBehaviour
 
 
     [Header ("INTERFACE VALUES")]
+    [Range (1, 10)]
     [SerializeField] private int sliderAmmount = 3;
 
 
@@ -294,29 +295,42 @@ public class CreateLine : MonoBehaviour
 
     }
     
+    public void MidiSpeedWave(int controlNumber, float controlValue, float valueAmmount){
+        /*VALUE EXPLANATION
+            controlNumber -> slider (for which slider the curve is)
+            controlValue -> waveType (amplitude of the curve)
+            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+        */
+
+        float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
+
+        switch(controlNumber){
+            case 21: speedA = increments; break;
+            case 22: speedB = increments; break;
+            case 23: speedC = increments; break;
+            case 24: speedD = increments; break;
+            case 25: speedE = increments; break;  
+            case 26: speedF = increments; break;
+        }
+
+    }
     
-    public void MidiControlWave(int controlNumber, float controlValue, float valueAmmount){
+    public void MidiAmplitudeWave(int controlNumber, float controlValue, float valueAmmount){
         /*VALUE EXPLANATION
             controlNumber -> segment (which curve is selected)
             controlValue -> waveType (amplitude or speed of the curve)
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
         
-        float increments = controlValue / valueAmmount * 10 - 5;    //calculate the value of the slider / knob
+        float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
 
         switch(controlNumber){
-            case 1: amplitudeA = increments; break;
-            case 2: amplitudeB = increments; break;
-            case 3: amplitudeC = increments; break;
-            case 4: amplitudeD = increments; break;
-            case 5: amplitudeE = increments; break;
-            case 6: amplitudeF = increments; break;
-            case 11: speedA = increments; break;
-            case 12: speedB = increments; break;
-            case 13: speedC = increments; break;
-            case 14: speedD = increments; break;
-            case 15: speedE = increments; break;
-            case 16: speedF = increments; break;
+            case 10: amplitudeA = increments; break;
+            case 11: amplitudeB = increments; break;
+            case 12: amplitudeC = increments; break;
+            case 13: amplitudeD = increments; break;
+            case 14: amplitudeE = increments; break;
+            case 15: amplitudeF = increments; break;
         }
 
     }
