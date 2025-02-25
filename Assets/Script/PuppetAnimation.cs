@@ -22,9 +22,6 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
     [SerializeField] private bool affectScale = false;
     private Vector3 multiplier;
-    private Tween normalizerTween;
-    private float normalizer = 1;
-    private bool isTweening = false;
 
     [Header("ROTATEABLE OBJECTS")]  //rotates the limbs, fill in the inspector with the joints
 
@@ -69,12 +66,8 @@ public class PuppetAnimation : MonoBehaviour
     {
         createLineScript = CreateLine.Instance;
         lineStart = createLineScript.LineStart.transform;
-        
-        InitializeStartTransforms();
 
-        normalizerTween = DOTween.To(() => normalizer, x => normalizer = x, -1, 2)
-               .SetEase(Ease.InOutSine)
-               .SetLoops(-1, LoopType.Yoyo);
+        InitializeStartTransforms();
     }
 
     // Update is called once per frame
@@ -101,9 +94,6 @@ public class PuppetAnimation : MonoBehaviour
     {
         //TODO schreibe eine funktion im movepoints Script die die Startposition der Punkte zurückgibt
 
-        // torso auf beide seiten der x achse drehen lassen 
-        // TODO ohne normalizer (bewegt sich von links nach rechts mit dem value und nicht natürlich)
-        //if (controlPoint == torsoControlPoint) multiplier = torsoMultiplier * normalizer;
 
         for (int i = 0; i < effectors.Length; i++)
         {
