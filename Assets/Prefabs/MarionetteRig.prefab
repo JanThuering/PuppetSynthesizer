@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2436020824284639241}
   m_Layer: 6
-  m_Name: TorsoEffector
+  m_Name: TorsoEffectorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -455,7 +455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3394719938445448771}
   m_Layer: 6
-  m_Name: L_ArmEffector
+  m_Name: L_ArmEffectorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -722,7 +722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834353841413941096}
   m_Layer: 6
-  m_Name: R_LegEffector
+  m_Name: R_LegEffectorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1034,7 +1034,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1664532197080724129}
   m_Layer: 6
-  m_Name: L_LegEffector
+  m_Name: L_LegEffectorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1304,7 +1304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5409716571722415170}
   m_Layer: 6
-  m_Name: R_ArmEffector
+  m_Name: R_ArmEffectorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2248,22 +2248,32 @@ MonoBehaviour:
   torsoMultiplier: {x: 20, y: 100, z: 20}
   affectScale: 0
   armLControlPoint: {fileID: 918701929169346446}
+  armLEffectorTop: {fileID: 4229666630624040015}
+  armLEffectorsBottom: {fileID: 1458790915272449407}
   armLEffectors:
   - {fileID: 4229666630624040015}
   - {fileID: 1458790915272449407}
   armRControlPoint: {fileID: 4745458968334610511}
+  armREffectorTop: {fileID: 2988170581426764349}
+  armREffectorBottom: {fileID: 7853734363915938171}
   armREffectors:
   - {fileID: 2988170581426764349}
   - {fileID: 7853734363915938171}
   legLControlPoint: {fileID: 8395599973592070232}
+  legLEffectorTop: {fileID: 308212141736103852}
+  legLEffectorBottom: {fileID: 5595896172838564381}
   legLEffectors:
   - {fileID: 308212141736103852}
   - {fileID: 5595896172838564381}
   legRControlPoint: {fileID: 6566061705212437514}
+  legREffectorTop: {fileID: 6060143375726659257}
+  legREffectorBottom: {fileID: 2564406420934798024}
   legREffectors:
   - {fileID: 6060143375726659257}
   - {fileID: 2564406420934798024}
   torsoControlPoint: {fileID: 5879559579789112731}
+  TorsoEffectorTop: {fileID: 9214305739383955611}
+  TorsoEffectorBottom: {fileID: 60587654236450463}
   torsoEffectors:
   - {fileID: 9214305739383955611}
   - {fileID: 60587654236450463}

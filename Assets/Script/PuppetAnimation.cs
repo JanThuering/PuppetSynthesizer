@@ -15,8 +15,8 @@ public class PuppetAnimation : MonoBehaviour
     private float distanceZeroToLine;
 
     [Header("ROTATION VALUES")]
-    [SerializeField] private float delay = 0.2f;
-    //[Range(-90f, 90f)] // Slider 
+    private float lerpT = 15f;
+
     [SerializeField] private Vector3 armRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
@@ -29,6 +29,7 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private GameObject[] armLEffectors;
     private Vector3[] armLStartRotation;
     private Vector3[] armLStartPositions;
+
     [SerializeField] private Transform armRControlPoint;
     [SerializeField] private GameObject[] armREffectors;
     private Vector3[] armRStartRotation;
@@ -39,6 +40,7 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private GameObject[] legLEffectors;
     private Vector3[] legLStartRotation;
     private Vector3[] legLStartPositions;
+
     [SerializeField] private Transform legRControlPoint;
     [SerializeField] private GameObject[] legREffectors;
     private Vector3[] legRStartRotation;
@@ -65,7 +67,6 @@ public class PuppetAnimation : MonoBehaviour
     {
         createLineScript = CreateLine.Instance;
         lineStart = createLineScript.LineStart.transform;
-
         InitializeStartTransforms();
     }
 
@@ -93,7 +94,6 @@ public class PuppetAnimation : MonoBehaviour
     {
         //TODO schreibe eine funktion im movepoints Script die die Startposition der Punkte zurückgibt
 
-
         for (int i = 0; i < effectors.Length; i++)
         {
             // y distanz von der welle zum controlpoint
@@ -107,10 +107,18 @@ public class PuppetAnimation : MonoBehaviour
             multiplier = rotationMultiplier;
 
             //targetRotation 
-            Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i];
-            effectors[i].transform.localEulerAngles = targetRotation;
+            //Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i];
+            Vector3 targetEulerAngles = (multiplier * distanceZeroToLine) + startRot[i];
+            Quaternion targetRotation = Quaternion.Euler(targetEulerAngles);
+
+            //TODO lerp rotation 
+            Quaternion quatLerpedRotation = Quaternion.Lerp(effectors[i].transform.localRotation, targetRotation, Time.deltaTime * lerpT);
+            Vector3 eulerLerpedRotation = quatLerpedRotation.eulerAngles;
+            effectors[i].transform.localEulerAngles = eulerLerpedRotation;
         }
     }
+
+
 
     //!Is forced in lateupdate after animation rigging has applied constraints!
     private void Scale(GameObject[] bones, Transform controlPoint)
