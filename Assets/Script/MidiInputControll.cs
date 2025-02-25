@@ -40,15 +40,20 @@ public class MidiInputControll : MonoBehaviour {
 
             }
             //Debug.Log($"Control {controlChange.ControlNumber} changed to {controlChange.ControlValue}");
+            Debug.Log("It works");
+            if(controlChange.ControlNumber >= 10 && controlChange.ControlNumber <= 15){
+                Debug.Log("It works würkli");
+                createLineScript.MidiAmplitudeWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            }
 
 
-            //Control the curve in CreateLineScript
-            if (controlChange.ControlNumber < 20){
-                createLineScript.MidiControlWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
-            }
-            if(controlChange.ControlNumber > 20){
-                createLineScript.MidiDefineWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f);
-            }
+            // //Control the curve in CreateLineScript
+            // if (controlChange.ControlNumber < 20){
+            //     createLineScript.MidiControlWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            // }
+            // if(controlChange.ControlNumber > 20){
+            //     createLineScript.MidiDefineWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            // }
             
 
             
