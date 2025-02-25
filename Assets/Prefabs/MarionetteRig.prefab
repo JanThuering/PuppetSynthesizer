@@ -2224,11 +2224,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ec595bb29742048852f9063f11e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMultiplier: 1
+  movementMultiplier: 2
   armRotationMultiplier: {x: 80, y: 50, z: 80}
   legRotationMultiplier: {x: 80, y: 50, z: 80}
   torsoMultiplier: {x: 20, y: 100, z: 20}
-  affectScale: 0
+  affectScale: 1
+  scaleMultiplier: 1
   scaledObjects:
   - {fileID: 8430305020792555947}
   - {fileID: 8498719814996123248}
