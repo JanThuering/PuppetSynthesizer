@@ -24,7 +24,6 @@ public class PuppetAnimation : MonoBehaviour
     private Vector3 multiplier;
 
     [Header("ROTATEABLE OBJECTS")]  //rotates the limbs, fill in the inspector with the joints
-
     //ARMS
     [SerializeField] private Transform armLControlPoint;
     [SerializeField] private GameObject[] armLEffectors;

@@ -9,12 +9,12 @@ public class MoveControlPoints : MonoBehaviour
     private CreateLine createLineScript;
     private GameObject[] linePointsArray;
     private int closestPointIndex;
+    int baseIndex;
 
     [Header("Movement")]
     [SerializeField] private float moveTowardsSpeed = 1;
-    [Range(-2f, 2f)]
-    [SerializeField] private float xPosition;
-    private Vector3 startPosition;
+    [SerializeField] private int xPosition;
+    private int currentPos;
 
     [Header("Delay Variables")]
     // [SerializeField] private GameObject delayObj; //for visualizing the delay
@@ -31,8 +31,9 @@ public class MoveControlPoints : MonoBehaviour
         this.gameObject.layer = LayerMask.NameToLayer("Wave");
         createLineScript = CreateLine.Instance;
         linePointsArray = createLineScript.pointsArray;
-        startPosition = gameObject.transform.position;
-        xPosition = startPosition.x;
+        FindClosestPoint();
+        baseIndex = closestPointIndex;
+        xPosition = 0;
 
         // Store the initial delay to ensure it always remains 50 when frequency is 1
         initialAnimationDelay = animationDelayPointOnWave;
@@ -85,48 +86,36 @@ public class MoveControlPoints : MonoBehaviour
             closestPointIndex = closestIndex;
             closestPointDelayIndex = closestIndexDelay;
         }
-
-    }
-    private void CopyLineMovement()
-    {
-        //go trough all control points  
-        //copy the position of the closest HORIZONTAL point to the control point
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, linePointsArray[closestPointIndex].transform.position, moveTowardsSpeed * Time.deltaTime);
-
-        DelayPosition = Vector3.MoveTowards(gameObject.transform.position, linePointsArray[closestPointDelayIndex].transform.position, moveTowardsSpeed * Time.deltaTime);
-        // if (delayObj != null) delayObj.transform.position = DelayPosition; //for visualizing the delay
     }
 
     private void MoveHorizontally()
     {
-        Vector3 position = new Vector3(xPosition, linePointsArray[closestPointIndex].transform.position.y, linePointsArray[closestPointIndex].transform.position.z);
-        Vector3 closestPoint = linePointsArray[closestPointIndex].transform.position;
-        Vector3 lineStart = createLineScript.LineStart.transform.position;
-        Vector3 lineEnd = createLineScript.LineEnd.transform.position;
+        //find the max and min position of the wave and apply it to the xPosition
+        int maxPos = linePointsArray.Length - 1 - baseIndex;
+        int minPos = baseIndex * -1;
+        if(xPosition > maxPos) xPosition = maxPos;
+        else if(xPosition < minPos) xPosition = minPos;
+        
+        //depending on the parameter xPosition the closest point on the wave is calculated
+        int newPos = baseIndex + xPosition;
+        if (currentPos != xPosition)
+        {
+            if (newPos < 0) newPos = 0;
+            else if (newPos > linePointsArray.Length - 1) newPos = linePointsArray.Length - 1;
 
-        if (gameObject.transform.position.x > lineStart.x && gameObject.transform.position.x < lineEnd.x + 0.5f)
-        {
-            gameObject.transform.position = position;
+            //apply the new position to the control point
+            closestPointIndex = newPos;
         }
-        if (gameObject.transform.position.x < lineStart.x)
-        {
-            Debug.Log("Out of bounds");
-            gameObject.transform.position = new Vector3(lineStart.x, closestPoint.y, closestPoint.z);
-            // stop the player from decreasing the x position
-            if (xPosition < lineStart.x)
-            {
-                xPosition = lineStart.x;
-            }
-        }
-        if (gameObject.transform.position.x > lineEnd.x)
-        {
-            Debug.Log("Out of bounds");
-            gameObject.transform.position = new Vector3(lineEnd.x, closestPoint.y, closestPoint.z);
-            //stop the player from increasing the x position
-            if (xPosition > lineEnd.x)
-            {
-                xPosition = lineEnd.x;
-            }
-        }
+
+        //store the current position
+        currentPos = xPosition;
+    }
+
+    private void CopyLineMovement()
+    { 
+        //copy the position of the closest HORIZONTAL point to the control point
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, linePointsArray[closestPointIndex].transform.position, moveTowardsSpeed * Time.deltaTime);
+        DelayPosition = Vector3.MoveTowards(gameObject.transform.position, linePointsArray[closestPointDelayIndex].transform.position, moveTowardsSpeed * Time.deltaTime);
+        // if (delayObj != null) delayObj.transform.position = DelayPosition; //for visualizing the delay
     }
 }
