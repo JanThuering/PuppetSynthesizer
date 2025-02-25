@@ -234,10 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayObj: {fileID: 0}
   moveTowardsSpeed: 55
   xPosition: 0
-  animationDelayPointOnWave: 50
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &691439115655334134
 GameObject:
@@ -411,10 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayObj: {fileID: 0}
   moveTowardsSpeed: 55
   xPosition: 0
-  animationDelayPointOnWave: 50
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1130818522860776948
 GameObject:
@@ -713,10 +709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayObj: {fileID: 0}
   moveTowardsSpeed: 55
   xPosition: 0
-  animationDelayPointOnWave: 50
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &2564406420934798024
 GameObject:
@@ -1264,10 +1258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayObj: {fileID: 0}
   moveTowardsSpeed: 55
   xPosition: 0
-  animationDelayPointOnWave: 50
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &7280311301035103401
 GameObject:
@@ -1429,10 +1421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayObj: {fileID: 0}
   moveTowardsSpeed: 55
   xPosition: 0
-  animationDelayPointOnWave: 50
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &8498719814996123248
 GameObject:
@@ -1530,10 +1520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayObj: {fileID: 0}
   moveTowardsSpeed: 55
   xPosition: 0
-  animationDelayPointOnWave: 50
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &8854056015655102077
 GameObject:
@@ -2258,7 +2246,7 @@ MonoBehaviour:
   armRotationMultiplier: {x: 80, y: 50, z: 80}
   legRotationMultiplier: {x: 80, y: 50, z: 80}
   torsoMultiplier: {x: 20, y: 100, z: 20}
-  affectScale: 1
+  affectScale: 0
   armLControlPoint: {fileID: 918701929169346446}
   armLEffectors:
   - {fileID: 4229666630624040015}

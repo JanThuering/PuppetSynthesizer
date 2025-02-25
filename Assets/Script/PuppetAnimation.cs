@@ -69,9 +69,8 @@ public class PuppetAnimation : MonoBehaviour
     {
         createLineScript = CreateLine.Instance;
         lineStart = createLineScript.LineStart.transform;
-
-        InitializeStartRotations();
-        InitializeStartPositions();
+        
+        InitializeStartTransforms();
 
         normalizerTween = DOTween.To(() => normalizer, x => normalizer = x, -1, 2)
                .SetEase(Ease.InOutSine)
@@ -117,7 +116,7 @@ public class PuppetAnimation : MonoBehaviour
             // else if (effectors[i].transform.position.x > 0) multiplier = rotationMultiplier;
 
             multiplier = rotationMultiplier;
-            
+
             //targetRotation 
             Vector3 targetRotation = (multiplier * distanceZeroToLine) + startRot[i];
             effectors[i].transform.localEulerAngles = targetRotation;
@@ -141,41 +140,36 @@ public class PuppetAnimation : MonoBehaviour
 
     //TODO initialize rotation und position in einer funktion mergen
     //Start position der controlpoints
-    private void InitializeStartRotations()
+
+    private void InitializeStartTransforms()
     {
-        armLStartRotation = GetStartRotations(armLEffectors);
-        armRStartRotation = GetStartRotations(armREffectors);
-        torsoStartRotation = GetStartRotations(torsoEffectors);
-        legLStartRotation = GetStartRotations(legLEffectors);
-        legRStartRotation = GetStartRotations(legREffectors);
+        armLStartPositions = new Vector3[armLEffectors.Length];
+        armLStartRotation = new Vector3[armLEffectors.Length];
+        GetStartTransforms(armLEffectors, armLStartPositions, armLStartRotation);
+
+        armRStartPositions = new Vector3[armREffectors.Length];
+        armRStartRotation = new Vector3[armREffectors.Length];
+        GetStartTransforms(armREffectors, armRStartPositions, armRStartRotation);
+
+        torsoStartPositions = new Vector3[torsoEffectors.Length];
+        torsoStartRotation = new Vector3[torsoEffectors.Length];
+        GetStartTransforms(torsoEffectors, torsoStartPositions, torsoStartRotation);
+
+        legLStartPositions = new Vector3[legLEffectors.Length];
+        legLStartRotation = new Vector3[legLEffectors.Length];
+        GetStartTransforms(legLEffectors, legLStartPositions, legLStartRotation);
+
+        legRStartPositions = new Vector3[legREffectors.Length];
+        legRStartRotation = new Vector3[legREffectors.Length];
+        GetStartTransforms(legREffectors, legRStartPositions, legRStartRotation);
     }
 
-    private Vector3[] GetStartRotations(GameObject[] bodypart)
+    private void GetStartTransforms(GameObject[] bodypart, Vector3[] positions, Vector3[] rotations)
     {
-        Vector3[] rotations = new Vector3[bodypart.Length];
-        for (int i = 0; i < bodypart.Length; i++)
-        {
-            rotations[i] = bodypart[i].transform.localEulerAngles;
-        }
-        return rotations;
-    }
-
-    private void InitializeStartPositions()
-    {
-        armLStartPositions = GetStartPosition(armLEffectors);
-        armRStartPositions = GetStartPosition(armREffectors);
-        torsoStartPositions = GetStartPosition(torsoEffectors);
-        legLStartPositions = GetStartPosition(legLEffectors);
-        legRStartPositions = GetStartPosition(legREffectors);
-    }
-
-    private Vector3[] GetStartPosition(GameObject[] bodypart)
-    {
-        Vector3[] positions = new Vector3[bodypart.Length];
         for (int i = 0; i < bodypart.Length; i++)
         {
             positions[i] = bodypart[i].transform.position;
+            rotations[i] = bodypart[i].transform.localEulerAngles;
         }
-        return positions;
     }
 }
