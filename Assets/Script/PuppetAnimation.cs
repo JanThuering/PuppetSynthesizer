@@ -25,7 +25,7 @@ public class PuppetAnimation : MonoBehaviour
     [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
     private float lerpT = 5f;
 
-    [Header("ROTATEABLE OBJECTS")]  //rotates the limbs, fill in the inspector with the joints
+    [Header("ROTATEABLE OBJECTS")]  //animates/rotates the limbs - fill in the inspector with the control points and effectors
     //ARMS
     [SerializeField] private Transform armLControlPoint;
     [SerializeField] private GameObject[] armLEffectors;
@@ -73,7 +73,6 @@ public class PuppetAnimation : MonoBehaviour
     {
         RotateLimbs();
     }
-
 
     private void RotateLimbs()
     {
