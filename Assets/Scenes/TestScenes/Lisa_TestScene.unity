@@ -267,6 +267,18 @@ Transform:
   - {fileID: 1023564346}
   m_Father: {fileID: 692742193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &118950569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 189759442029557260, guid: cd7c9a416eeb640f5adb9e05c48d9918,
+    type: 3}
+  m_PrefabInstance: {fileID: 6089857904622872200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171ec595bb29742048852f9063f11e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &280014734
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,8 +1434,38 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 88005516244083039, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
@@ -1445,6 +1487,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: puppetAnimation
+      value: 
+      objectReference: {fileID: 118950569}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2957,12 +3004,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ec595bb29742048852f9063f11e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMultiplier: 3
+  MovementMultiplier: 3
   armRotationMultiplier: {x: 80, y: 50, z: 80}
   legRotationMultiplier: {x: 80, y: 50, z: 80}
   torsoMultiplier: {x: 20, y: 100, z: 20}
   affectScale: 0
-  scaleMultiplier: 2
+  ScaleMultiplier: 2
   scaledObjects:
   - {fileID: 772296601}
   - {fileID: 509759140}

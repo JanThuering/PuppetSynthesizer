@@ -12,9 +12,9 @@ public class MidiInputControll : MonoBehaviour {
     }
 
     void OnEnable() {
-        //input = InputDevice.GetByName("X-TOUCH COMPACT"); // X-TOUCH COMPACT
+        input = InputDevice.GetByName("X-TOUCH COMPACT"); // X-TOUCH COMPACT
         //input = InputDevice.GetByName("Launch Control XL"); // Launch Control XL
-        input = InputDevice.GetByName("Arduino Leonardo"); // Arduino Leonardo
+        //input = InputDevice.GetByName("Arduino Leonardo"); // Arduino Leonardo
         if(input == null){
             Debug.LogError("MIDI device not found");
         }
@@ -36,13 +36,9 @@ public class MidiInputControll : MonoBehaviour {
 
         if (e.Event is ControlChangeEvent controlChange) {
 
-            if (e.Event.EventType == MidiEventType.ControlChange){
+            //Debug.Log($"ControlNumber: {controlChange.ControlNumber} ControlValue: {controlChange.ControlValue}");
 
-            }
-            //Debug.Log($"Control {controlChange.ControlNumber} changed to {controlChange.ControlValue}");
-            Debug.Log("It works");
-            if(controlChange.ControlNumber >= 10 && controlChange.ControlNumber <= 15){
-                Debug.Log("It works würkli");
+            if(controlChange.ControlNumber >= 1 && controlChange.ControlNumber <= 4){
                 createLineScript.MidiAmplitudeWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
             }
 
