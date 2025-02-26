@@ -2228,19 +2228,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ec595bb29742048852f9063f11e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScaleMultiplier: 2
   MovementMultiplier: 3
   armRotationMultiplier: {x: 80, y: 50, z: 80}
   legRotationMultiplier: {x: 80, y: 50, z: 80}
   torsoMultiplier: {x: 20, y: 100, z: 20}
-  affectScale: 1
-  ScaleMultiplier: 2
-  scaledObjects:
-  - {fileID: 8430305020792555947}
-  - {fileID: 8498719814996123248}
-  - {fileID: 683797371747184060}
-  - {fileID: 842207799040267190}
-  - {fileID: 7189020477298264211}
-  - {fileID: 1517410425519292037}
   armLControlPoint: {fileID: 918701929169346446}
   armLEffectors:
   - {fileID: 4229666630624040015}
@@ -2276,7 +2268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   affectScale: 1
-  ScaleMultiplier: 2
+  ScaleMultiplier: 0.6
   scaledObjects:
   - {fileID: 8430305020792555947}
   - {fileID: 8498719814996123248}
