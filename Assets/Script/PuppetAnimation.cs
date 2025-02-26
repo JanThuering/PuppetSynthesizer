@@ -10,26 +10,20 @@ public class PuppetAnimation : MonoBehaviour
 {
     //References
     private CreateLine createLineScript;
+    private PuppetScaleControlPoints puppetScaleControlPoints;
+    public float ScaleMultiplier;
 
     //Nullpunkt und Abstand von der Linie
     private Transform lineStart;
     private float distanceZeroToLine;
-
+    
     [Header("ROTATION VALUES")]
 
     [SerializeField] public float MovementMultiplier = 3;
     [SerializeField] private Vector3 armRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
-    private float lerpT = 15f;
-
-    [Header("SCALE OBJECTS")]
-    [SerializeField] private bool affectScale = false;
-    [SerializeField] public float ScaleMultiplier = 2;
-    [SerializeField] private GameObject[] scaledObjects;
-    private Vector3[] scaledObjStartScale;
-    private Vector3[] scaledObjStartPos;
-
+    private float lerpT = 5f;
 
     [Header("ROTATEABLE OBJECTS")]  //rotates the limbs, fill in the inspector with the joints
     //ARMS
@@ -69,8 +63,9 @@ public class PuppetAnimation : MonoBehaviour
     {
         createLineScript = CreateLine.Instance;
         lineStart = createLineScript.LineStart.transform;
-        InitializeStartScale();
         InitializeStartTransformForRotation();
+        puppetScaleControlPoints = GetComponent<PuppetScaleControlPoints>();
+        ScaleMultiplier = puppetScaleControlPoints.ScaleMultiplier;
     }
 
     // Update is called once per frame
@@ -79,11 +74,6 @@ public class PuppetAnimation : MonoBehaviour
         RotateLimbs();
     }
 
-    void LateUpdate()
-    {
-        if (affectScale) Scale(scaledObjects, scaledObjStartScale);
-        if (affectScale!) ScaleBack(scaledObjects, scaledObjStartScale);
-    }
 
     private void RotateLimbs()
     {
@@ -120,56 +110,6 @@ public class PuppetAnimation : MonoBehaviour
         }
     }
 
-
-    //!Is forced in lateupdate after animation rigging has applied constraints!
-    private void Scale(GameObject[] scaleableObj, Vector3[] startScale)
-    {
-        Vector3 scaleMultiplierVec = new Vector3(ScaleMultiplier, ScaleMultiplier, ScaleMultiplier);
-
-        for (int i = 0; i < scaleableObj.Length; i++)
-        {
-            // y distanz von der welle zum controlpoint
-            distanceZeroToLine = MathF.Abs(lineStart.position.y - scaleableObj[i].transform.position.y);
-
-            //print(distanceZeroToLine);
-
-            Vector3 targetScale = (scaleMultiplierVec * distanceZeroToLine) + startScale[i];
-            //Vector3 mappedScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one * 1.5f, Mathf.InverseLerp(0, 0.2f, distanceZeroToLine));
-
-            //lerp between scales 
-            Vector3 lerpedScale = Vector3.Lerp(scaleableObj[i].transform.localScale, targetScale, Time.deltaTime * lerpT);
-            scaleableObj[i].transform.localScale = lerpedScale;
-        }
-    }
-
-    private void ScaleBack(GameObject[] scaleableObj, Vector3[] startScale)
-    {
-        for (int i = 0; i < scaleableObj.Length; i++)
-        {
-            //lerp between scales 
-            //if (i == 0) print("current scale " + scaleableObj[i].transform.localScale + "start scale " + startScale[i]);
-            Vector3 lerpedScale = Vector3.Lerp(scaleableObj[i].transform.localScale, startScale[i], Time.deltaTime * lerpT);
-            scaleableObj[i].transform.localScale = lerpedScale;
-        }
-    }
-
-    //
-    private void InitializeStartScale()
-    {
-        scaledObjStartScale = new Vector3[scaledObjects.Length];
-        scaledObjStartPos = new Vector3[scaledObjects.Length];
-        GetStartScale(scaledObjects, scaledObjStartScale, scaledObjStartPos);
-    }
-
-    private void GetStartScale(GameObject[] scaledObjScale, Vector3[] scales, Vector3[] positions)
-    {
-        for (int i = 0; i < scaledObjScale.Length; i++)
-        {
-            scales[i] = scaledObjScale[i].transform.localScale;
-            positions[i] = scaledObjScale[i].transform.position;
-            // print(scaledObjScale[i].transform.position);
-        }
-    }
 
     //Start position und rotation der effectors
     private void InitializeStartTransformForRotation()
