@@ -130,7 +130,7 @@ public class PuppetAnimation : MonoBehaviour
             // y distanz von der welle zum controlpoint
             distanceZeroToLine = MathF.Abs(lineStart.position.y - scaleableObj[i].transform.position.y);
 
-            print(distanceZeroToLine);
+            //print(distanceZeroToLine);
 
             Vector3 targetScale = (scaleMultiplierVec * distanceZeroToLine) + startScale[i];
             //Vector3 mappedScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one * 1.5f, Mathf.InverseLerp(0, 0.2f, distanceZeroToLine));
@@ -146,7 +146,7 @@ public class PuppetAnimation : MonoBehaviour
         for (int i = 0; i < scaleableObj.Length; i++)
         {
             //lerp between scales 
-            if (i == 0) print("current scale " + scaleableObj[i].transform.localScale + "start scale " + startScale[i]);
+            //if (i == 0) print("current scale " + scaleableObj[i].transform.localScale + "start scale " + startScale[i]);
             Vector3 lerpedScale = Vector3.Lerp(scaleableObj[i].transform.localScale, startScale[i], Time.deltaTime * lerpT);
             scaleableObj[i].transform.localScale = lerpedScale;
         }
@@ -166,7 +166,7 @@ public class PuppetAnimation : MonoBehaviour
         {
             scales[i] = scaledObjScale[i].transform.localScale;
             positions[i] = scaledObjScale[i].transform.position;
-            print(scaledObjScale[i].transform.position);
+            // print(scaledObjScale[i].transform.position);
         }
     }
 
