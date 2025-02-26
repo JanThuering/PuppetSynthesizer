@@ -86,14 +86,6 @@ public class CreateLine : MonoBehaviour
     [SerializeField] float amplitudeD = 1;
     [Range(0, 5)]
     [SerializeField] float speedD = 1;
-    [Range(0, 5)]
-    [SerializeField] float amplitudeE = 1;
-    [Range(0, 5)]
-    [SerializeField] float speedE = 1;
-    [Range(0, 5)]
-    [SerializeField] float amplitudeF = 1;
-    [Range(0, 5)]
-    [SerializeField] float speedF = 1;
     
 
     // Start is called before the first frame update
@@ -147,26 +139,23 @@ public class CreateLine : MonoBehaviour
     }
 
     private void SegmentedCurve(){
-            // Move the points in the defined axis, acording to the curves
-            ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], frequency);
-            ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], frequency);
-            ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], frequency);
-            ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], frequency);
-            ControlSegmentedCurve(5, curveArray[4], "Curve E", amplitudeArray[4], frequency);
-            ControlSegmentedCurve(6, curveArray[5], "Curve F", amplitudeArray[5], frequency);
+        // Move the points in the defined axis, acording to the curves
+        ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], frequency);
+        ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], frequency);
+        ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], frequency);
+        ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], frequency);
+
     }
 
     private void CreateArrays(){
-        curveArray = new AnimationCurve[6];
-        curveTypeIndex = new int[6];
-        amplitudeArray = new float[6];
-        speedArray = new float[6];
+        curveArray = new AnimationCurve[4];
+        curveTypeIndex = new int[4];
+        amplitudeArray = new float[4];
+        speedArray = new float[4];
 
         for(int i = 0; i < curveArray.Length; i++){
             curveArray[i] = curveTypes[1];
         }
-
-
     }
 
     private void FillCurveArray(){
@@ -188,13 +177,6 @@ public class CreateLine : MonoBehaviour
         amplitudeArray[3] = amplitudeD;
         speedArray[3] = speedD;
 
-
-        amplitudeArray[4] = amplitudeE;
-        speedArray[4] = speedE;
-
-
-        amplitudeArray[5] = amplitudeF;
-        speedArray[5] = speedF;
     }
     private void CreatePoints(){    
         //check if (points count + 2) is divisible by slider ammount
@@ -278,8 +260,6 @@ public class CreateLine : MonoBehaviour
             case 22: slider = 2; break;
             case 23: slider = 3; break;
             case 24: slider = 4; break;
-            case 25: slider = 5; break;
-            case 26: slider = 6; break;
 
         }
 
@@ -309,8 +289,6 @@ public class CreateLine : MonoBehaviour
             case 22: speedB = increments; break;
             case 23: speedC = increments; break;
             case 24: speedD = increments; break;
-            case 25: speedE = increments; break;  
-            case 26: speedF = increments; break;
         }
 
     }
@@ -325,12 +303,10 @@ public class CreateLine : MonoBehaviour
         float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
 
         switch(controlNumber){
-            case 10: amplitudeA = increments; break;
-            case 11: amplitudeB = increments; break;
-            case 12: amplitudeC = increments; break;
-            case 13: amplitudeD = increments; break;
-            case 14: amplitudeE = increments; break;
-            case 15: amplitudeF = increments; break;
+            case 1: amplitudeA = increments; break;
+            case 2: amplitudeB = increments; break;
+            case 3: amplitudeC = increments; break;
+            case 4: amplitudeD = increments; break;
         }
 
     }
