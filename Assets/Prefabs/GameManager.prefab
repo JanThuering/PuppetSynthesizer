@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 88005516244083039}
+  - component: {fileID: 8920915931408000488}
   - component: {fileID: 6970745041888927260}
   - component: {fileID: 2135393879385534873}
-  - component: {fileID: 8920915931408000488}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -36,6 +36,20 @@ Transform:
   - {fileID: 6566410334860292298}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8920915931408000488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085248416837100406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032f0119ee338f643a8d8fac11c0dec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetAnimation: {fileID: 0}
+  createLine: {fileID: 0}
 --- !u!114 &6970745041888927260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,20 +78,6 @@ MonoBehaviour:
   amountOfDots: 10000
   size: 0.01
   distribution: {x: 10, y: 10, z: 10}
---- !u!114 &8920915931408000488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085248416837100406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 032f0119ee338f643a8d8fac11c0dec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puppetAnimation: {fileID: 0}
-  lineRenderer: {fileID: 2325180773715706848}
 --- !u!1 &3021875952772663878
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,9 +581,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   curveArray: []
   changeCurvesInInspector: 1
-  curveTypeIndex: 
-  amplitudeArray: []
-  speedArray: []
+  CurveTypeIndex: 
   AmplitudeA: 1
   SpeedA: 1
   AmplitudeB: 1

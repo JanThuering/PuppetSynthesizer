@@ -680,13 +680,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2325180773715706848, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
+      propertyPath: speedA
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325180773715706848, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
       propertyPath: frequency
-      value: 3.43
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325180773715706848, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: amplitudeA
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2325180773715706848, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: totalAmplitude
-      value: 0.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2325180773715706848, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
