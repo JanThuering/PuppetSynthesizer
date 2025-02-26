@@ -10,13 +10,14 @@ public class PuppetAnimation : MonoBehaviour
 {
     //References
     private CreateLine createLineScript;
+
     //Nullpunkt und Abstand von der Linie
     private Transform lineStart;
     private float distanceZeroToLine;
 
     [Header("ROTATION VALUES")]
 
-    [SerializeField] private float movementMultiplier = 3;
+    [SerializeField] public float MovementMultiplier = 3;
     [SerializeField] private Vector3 armRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 50, 80);
     [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
@@ -24,7 +25,7 @@ public class PuppetAnimation : MonoBehaviour
 
     [Header("SCALE OBJECTS")]
     [SerializeField] private bool affectScale = false;
-    [SerializeField] private float scaleMultiplier = 2;
+    [SerializeField] public float ScaleMultiplier = 2;
     [SerializeField] private GameObject[] scaledObjects;
     private Vector3[] scaledObjStartScale;
     private Vector3[] scaledObjStartPos;
@@ -95,8 +96,8 @@ public class PuppetAnimation : MonoBehaviour
 
     private void Rotate(GameObject[] effectors, Vector3[] startRot, Vector3[] startPos, Transform controlPoint, Vector3 rotationMultiplier)
     {
-        //TODO schreibe eine funktion im movepoints Script die die Startposition der Punkte zurückgibt
-        Vector3 adjustedrotationMultiplier = rotationMultiplier * movementMultiplier;
+        //TODO schreibe eine funktion im movepoints Script die dieMStartposition der Punkte zurückgibt
+        Vector3 adjustedrotationMultiplier = rotationMultiplier * MovementMultiplier;
 
         for (int i = 0; i < effectors.Length; i++)
         {
@@ -123,7 +124,7 @@ public class PuppetAnimation : MonoBehaviour
     //!Is forced in lateupdate after animation rigging has applied constraints!
     private void Scale(GameObject[] scaleableObj, Vector3[] startScale)
     {
-        Vector3 scaleMultiplierVec = new Vector3(scaleMultiplier, scaleMultiplier, scaleMultiplier);
+        Vector3 scaleMultiplierVec = new Vector3(ScaleMultiplier, ScaleMultiplier, ScaleMultiplier);
 
         for (int i = 0; i < scaleableObj.Length; i++)
         {

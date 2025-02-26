@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 88005516244083039}
   - component: {fileID: 6970745041888927260}
   - component: {fileID: 2135393879385534873}
+  - component: {fileID: 8920915931408000488}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -63,6 +64,20 @@ MonoBehaviour:
   amountOfDots: 10000
   size: 0.01
   distribution: {x: 10, y: 10, z: 10}
+--- !u!114 &8920915931408000488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085248416837100406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032f0119ee338f643a8d8fac11c0dec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetAnimation: {fileID: 0}
+  lineRenderer: {fileID: 2325180773715706848}
 --- !u!1 &3021875952772663878
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,10 +444,10 @@ MonoBehaviour:
   LineStart: {fileID: 0}
   LineEnd: {fileID: 0}
   movement: {x: 0, y: 1, z: 0}
-  totalAmplitude: 0.04
-  frequency: 3
-  horizontalMovement: 0.91
-  sliderAmmount: 3
+  GlobalAmplitude: 0.03
+  GlobalFrequency: 2
+  GlobalSpeed: 1
+  sliderAmount: 3
   pointsCount: 300
   pointsArray: []
   curveTypes:
@@ -569,18 +584,14 @@ MonoBehaviour:
   curveTypeIndex: 
   amplitudeArray: []
   speedArray: []
-  amplitudeA: 1.02
-  speedA: 1
-  amplitudeB: 1
-  speedB: 1
-  amplitudeC: 1
-  speedC: 1
-  amplitudeD: 1
-  speedD: 1
-  amplitudeE: 1
-  speedE: 1
-  amplitudeF: 1
-  speedF: 1
+  AmplitudeA: 1
+  SpeedA: 1
+  AmplitudeB: 1
+  SpeedB: 1
+  AmplitudeC: 1
+  SpeedC: 1
+  AmplitudeD: 1
+  SpeedD: 1
 --- !u!120 &1600046383545866864
 LineRenderer:
   serializedVersion: 2

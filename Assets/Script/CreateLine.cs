@@ -40,17 +40,17 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private Vector3 movement = new Vector3(0,1,0);
 
     [Range(0, 5)]
-    [SerializeField] private float totalAmplitude = 1;
+    public float GlobalAmplitude = 0.03f;
     [Range(1f, 10)]
-    public float frequency = 1;
+    public float GlobalFrequency = 2f;
     [Range(0f, 5)]
-    public float horizontalMovement = 10;
+    public float GlobalSpeed = 1f;
     private float accumulatedTime = 0;
 
 
     [Header ("INTERFACE VALUES")]
     [Range (1, 10)]
-    [SerializeField] private int sliderAmmount = 3;
+    [SerializeField] private int sliderAmount = 3;
 
 
     [Header ("Points")]
@@ -64,28 +64,28 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private AnimationCurve [] curveArray;
     [SerializeField] private bool changeCurvesInInspector = false;
     [Range(0, 5)]
-    [SerializeField] private int [] curveTypeIndex; //needed to change wave type in the inspector
-    [SerializeField] private float [] amplitudeArray;
-    [SerializeField] private float [] speedArray;
+    public int [] CurveTypeIndex; //needed to change wave type in the inspector
+    private float [] amplitudeArray;
+    private float [] speedArray;
 
 
     [Header ("CURVE PROPERTIES")]
     [Range(0, 5)]
-    [SerializeField] float amplitudeA = 1;
+    public float AmplitudeA = 1;
     [Range(0, 5)]
-    [SerializeField] float speedA = 1;
+    public float SpeedA = 1;
     [Range(0, 5)]
-    [SerializeField] float amplitudeB = 1;
+    public float AmplitudeB = 1;
     [Range(0, 5)]
-    [SerializeField] float speedB = 1;
+    public float SpeedB = 1;
     [Range(0, 5)]
-    [SerializeField] float amplitudeC = 1;
+    public float AmplitudeC = 1;
     [Range(0, 5)]
-    [SerializeField] float speedC = 1;
+    public float SpeedC = 1;
     [Range(0, 5)]
-    [SerializeField] float amplitudeD = 1;
+    public float AmplitudeD = 1;
     [Range(0, 5)]
-    [SerializeField] float speedD = 1;
+    public float SpeedD = 1;
     
 
     // Start is called before the first frame update
@@ -133,23 +133,23 @@ public class CreateLine : MonoBehaviour
     private void UpdateCurves(){
         if(changeCurvesInInspector){
             for(int i = 0; i < curveArray.Length; i++){
-                curveArray[i] = curveTypes[curveTypeIndex[i]];
+                curveArray[i] = curveTypes[CurveTypeIndex[i]];
             }
         }
     }
 
     private void SegmentedCurve(){
         // Move the points in the defined axis, acording to the curves
-        ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], frequency);
-        ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], frequency);
-        ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], frequency);
-        ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], frequency);
+        ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], GlobalFrequency);
+        ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], GlobalFrequency);
+        ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], GlobalFrequency);
+        ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], GlobalFrequency);
 
     }
 
     private void CreateArrays(){
         curveArray = new AnimationCurve[4];
-        curveTypeIndex = new int[4];
+        CurveTypeIndex = new int[4];
         amplitudeArray = new float[4];
         speedArray = new float[4];
 
@@ -162,27 +162,27 @@ public class CreateLine : MonoBehaviour
         //Fills the arrays with the curves and amplitudes
         //easiere access to the values for the MIDI input
 
-        amplitudeArray[0] = amplitudeA;
-        speedArray[0] = speedA;
+        amplitudeArray[0] = AmplitudeA;
+        speedArray[0] = SpeedA;
 
 
-        amplitudeArray[1] = amplitudeB;
-        speedArray[1] = speedB;
+        amplitudeArray[1] = AmplitudeB;
+        speedArray[1] = SpeedB;
 
 
-        amplitudeArray[2] = amplitudeC;
-        speedArray[2] = speedC;
+        amplitudeArray[2] = AmplitudeC;
+        speedArray[2] = SpeedC;
 
 
-        amplitudeArray[3] = amplitudeD;
-        speedArray[3] = speedD;
+        amplitudeArray[3] = AmplitudeD;
+        speedArray[3] = SpeedD;
 
     }
     private void CreatePoints(){    
         //check if (points count + 2) is divisible by slider ammount
-        if((pointsCount+2)%sliderAmmount != 0){
+        if((pointsCount+2)%sliderAmount != 0){
             //if not, add points until it is
-            for(int i = 0; (pointsCount+2)%sliderAmmount != 0; i++){
+            for(int i = 0; (pointsCount+2)%sliderAmount != 0; i++){
                 pointsCount++;
             }
         }
@@ -252,7 +252,7 @@ public class CreateLine : MonoBehaviour
         */
 
         // int curveTypeIndex;
-        float steps = valueAmmount / sliderAmmount;
+        float steps = valueAmmount / sliderAmount;
         int slider = 1;
 
         switch(controlNumber){
@@ -264,11 +264,11 @@ public class CreateLine : MonoBehaviour
         }
 
         //assign curve to slider depending on value
-        for(int i = 1; i <= sliderAmmount; i++){
+        for(int i = 1; i <= sliderAmount; i++){
             if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
 
-                curveTypeIndex[slider-1] = i-1;
-                curveArray[slider-1] = curveTypes[curveTypeIndex[slider-1]];
+                CurveTypeIndex[slider-1] = i-1;
+                curveArray[slider-1] = curveTypes[CurveTypeIndex[slider-1]];
             }
 
         }
@@ -285,10 +285,10 @@ public class CreateLine : MonoBehaviour
         float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
 
         switch(controlNumber){
-            case 21: speedA = increments; break;
-            case 22: speedB = increments; break;
-            case 23: speedC = increments; break;
-            case 24: speedD = increments; break;
+            case 21: SpeedA = increments; break;
+            case 22: SpeedB = increments; break;
+            case 23: SpeedC = increments; break;
+            case 24: SpeedD = increments; break;
         }
 
     }
@@ -303,10 +303,10 @@ public class CreateLine : MonoBehaviour
         float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
 
         switch(controlNumber){
-            case 1: amplitudeA = increments; break;
-            case 2: amplitudeB = increments; break;
-            case 3: amplitudeC = increments; break;
-            case 4: amplitudeD = increments; break;
+            case 1: AmplitudeA = increments; break;
+            case 2: AmplitudeB = increments; break;
+            case 3: AmplitudeC = increments; break;
+            case 4: AmplitudeD = increments; break;
         }
 
     }
@@ -321,16 +321,16 @@ public class CreateLine : MonoBehaviour
             frequency -> the frequency of the curve
         */
 
-        if(slider > sliderAmmount){
+        if(slider > sliderAmount){
             Debug.LogWarning($"Slider{slider} out of range. {curveName} will be ignored");
             return;
         }
 
         //counts up so the wave moves up the index (multiplied by 10 for better movement)
-        accumulatedTime += Time.deltaTime * horizontalMovement * 10;
+        accumulatedTime += Time.deltaTime * GlobalSpeed * 10;
 
         //calculate range of points
-        int range = pointsArray.Length / sliderAmmount;
+        int range = pointsArray.Length / sliderAmount;
         int start = range * (slider-1);
         int end = range * slider;
 
@@ -345,7 +345,7 @@ public class CreateLine : MonoBehaviour
             // Use modulo to wrap value between 0-1
             normalizedT = normalizedT % 1.0f;
             
-            float curveValue = curve.Evaluate(normalizedT) * amplitude * totalAmplitude;
+            float curveValue = curve.Evaluate(normalizedT) * amplitude * GlobalAmplitude;
 
             Vector3 right = pointsArray[currentIndex].transform.right * curveValue * this.movement.x;
             Vector3 up = pointsArray[currentIndex].transform.up * curveValue * this.movement.y;
@@ -365,7 +365,7 @@ public class CreateLine : MonoBehaviour
     //NEW CURVESYSTEM
     private void ControlGlobalCurve(){
         // counts up so the wave moves up the index
-        accumulatedTime += Time.deltaTime * horizontalMovement;
+        accumulatedTime += Time.deltaTime * GlobalSpeed;
 
         // Move points in the defined axis, according to the curves
         for (int i = 0; i < pointsArray.Length; i++) {
@@ -373,9 +373,9 @@ public class CreateLine : MonoBehaviour
             float combinedCurveValue = 0;
 
             //Combine all curves
-            for (int j = 0; j < sliderAmmount ; j++) {  // Evaluate the curve based on the current index and frequency
-                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * frequency + accumulatedTime * speedArray[j]);
-                combinedCurveValue += curveEvaluation * amplitudeArray[j] * totalAmplitude;
+            for (int j = 0; j < sliderAmount ; j++) {  // Evaluate the curve based on the current index and frequency
+                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * GlobalFrequency + accumulatedTime * speedArray[j]);
+                combinedCurveValue += curveEvaluation * amplitudeArray[j] * GlobalAmplitude;
             }
 
             //Move in defined direction
