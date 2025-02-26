@@ -50,6 +50,11 @@ public class MidiInputControll : MonoBehaviour {
                 globalControlScript.MidiSpeedWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
             }
 
+            //TYPE - Control speed of the individual Waves
+            if(controlChange.ControlNumber >= 32 && controlChange.ControlNumber <= 35){
+                globalControlScript.MidiWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            }
+
             // if(controlChange.ControlNumber >= 1 && controlChange.ControlNumber <= 4){
             //     createLineScript.MidiAmplitudeWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
             // }

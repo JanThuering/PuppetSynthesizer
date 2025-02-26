@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -21,6 +22,7 @@ public class GlobalControl : MonoBehaviour
     [Header("Amplitude")]
     [SerializeField] private float minAmplitude = 0;
     [SerializeField] private float maxAmplitude = 5;
+
     [Header("Frequency")]
     [SerializeField] private float minFrequency = 1;
     [SerializeField] private float maxFrequency = 10;
@@ -206,6 +208,34 @@ public class GlobalControl : MonoBehaviour
             case 11: speedB = increments; break;
             case 12: speedC = increments; break;
             case 13: speedD = increments; break;
+        }
+
+    }
+
+    public void MidiWaveType(int controlNumber, float controlValue, float valueAmmount){
+        /*VALUE EXPLANATION
+            controlNumber -> slider (for which slider the curve is)
+            controlValue -> waveType (amplitude of the curve)
+            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+        */
+        //int waveType = Mathf.FloorToInt(controlValue / valueAmmount * 4);    //calculate the value of the slider / knob
+        
+        int index = 0;
+        
+        //set the index of the waveType
+        switch(controlNumber){
+            case 32: index = 0; break;
+            case 33: index = 1; break;
+            case 34: index = 2; break;
+            case 35: index = 3; break;
+        }
+
+        //switch to next wavetype
+        if(controlValue == 0){
+            WaveType[index] += 1;
+            if(WaveType[index] > 3){
+                WaveType[index] = 0;
+            }
         }
 
     }
