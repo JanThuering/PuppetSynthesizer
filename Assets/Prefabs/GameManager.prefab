@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puppetAnimation: {fileID: 0}
-  createLine: {fileID: 0}
+  createLine: {fileID: 2325180773715706848}
 --- !u!114 &6970745041888927260
 MonoBehaviour:
   m_ObjectHideFlags: 0
