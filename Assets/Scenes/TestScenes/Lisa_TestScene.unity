@@ -1487,6 +1487,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2325180773715706848, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: GlobalAmplitude
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: puppetAnimation
@@ -1629,7 +1634,7 @@ PrefabInstance:
     - target: {fileID: 6578526420000567457, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 6578526420000567457, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
@@ -2185,11 +2190,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MarionetteRig
-      objectReference: {fileID: 0}
-    - target: {fileID: 8679564036945609960, guid: cd7c9a416eeb640f5adb9e05c48d9918,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
