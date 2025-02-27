@@ -4,6 +4,10 @@ Shader "Hidden/Edge Detection"
     {
         _OutlineThickness ("Outline Thickness", Float) = 1
         _OutlineColor ("Outline Color", Color) = (0, 0, 0, 1)
+        _AngleFactor ("Angle Factor", Float) = 0.05
+        _DepthThreshold ("Depth Threshold", Float) = 0.005
+        _NormalThreshold ("Normal Threshold", Float) = 0.25
+        _LuminanceThreshold ("Luminance Threshold", Float) = 0.5
     }
 
     SubShader
@@ -25,12 +29,17 @@ Shader "Hidden/Edge Detection"
             HLSLPROGRAM
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/SpaceTransforms.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl" // needed to sample scene depth
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl" // needed to sample scene normals
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl" // needed to sample scene color/luminance
 
             float _OutlineThickness;
             float4 _OutlineColor;
+            float _AngleFactor;
+            float _DepthThreshold;
+            float _NormalThreshold;
+            float _LuminanceThreshold;
 
             #pragma vertex Vert // vertex shader is provided by the Blit.hlsl include
             #pragma fragment frag
@@ -89,20 +98,24 @@ Shader "Hidden/Edge Detection"
                     luminance_samples[i] = SampleSceneLuminance(uvs[i]);
                 }
                 
+                float3 viewDir = mul(UNITY_MATRIX_I_P, IN.positionCS).xyz;
+                float3 viewNor = SampleSceneNormals(uv);
+                float viewDepth = SampleSceneDepth(uv);
+                float NdotV = 1 - dot(viewNor, -viewDir);
+                float depthNorFac = saturate((NdotV - _AngleFactor) / (1 - _AngleFactor)) * 10.0f + 1;
+
                 // Apply edge detection kernel on the samples to compute edges.
                 float edge_depth = RobertsCross(depth_samples);
                 float edge_normal = RobertsCross(normal_samples);
                 float edge_luminance = RobertsCross(luminance_samples);
                 
                 // Threshold the edges (discontinuity must be above certain threshold to be counted as an edge). The sensitivities are hardcoded here.
-                float depth_threshold = 1 / 200.0f;
+                float depth_threshold = _DepthThreshold * depthNorFac;
                 edge_depth = edge_depth > depth_threshold ? 1 : 0;
                 
-                float normal_threshold = 1 / 4.0f;
-                edge_normal = edge_normal > normal_threshold ? 1 : 0;
+                edge_normal = edge_normal > _NormalThreshold ? 1 : 0;
                 
-                float luminance_threshold = 1 / 0.5f;
-                edge_luminance = edge_luminance > luminance_threshold ? 1 : 0;
+                edge_luminance = edge_luminance > _LuminanceThreshold ? 1 : 0;
                 
                 // Combine the edges from depth/normals/luminance using the max operator.
                 float edge = max(edge_depth, max(edge_normal, edge_luminance));

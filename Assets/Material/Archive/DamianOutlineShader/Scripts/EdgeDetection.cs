@@ -11,6 +11,10 @@ public class EdgeDetection : ScriptableRendererFeature
 
         private static readonly int OutlineThicknessProperty = Shader.PropertyToID("_OutlineThickness");
         private static readonly int OutlineColorProperty = Shader.PropertyToID("_OutlineColor");
+        private static readonly int AngleFactorProperty = Shader.PropertyToID("_AngleFactor");
+        private static readonly int DepthThresholdProperty = Shader.PropertyToID("_DepthThreshold");
+        private static readonly int NormalThresholdProperty = Shader.PropertyToID("_NormalThreshold");
+        private static readonly int LuminanceThresholdProperty = Shader.PropertyToID("_LuminanceThreshold");
 
         public EdgeDetectionPass()
         {
@@ -24,6 +28,10 @@ public class EdgeDetection : ScriptableRendererFeature
 
             material.SetFloat(OutlineThicknessProperty, settings.outlineThickness);
             material.SetColor(OutlineColorProperty, settings.outlineColor);
+            material.SetFloat(AngleFactorProperty, settings.angleFactor);
+            material.SetFloat(DepthThresholdProperty, settings.depthThreshold);
+            material.SetFloat(NormalThresholdProperty, settings.normalThreshold);
+            material.SetFloat(LuminanceThresholdProperty, settings.luminanceThreshold);
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -58,6 +66,10 @@ public class EdgeDetection : ScriptableRendererFeature
         public RenderPassEvent renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
         [Range(0, 15)] public int outlineThickness = 3;
         public Color outlineColor = Color.black;
+        public float angleFactor = 0.05f;
+        public float depthThreshold = 0.005f;
+        public float normalThreshold = 0.25f;
+        public float luminanceThreshold = 0.5f;
     }
 
     [SerializeField] private EdgeDetectionSettings settings;
