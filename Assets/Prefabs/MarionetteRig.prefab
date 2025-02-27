@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_Root: {fileID: 7285192869608421311}
+    m_Root: {fileID: 5269927387149650458}
     m_Tip: {fileID: 5381287087165938110}
     m_RootTarget: {fileID: 3621867904814487447}
     m_TipTarget: {fileID: 2436020824284639241}
@@ -2232,7 +2232,7 @@ MonoBehaviour:
   MovementMultiplier: 3
   armRotationMultiplier: {x: 0, y: 20, z: 160}
   legRotationMultiplier: {x: 80, y: 10, z: 80}
-  torsoMultiplier: {x: -15, y: 50, z: 15}
+  torsoMultiplier: {x: -60, y: 50, z: 30}
   armLControlPoint: {fileID: 918701929169346446}
   armLEffectors:
   - {fileID: 4229666630624040015}

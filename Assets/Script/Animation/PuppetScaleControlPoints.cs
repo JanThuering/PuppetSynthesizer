@@ -32,8 +32,15 @@ public class PuppetScaleControlPoints : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //MultiplierToAmplitude();
         if (affectScale) Scale(scaledObjects, scaledObjStartScale);
         if (affectScale!) ScaleBack(scaledObjects, scaledObjStartScale);
+    }
+
+     private void MultiplierToAmplitude()
+    {
+        ScaleMultiplier = Mathf.Lerp(0.5f, 0.52f, Mathf.InverseLerp(0, 15, createLineScript.MaxAmplitudeClamper));
+        print(ScaleMultiplier);
     }
 
     private void Scale(GameObject[] scaleableObj, Vector3[] startScale)
