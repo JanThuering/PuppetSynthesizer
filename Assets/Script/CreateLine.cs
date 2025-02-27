@@ -32,11 +32,12 @@ public class CreateLine : MonoBehaviour
     [Range(0f, 5)]
     [SerializeField] private float globalSpeed = 1f;
     private float accumulatedTime = 0;
+    public float MaxAmplitudeClamper;
 
 
     [Header ("INTERFACE VALUES")]
     [Range (1, 10)]
-    [SerializeField] private int sliderAmount = 3;
+    public int SliderAmount = 3;
 
 
     [Header ("Points")]
@@ -46,10 +47,10 @@ public class CreateLine : MonoBehaviour
 
 
     [Header ("CURVES")]
-    [SerializeField] private AnimationCurve [] curveTypes;
+    public AnimationCurve [] curveTypes;
     [SerializeField] private AnimationCurve [] curveArray;
     [SerializeField] private bool changeCurvesInInspector = false;
-    [Range(0, 5)]
+    [Range(0, 3)]
     public int [] CurveTypeIndex; //needed to change wave type in the inspector
     private float [] amplitudeArray;
     private float [] speedArray;
@@ -134,7 +135,12 @@ public class CreateLine : MonoBehaviour
         speedC = globalControlScript.SpeedC;
         amplitudeD = globalControlScript.AmplitudeD;
         speedD = globalControlScript.SpeedD;
-    }
+
+        //curve types
+        for(int i = 0; i < CurveTypeIndex.Length; i++){
+            CurveTypeIndex[i] = globalControlScript.WaveType[i];
+        }    
+    }       
 
     private void UpdateCurves(){
         if(changeCurvesInInspector){
@@ -183,9 +189,9 @@ public class CreateLine : MonoBehaviour
 
     private void CreatePoints(){    
         //check if (points count + 2) is divisible by slider ammount
-        if((pointsCount+2)%sliderAmount != 0){
+        if((pointsCount+2)%SliderAmount != 0){
             //if not, add points until it is
-            for(int i = 0; (pointsCount+2)%sliderAmount != 0; i++){
+            for(int i = 0; (pointsCount+2)%SliderAmount != 0; i++){
                 pointsCount++;
             }
         }
@@ -260,7 +266,7 @@ public class CreateLine : MonoBehaviour
     //     */
 
     //     // int curveTypeIndex;
-    //     float steps = valueAmmount / sliderAmount;
+    //     float steps = valueAmmount / SliderAmount;
     //     int slider = 1;
 
     //     switch(controlNumber){
@@ -271,7 +277,7 @@ public class CreateLine : MonoBehaviour
     //     }
 
     //     //assign curve to slider depending on value
-    //     for(int i = 1; i <= sliderAmount; i++){
+    //     for(int i = 1; i <= SliderAmount; i++){
     //         if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
     //             CurveTypeIndex[slider-1] = i-1;
     //             curveArray[slider-1] = curveTypes[CurveTypeIndex[slider-1]];
@@ -328,7 +334,7 @@ public class CreateLine : MonoBehaviour
             frequency -> the frequency of the curve
         */
 
-        if(slider > sliderAmount){
+        if(slider > SliderAmount){
             Debug.LogWarning($"Slider{slider} out of range. {curveName} will be ignored");
             return;
         }
@@ -337,7 +343,7 @@ public class CreateLine : MonoBehaviour
         accumulatedTime += Time.deltaTime * globalSpeed * 10;
 
         //calculate range of points
-        int range = pointsArray.Length / sliderAmount;
+        int range = pointsArray.Length / SliderAmount;
         int start = range * (slider-1);
         int end = range * slider;
 
@@ -373,8 +379,8 @@ public class CreateLine : MonoBehaviour
     private void ControlGlobalCurve(){
         // counts up so the wave moves up the index
         accumulatedTime += Time.deltaTime * globalSpeed;
-        float maxAmplitude = globalControlScript.GetMaxAmplitude() * sliderAmount;
-        float maxAmplitudeClamper = globalAmplitude / maxAmplitude;
+        float maxAmplitude = globalControlScript.GetMaxAmplitude() * SliderAmount;
+        MaxAmplitudeClamper = globalAmplitude / maxAmplitude;
 
         // Move points in the defined axis, according to the curves
         for (int i = 0; i < pointsArray.Length; i++) {
@@ -382,10 +388,10 @@ public class CreateLine : MonoBehaviour
             float combinedCurveValue = 0;
 
             //Combine all curves
-            for (int j = 0; j < sliderAmount ; j++) {  // Evaluate the curve based on the current index and frequency
+            for (int j = 0; j < SliderAmount ; j++) {  // Evaluate the curve based on the current index and frequency
                 float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * globalFrequency + accumulatedTime * speedArray[j]);
                 //combinedCurveValue += curveEvaluation * amplitudeArray[j] * globalAmplitude;
-                combinedCurveValue += curveEvaluation * amplitudeArray[j] * maxAmplitudeClamper;
+                combinedCurveValue += curveEvaluation * amplitudeArray[j] * MaxAmplitudeClamper;
             }
 
             //Move in defined direction

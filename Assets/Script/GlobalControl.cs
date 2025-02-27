@@ -14,7 +14,7 @@ public class GlobalControl : MonoBehaviour
     [Header("EXTERNAL REFERENCES")]
     //ANIMATIONS-PARAMETERS
     [SerializeField] private PuppetAnimation puppetAnimation;
-    [SerializeField] private CreateLine createLine;
+    [SerializeField] private CreateLine createLineScript;
     private float animationMultiplier; //effects the amount of movement of the puppet
     private float scaleMultiplier; //effects the amount of scaling of the controlpoints
 
@@ -25,16 +25,17 @@ public class GlobalControl : MonoBehaviour
 
     [Header("Frequency")]
     [SerializeField] private float minFrequency = 1;
-    [SerializeField] private float maxFrequency = 10;
+    [SerializeField] private float maxFrequency = 5;
     [Header("Speed")]
     [SerializeField] private float minSpeed = 1;
-    [SerializeField] private float maxSpeed = 5;
+    [SerializeField] private float maxSpeed = 2.5f;
 
 
 
     //WAVE-PARAMETERS
     [Header("GLOBAL WAVE")]
     [SerializeField] private float globalAmplitude;
+    [SerializeField] private float maxGlobalAmplitude = 2.4f;
     [SerializeField] private float globalFrequency;
     [SerializeField] private float globalSpeed;
     [SerializeField] private int [] waveType =  {0, 0, 0, 0}; 
@@ -48,7 +49,7 @@ public class GlobalControl : MonoBehaviour
     public float GlobalAmplitude
     {
         get => globalAmplitude;
-        set => globalAmplitude = Mathf.Clamp(value, minAmplitude, maxAmplitude);
+        set => globalAmplitude = Mathf.Clamp(value, 0, maxGlobalAmplitude);
     }
     public float GlobalFrequency
     {
@@ -143,6 +144,8 @@ public class GlobalControl : MonoBehaviour
     }
 
     private void SetStartValues(){
+        createLineScript = CreateLine.Instance;
+
         GlobalAmplitude = 1;
         GlobalFrequency = 1;
         GlobalSpeed = 1;
@@ -171,7 +174,7 @@ public class GlobalControl : MonoBehaviour
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
         switch(controlNumber){
-            case 7: GlobalAmplitude = controlValue / valueAmmount * (maxAmplitude-minAmplitude) + minAmplitude; break;
+            case 7: GlobalAmplitude = controlValue / valueAmmount * (maxGlobalAmplitude-minAmplitude) + minAmplitude; break;
             case 8: GlobalFrequency = controlValue / valueAmmount * (maxFrequency-minFrequency) + minFrequency; break;
             case 9: GlobalSpeed = controlValue / valueAmmount * (maxSpeed-minSpeed) + minSpeed; break;
         }
@@ -212,32 +215,51 @@ public class GlobalControl : MonoBehaviour
 
     }
 
-    public void MidiWaveType(int controlNumber, float controlValue, float valueAmmount){
+    public void MidiWaveType(int controlNumber, float controlValue, float valueAmmount, bool fader){
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
             controlValue -> waveType (amplitude of the curve)
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
-        //int waveType = Mathf.FloorToInt(controlValue / valueAmmount * 4);    //calculate the value of the slider / knob
         
         int index = 0;
         
         //set the index of the waveType
-        switch(controlNumber){
-            case 32: index = 0; break;
-            case 33: index = 1; break;
-            case 34: index = 2; break;
-            case 35: index = 3; break;
-        }
+        if(fader){
+            switch(controlNumber){
+                case 15: index = 0; break;
+                case 16: index = 1; break;
+                case 17: index = 2; break;
+                case 18: index = 3; break;
+            }
 
-        //switch to next wavetype
-        if(controlValue == 0){
-            WaveType[index] += 1;
-            if(WaveType[index] > 3){
-                WaveType[index] = 0;
+            float steps =  valueAmmount / createLineScript.SliderAmount;
+
+            for( int i = 1; i <= 4; i++){
+                if(controlValue >= (steps*i - steps) && controlValue <= (steps*i)){
+                    if(i > 4){
+                        i = 4;
+                    }
+                    waveType[index] = i-1;
+                }
             }
         }
 
+        if(!fader){
+            switch(controlNumber){
+                case 32: index = 0; break;
+                case 33: index = 1; break;
+                case 34: index = 2; break;
+                case 35: index = 3; break;
+            }
+            //switch to next wavetype
+            if(controlValue == 0){
+                WaveType[index] += 1;
+                if(WaveType[index] > 3){
+                    WaveType[index] = 0;
+                }
+            }
+        }
     }
 
 

@@ -65,12 +65,13 @@ MonoBehaviour:
   minAmplitude: 0
   maxAmplitude: 5
   minFrequency: 1
-  maxFrequency: 10
-  minSpeed: 1
-  maxSpeed: 5
+  maxFrequency: 5
+  minSpeed: 0
+  maxSpeed: 2.5
   globalAmplitude: 0
   globalFrequency: 0
   globalSpeed: 0
+  waveType: 00000000000000000000000000000000
   amplitudeA: 0
   speedA: 0
   amplitudeB: 0

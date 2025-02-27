@@ -51,25 +51,9 @@ public class MidiInputControll : MonoBehaviour {
             }
 
             //TYPE - Control speed of the individual Waves
-            if(controlChange.ControlNumber >= 32 && controlChange.ControlNumber <= 35){
-                globalControlScript.MidiWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            if(controlChange.ControlNumber >= 32 && controlChange.ControlNumber <= 35 || controlChange.ControlNumber >= 15 && controlChange.ControlNumber <= 18){
+                globalControlScript.MidiWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f, true);
             }
-
-            // if(controlChange.ControlNumber >= 1 && controlChange.ControlNumber <= 4){
-            //     createLineScript.MidiAmplitudeWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
-            // }
-
-            // if(controlChange.ControlNumber >= 10 && controlChange.ControlNumber <= 13){
-            //     createLineScript.MidiSpeedWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
-            // }
-
-            // //Control the curve in CreateLineScript
-            // if (controlChange.ControlNumber < 20){
-            //     createLineScript.MidiControlWave(controlChange.ControlNumber, controlChange.ControlValue, 127f);
-            // }
-            // if(controlChange.ControlNumber > 20){
-            //     createLineScript.MidiDefineWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f);
-            // }
         }
         
         
