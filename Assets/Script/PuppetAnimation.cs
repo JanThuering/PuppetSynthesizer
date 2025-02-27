@@ -16,13 +16,13 @@ public class PuppetAnimation : MonoBehaviour
     //Nullpunkt und Abstand von der Linie
     private Transform lineStart;
     private float distanceZeroToLine;
-    
+
     [Header("ROTATION VALUES")]
 
     [SerializeField] public float MovementMultiplier = 3;
-    [SerializeField] private Vector3 armRotationMultiplier = new Vector3(80, 50, 80);
-    [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 50, 80);
-    [SerializeField] private Vector3 torsoMultiplier = new Vector3(20, 100, 20);
+    [SerializeField] private Vector3 armRotationMultiplier = new Vector3(0, 20, 160);
+    [SerializeField] private Vector3 legRotationMultiplier = new Vector3(80, 10, 80);
+    [SerializeField] private Vector3 torsoMultiplier = new Vector3(-10, 50, -10);
     private float lerpT = 5f;
 
     [Header("ROTATEABLE OBJECTS")]  //animates/rotates the limbs - fill in the inspector with the control points and effectors
@@ -71,7 +71,12 @@ public class PuppetAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MultiplierToAmplitude();
         RotateLimbs();
+    }
+    private void MultiplierToAmplitude()
+    {
+        MovementMultiplier = Mathf.Lerp(3, 20, Mathf.InverseLerp(0, 15, createLineScript.MaxAmplitudeClamper));
     }
 
     private void RotateLimbs()
@@ -85,7 +90,6 @@ public class PuppetAnimation : MonoBehaviour
 
     private void Rotate(GameObject[] effectors, Vector3[] startRot, Vector3[] startPos, Transform controlPoint, Vector3 rotationMultiplier)
     {
-        //TODO schreibe eine funktion im movepoints Script die dieMStartposition der Punkte zurückgibt
         Vector3 adjustedrotationMultiplier = rotationMultiplier * MovementMultiplier;
 
         for (int i = 0; i < effectors.Length; i++)
