@@ -7,23 +7,9 @@ using UnityEngine.Rendering;
 public class CreateLine : MonoBehaviour
 {
     // Singleton instance
-    private static CreateLine instance;
-    public static CreateLine Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<CreateLine>();
-                if (instance == null)
-                {
-                    GameObject go = new GameObject("CreateLine");
-                    instance = go.AddComponent<CreateLine>();
-                }
-            }
-            return instance;
-        }
-    }
+    //private static CreateLine Instance;
+    public static CreateLine Instance {get; private set;}
+    private GlobalControl globalControlScript;
 
     [Header ("CHECKS")]
     [SerializeField] private bool segmentedCurves = true;
@@ -40,11 +26,11 @@ public class CreateLine : MonoBehaviour
     [SerializeField] private Vector3 movement = new Vector3(0,1,0);
 
     [Range(0, 5)]
-    public float GlobalAmplitude = 0.03f;
+    [SerializeField] private float globalAmplitude = 0.03f;
     [Range(1f, 10)]
-    public float GlobalFrequency = 2f;
+    public  float globalFrequency = 2f;
     [Range(0f, 5)]
-    public float GlobalSpeed = 1f;
+    [SerializeField] private float globalSpeed = 1f;
     private float accumulatedTime = 0;
 
 
@@ -71,34 +57,35 @@ public class CreateLine : MonoBehaviour
 
     [Header ("CURVE PROPERTIES")]
     [Range(0, 5)]
-    public float AmplitudeA = 1;
+    public float amplitudeA = 1;
     [Range(0, 5)]
-    public float SpeedA = 1;
+    public float speedA = 1;
     [Range(0, 5)]
-    public float AmplitudeB = 1;
+    public float amplitudeB = 1;
     [Range(0, 5)]
-    public float SpeedB = 1;
+    public float speedB = 1;
     [Range(0, 5)]
-    public float AmplitudeC = 1;
+    public float amplitudeC = 1;
     [Range(0, 5)]
-    public float SpeedC = 1;
+    public float speedC = 1;
     [Range(0, 5)]
-    public float AmplitudeD = 1;
+    public float amplitudeD = 1;
     [Range(0, 5)]
-    public float SpeedD = 1;
+    public float speedD = 1;
     
 
     // Start is called before the first frame update
     private void Awake()
     {
         // Ensure only one instance exists
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(this);
+        }else{
+            Instance = this;
         }
         
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
         
 
@@ -115,6 +102,8 @@ public class CreateLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
+        CopyGlobalControlVariables(); //copy the values from the global control script
+
         FillLineRenderer(); //fill the line renderer with the points
         UpdateCurves(); //update the curves
         FillCurveArray(); //fill the curve array with the curves and amplitudes
@@ -130,6 +119,23 @@ public class CreateLine : MonoBehaviour
 
     }
 
+    private void CopyGlobalControlVariables(){
+        //copy the values from the global control script
+        globalAmplitude = globalControlScript.GlobalAmplitude;
+        globalFrequency = globalControlScript.GlobalFrequency;
+        globalSpeed = globalControlScript.GlobalSpeed;
+
+        //individual curve properties
+        amplitudeA = globalControlScript.AmplitudeA;
+        speedA = globalControlScript.SpeedA;
+        amplitudeB = globalControlScript.AmplitudeB;
+        speedB = globalControlScript.SpeedB;
+        amplitudeC = globalControlScript.AmplitudeC;
+        speedC = globalControlScript.SpeedC;
+        amplitudeD = globalControlScript.AmplitudeD;
+        speedD = globalControlScript.SpeedD;
+    }
+
     private void UpdateCurves(){
         if(changeCurvesInInspector){
             for(int i = 0; i < curveArray.Length; i++){
@@ -140,10 +146,10 @@ public class CreateLine : MonoBehaviour
 
     private void SegmentedCurve(){
         // Move the points in the defined axis, acording to the curves
-        ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], GlobalFrequency);
-        ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], GlobalFrequency);
-        ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], GlobalFrequency);
-        ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], GlobalFrequency);
+        ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], globalFrequency);
+        ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], globalFrequency);
+        ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], globalFrequency);
+        ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], globalFrequency);
 
     }
 
@@ -162,22 +168,19 @@ public class CreateLine : MonoBehaviour
         //Fills the arrays with the curves and amplitudes
         //easiere access to the values for the MIDI input
 
-        amplitudeArray[0] = AmplitudeA;
-        speedArray[0] = SpeedA;
+        amplitudeArray[0] = amplitudeA;
+        speedArray[0] = speedA;
 
+        amplitudeArray[1] = amplitudeB;
+        speedArray[1] = speedB;
 
-        amplitudeArray[1] = AmplitudeB;
-        speedArray[1] = SpeedB;
+        amplitudeArray[2] = amplitudeC;
+        speedArray[2] = speedC;
 
-
-        amplitudeArray[2] = AmplitudeC;
-        speedArray[2] = SpeedC;
-
-
-        amplitudeArray[3] = AmplitudeD;
-        speedArray[3] = SpeedD;
-
+        amplitudeArray[3] = amplitudeD;
+        speedArray[3] = speedD;
     }
+
     private void CreatePoints(){    
         //check if (points count + 2) is divisible by slider ammount
         if((pointsCount+2)%sliderAmount != 0){
@@ -232,6 +235,10 @@ public class CreateLine : MonoBehaviour
         if(LineEnd == null){
             Debug.LogError("LineEnd not found");
         }
+        globalControlScript = GlobalControl.Instance;
+        if(globalControlScript == null){
+            Debug.LogError("GlobalControl not found");
+        }
     }
     public void FillLineRenderer()
     {
@@ -244,72 +251,72 @@ public class CreateLine : MonoBehaviour
         }
     }
 
-    public void MidiDefineWaveType(int controlNumber, float controlValue, float valueAmmount){
-        /*VALUE EXPLANATION
-            controlNumber -> slider (for which slider the curve is)
-            controlValue -> waveType (which curve is selected)
-            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
-        */
 
-        // int curveTypeIndex;
-        float steps = valueAmmount / sliderAmount;
-        int slider = 1;
+    // public void MidiDefineWaveType(int controlNumber, float controlValue, float valueAmmount){
+    //     /*VALUE EXPLANATION
+    //         controlNumber -> slider (for which slider the curve is)
+    //         controlValue -> waveType (which curve is selected)
+    //         valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+    //     */
 
-        switch(controlNumber){
-            case 21: slider = 1; break;
-            case 22: slider = 2; break;
-            case 23: slider = 3; break;
-            case 24: slider = 4; break;
+    //     // int curveTypeIndex;
+    //     float steps = valueAmmount / sliderAmount;
+    //     int slider = 1;
 
-        }
+    //     switch(controlNumber){
+    //         case 21: slider = 1; break;
+    //         case 22: slider = 2; break;
+    //         case 23: slider = 3; break;
+    //         case 24: slider = 4; break;
+    //     }
 
-        //assign curve to slider depending on value
-        for(int i = 1; i <= sliderAmount; i++){
-            if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
+    //     //assign curve to slider depending on value
+    //     for(int i = 1; i <= sliderAmount; i++){
+    //         if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
+    //             CurveTypeIndex[slider-1] = i-1;
+    //             curveArray[slider-1] = curveTypes[CurveTypeIndex[slider-1]];
+    //         }
+    //     }
 
-                CurveTypeIndex[slider-1] = i-1;
-                curveArray[slider-1] = curveTypes[CurveTypeIndex[slider-1]];
-            }
-
-        }
-
-    }
+    // }
     
-    public void MidiSpeedWave(int controlNumber, float controlValue, float valueAmmount){
-        /*VALUE EXPLANATION
-            controlNumber -> slider (for which slider the curve is)
-            controlValue -> waveType (amplitude of the curve)
-            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
-        */
+    // public void MidiSpeedWave(int controlNumber, float controlValue, float valueAmmount){
+    //     /*VALUE EXPLANATION
+    //         controlNumber -> slider (for which slider the curve is)
+    //         controlValue -> waveType (amplitude of the curve)
+    //         valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+    //     */
 
-        float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
+    //     float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
 
-        switch(controlNumber){
-            case 21: SpeedA = increments; break;
-            case 22: SpeedB = increments; break;
-            case 23: SpeedC = increments; break;
-            case 24: SpeedD = increments; break;
-        }
+    //     switch(controlNumber){
+    //         case 21: speedA = increments; break;
+    //         case 22: speedB = increments; break;
+    //         case 23: speedC = increments; break;
+    //         case 24: speedD = increments; break;
+    //     }
 
-    }
+    // }
     
-    public void MidiAmplitudeWave(int controlNumber, float controlValue, float valueAmmount){
-        /*VALUE EXPLANATION
-            controlNumber -> segment (which curve is selected)
-            controlValue -> waveType (amplitude or speed of the curve)
-            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
-        */
+    // public void MidiAmplitudeWave(int controlNumber, float controlValue, float valueAmmount){
+    //     /*VALUE EXPLANATION
+    //         controlNumber -> segment (which curve is selected)
+    //         controlValue -> waveType (amplitude or speed of the curve)
+    //         valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+    //     */
         
-        float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
+    //     float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
 
-        switch(controlNumber){
-            case 1: AmplitudeA = increments; break;
-            case 2: AmplitudeB = increments; break;
-            case 3: AmplitudeC = increments; break;
-            case 4: AmplitudeD = increments; break;
-        }
+    //     switch(controlNumber){
+    //         case 1: amplitudeA = increments; break;
+    //         case 2: amplitudeB = increments; break;
+    //         case 3: amplitudeC = increments; break;
+    //         case 4: amplitudeD = increments; break;
+    //     }
 
-    }
+    // }
+
+
 
     //SEGMENTED CURVES
     private void ControlSegmentedCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
@@ -327,7 +334,7 @@ public class CreateLine : MonoBehaviour
         }
 
         //counts up so the wave moves up the index (multiplied by 10 for better movement)
-        accumulatedTime += Time.deltaTime * GlobalSpeed * 10;
+        accumulatedTime += Time.deltaTime * globalSpeed * 10;
 
         //calculate range of points
         int range = pointsArray.Length / sliderAmount;
@@ -345,7 +352,7 @@ public class CreateLine : MonoBehaviour
             // Use modulo to wrap value between 0-1
             normalizedT = normalizedT % 1.0f;
             
-            float curveValue = curve.Evaluate(normalizedT) * amplitude * GlobalAmplitude;
+            float curveValue = curve.Evaluate(normalizedT) * amplitude * globalAmplitude;
 
             Vector3 right = pointsArray[currentIndex].transform.right * curveValue * this.movement.x;
             Vector3 up = pointsArray[currentIndex].transform.up * curveValue * this.movement.y;
@@ -365,7 +372,9 @@ public class CreateLine : MonoBehaviour
     //NEW CURVESYSTEM
     private void ControlGlobalCurve(){
         // counts up so the wave moves up the index
-        accumulatedTime += Time.deltaTime * GlobalSpeed;
+        accumulatedTime += Time.deltaTime * globalSpeed;
+        float maxAmplitude = globalControlScript.GetMaxAmplitude() * sliderAmount;
+        float maxAmplitudeClamper = globalAmplitude / maxAmplitude;
 
         // Move points in the defined axis, according to the curves
         for (int i = 0; i < pointsArray.Length; i++) {
@@ -374,8 +383,9 @@ public class CreateLine : MonoBehaviour
 
             //Combine all curves
             for (int j = 0; j < sliderAmount ; j++) {  // Evaluate the curve based on the current index and frequency
-                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * GlobalFrequency + accumulatedTime * speedArray[j]);
-                combinedCurveValue += curveEvaluation * amplitudeArray[j] * GlobalAmplitude;
+                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * globalFrequency + accumulatedTime * speedArray[j]);
+                //combinedCurveValue += curveEvaluation * amplitudeArray[j] * globalAmplitude;
+                combinedCurveValue += curveEvaluation * amplitudeArray[j] * maxAmplitudeClamper;
             }
 
             //Move in defined direction

@@ -375,6 +375,26 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.012357668
       objectReference: {fileID: 0}
+    - target: {fileID: 345780347970439597, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 345780347970439597, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.91764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 345780347970439597, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.94509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 345780347970439597, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.95686275
+      objectReference: {fileID: 0}
     - target: {fileID: 456015810738542553, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_Name
@@ -672,6 +692,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: minSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: maxFrequency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: minFrequency
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 88005516244083039}
-  - component: {fileID: 8920915931408000488}
   - component: {fileID: 6970745041888927260}
+  - component: {fileID: 8920915931408000488}
   - component: {fileID: 2135393879385534873}
   m_Layer: 0
   m_Name: GameManager
@@ -36,6 +36,18 @@ Transform:
   - {fileID: 6566410334860292298}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6970745041888927260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085248416837100406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2d0817ed0e740a6940d7d6eb18b8da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8920915931408000488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,18 +62,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puppetAnimation: {fileID: 0}
   createLine: {fileID: 2325180773715706848}
---- !u!114 &6970745041888927260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085248416837100406}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2d0817ed0e740a6940d7d6eb18b8da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  minAmplitude: 0
+  maxAmplitude: 5
+  minFrequency: 1
+  maxFrequency: 10
+  minSpeed: 1
+  maxSpeed: 5
+  globalAmplitude: 0
+  globalFrequency: 0
+  globalSpeed: 0
+  amplitudeA: 0
+  speedA: 0
+  amplitudeB: 0
+  speedB: 0
+  amplitudeC: 0
+  speedC: 0
+  amplitudeD: 0
+  speedD: 0
 --- !u!114 &2135393879385534873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,9 +461,9 @@ MonoBehaviour:
   LineStart: {fileID: 0}
   LineEnd: {fileID: 0}
   movement: {x: 0, y: 1, z: 0}
-  GlobalAmplitude: 0.03
-  GlobalFrequency: 2
-  GlobalSpeed: 1
+  globalAmplitude: 0.03
+  globalFrequency: 2
+  globalSpeed: 1
   sliderAmount: 3
   pointsCount: 300
   pointsArray: []
@@ -582,14 +599,14 @@ MonoBehaviour:
   curveArray: []
   changeCurvesInInspector: 1
   CurveTypeIndex: 
-  AmplitudeA: 1
-  SpeedA: 1
-  AmplitudeB: 1
-  SpeedB: 1
-  AmplitudeC: 1
-  SpeedC: 1
-  AmplitudeD: 1
-  SpeedD: 1
+  amplitudeA: 1
+  speedA: 1
+  amplitudeB: 1
+  speedB: 1
+  amplitudeC: 1
+  speedC: 1
+  amplitudeD: 1
+  speedD: 1
 --- !u!120 &1600046383545866864
 LineRenderer:
   serializedVersion: 2

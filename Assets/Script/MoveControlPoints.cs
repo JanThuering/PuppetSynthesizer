@@ -55,7 +55,7 @@ public class MoveControlPoints : MonoBehaviour
     //mapping the wave frequency. used for delay (higher frequency = shorter delay)
     private void FrequencyMap()
     {
-        mapFreq = Mathf.Lerp(1, 5, Mathf.InverseLerp(1, 10, createLineScript.GlobalFrequency));
+        mapFreq = Mathf.Lerp(1, 5, Mathf.InverseLerp(1, 10, createLineScript.globalFrequency));
         delay = Mathf.CeilToInt(initialAnimationDelay / mapFreq);
     }
 
