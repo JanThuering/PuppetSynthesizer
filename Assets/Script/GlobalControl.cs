@@ -38,8 +38,10 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float maxGlobalAmplitude = 2.4f;
     [SerializeField] private float globalFrequency;
     [SerializeField] private float globalSpeed;
+    [Range(0, 3)]
     [SerializeField] private int [] waveType =  {0, 0, 0, 0}; 
 
+    
     public int [] WaveType
     {
         get => waveType;
