@@ -237,10 +237,10 @@ public class GlobalControl : MonoBehaviour
 
             float steps =  valueAmmount / createLineScript.SliderAmount;
 
-            for( int i = 1; i <= 4; i++){
+            for( int i = 1; i <= createLineScript.curveTypes.Length; i++){
                 if(controlValue >= (steps*i - steps) && controlValue <= (steps*i)){
-                    if(i > 4){
-                        i = 4;
+                    if(i > createLineScript.curveTypes.Length){
+                        i = createLineScript.curveTypes.Length;
                     }
                     waveType[index] = i-1;
                 }
