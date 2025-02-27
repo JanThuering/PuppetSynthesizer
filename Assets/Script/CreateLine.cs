@@ -389,7 +389,7 @@ public class CreateLine : MonoBehaviour
 
             //Combine all curves
             for (int j = 0; j < SliderAmount ; j++) {  // Evaluate the curve based on the current index and frequency
-                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * globalFrequency + accumulatedTime * speedArray[j]);
+                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * (globalFrequency * speedArray[j]) + accumulatedTime * speedArray[j]);
                 //combinedCurveValue += curveEvaluation * amplitudeArray[j] * globalAmplitude;
                 combinedCurveValue += curveEvaluation * amplitudeArray[j] * MaxAmplitudeClamper;
             }
