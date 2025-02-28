@@ -27,7 +27,7 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float minFrequency = 1;
     [SerializeField] private float maxFrequency = 5;
     [Header("Speed")]
-    [SerializeField] private float minSpeed = 1;
+    [SerializeField] private float minSpeed = 0f;
     [SerializeField] private float maxSpeed = 2.5f;
 
 
@@ -51,7 +51,7 @@ public class GlobalControl : MonoBehaviour
     public float GlobalAmplitude
     {
         get => globalAmplitude;
-        set => globalAmplitude = Mathf.Clamp(value, 0, maxGlobalAmplitude);
+        set => globalAmplitude = Mathf.Clamp(value, 1, maxGlobalAmplitude);
     }
     public float GlobalFrequency
     {
@@ -178,7 +178,7 @@ public class GlobalControl : MonoBehaviour
         switch(controlNumber){
             case 7: GlobalAmplitude = controlValue / valueAmmount * (maxGlobalAmplitude-minAmplitude) + minAmplitude; break;
             case 8: GlobalFrequency = controlValue / valueAmmount * (maxFrequency-minFrequency) + minFrequency; break;
-            case 9: GlobalSpeed = controlValue / valueAmmount * (maxSpeed-minSpeed) + minSpeed; break;
+            case 9: GlobalSpeed = controlValue / valueAmmount * (maxSpeed-(-maxSpeed)) + (-maxSpeed); break;
         }
 
     }
