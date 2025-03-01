@@ -18,26 +18,38 @@ public class GlobalControl : MonoBehaviour
     private float animationMultiplier; //effects the amount of movement of the puppet
     private float scaleMultiplier; //effects the amount of scaling of the controlpoints
 
+
+    [Header("DEFAULT VALUES")]
+    float timeToDefault = 10.0f;
+    float defaultGlobalSpeed = 0.3f;
+    float defaultGlobalFrequency = 1.0f;
+    float defaultAmplitude = 0.1f;
+    float defaultFrequency = 1.0f;
+
+
+
     [Header("LIMITS")]
     [Header("Amplitude")]
-    [SerializeField] private float minAmplitude = 0;
-    [SerializeField] private float maxAmplitude = 5;
+    private float minAmplitude = 0;
+    private float maxAmplitude = 5;
+    private float maxGlobalAmplitude = 2.4f;
 
     [Header("Frequency")]
-    [SerializeField] private float minFrequency = 1;
-    [SerializeField] private float maxFrequency = 5;
+    private float minFrequency = 1;
+    private float maxFrequency = 5;
+
     [Header("Speed")]
-    [SerializeField] private float minSpeed = 0f;
-    [SerializeField] private float maxSpeed = 2.5f;
+    private float minSpeed = 0f;
+    private float maxSpeed = 2.5f;
 
 
 
     //WAVE-PARAMETERS
     [Header("GLOBAL WAVE")]
-    [SerializeField] private float globalAmplitude;
-    [SerializeField] private float maxGlobalAmplitude = 2.4f;
     [SerializeField] private float globalFrequency;
     [SerializeField] private float globalSpeed;
+    [HideInInspector]
+    [SerializeField] private float globalAmplitude;
     [Range(0, 3)]
     [SerializeField] private int [] waveType =  {0, 0, 0, 0}; 
 
@@ -67,7 +79,9 @@ public class GlobalControl : MonoBehaviour
 
     //wave - curveA
     [Header ("Curve A")]
+    [Range(0, 5)]
     [SerializeField] private float amplitudeA;
+    [Range(0, 2.5f)]
     [SerializeField] private float speedA;
     public float AmplitudeA
     {
@@ -81,7 +95,9 @@ public class GlobalControl : MonoBehaviour
     }
     //wave - curveB
     [Header ("Curve B")]
+    [Range(0, 5)]
     [SerializeField] private float amplitudeB;
+    [Range(0, 2.5f)]
     [SerializeField] private float speedB;
     public float AmplitudeB
     {
@@ -95,7 +111,9 @@ public class GlobalControl : MonoBehaviour
     }
     //wave - curveC
     [Header ("Curve C")]
+    [Range(0, 5)]
     [SerializeField] private float amplitudeC;
+    [Range(0, 2.5f)]
     [SerializeField] private float speedC;
     public float AmplitudeC
     {
@@ -109,7 +127,9 @@ public class GlobalControl : MonoBehaviour
     }
     //wave - curveD
     [Header ("Curve D")]
+    [Range(0, 5)]
     [SerializeField] private float amplitudeD;
+    [Range(0, 2.5f)]
     [SerializeField] private float speedD;
     public float AmplitudeD
     {
@@ -142,13 +162,13 @@ public class GlobalControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void SetStartValues(){
         createLineScript = CreateLine.Instance;
 
-        GlobalAmplitude = 1;
+        GlobalAmplitude = 1.8f;
         GlobalFrequency = 1;
         GlobalSpeed = 1;
 
@@ -176,7 +196,7 @@ public class GlobalControl : MonoBehaviour
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
         switch(controlNumber){
-            case 7: GlobalAmplitude = controlValue / valueAmmount * (maxGlobalAmplitude-minAmplitude) + minAmplitude; break;
+            //case 7: GlobalAmplitude = controlValue / valueAmmount * (maxGlobalAmplitude-minAmplitude) + minAmplitude; break;
             case 8: GlobalFrequency = controlValue / valueAmmount * (maxFrequency-minFrequency) + minFrequency; break;
             case 9: GlobalSpeed = controlValue / valueAmmount * (maxSpeed-(-maxSpeed)) + (-maxSpeed); break;
         }
