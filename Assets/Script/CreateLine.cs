@@ -42,6 +42,7 @@ public class CreateLine : MonoBehaviour
 
     [Header ("Points")]
     [SerializeField] private int pointsCount = 300;
+    [SerializeField] private float pointMovementSpeed = 10f;
     public GameObject[] pointsArray;
     private Vector3[] startPointLocation;
 
@@ -69,10 +70,7 @@ public class CreateLine : MonoBehaviour
     public float amplitudeC = 1;
     [Range(0, 5)]
     public float speedC = 1;
-    [Range(0, 5)]
-    public float amplitudeD = 1;
-    [Range(0, 5)]
-    public float speedD = 1;
+
     
 
     // Start is called before the first frame update
@@ -133,8 +131,6 @@ public class CreateLine : MonoBehaviour
         speedB = globalControlScript.SpeedB;
         amplitudeC = globalControlScript.AmplitudeC;
         speedC = globalControlScript.SpeedC;
-        amplitudeD = globalControlScript.AmplitudeD;
-        speedD = globalControlScript.SpeedD;
 
         //curve types
         for(int i = 0; i < CurveTypeIndex.Length; i++){
@@ -155,15 +151,14 @@ public class CreateLine : MonoBehaviour
         ControlSegmentedCurve(1, curveArray[0], "Curve A", amplitudeArray[0], globalFrequency);
         ControlSegmentedCurve(2, curveArray[1], "Curve B", amplitudeArray[1], globalFrequency);
         ControlSegmentedCurve(3, curveArray[2], "Curve C", amplitudeArray[2], globalFrequency);
-        ControlSegmentedCurve(4, curveArray[3], "Curve D", amplitudeArray[3], globalFrequency);
 
     }
 
     private void CreateArrays(){
-        curveArray = new AnimationCurve[4];
-        CurveTypeIndex = new int[4];
-        amplitudeArray = new float[4];
-        speedArray = new float[4];
+        curveArray = new AnimationCurve[3];
+        CurveTypeIndex = new int[3];
+        amplitudeArray = new float[3];
+        speedArray = new float[3];
 
         for(int i = 0; i < curveArray.Length; i++){
             curveArray[i] = curveTypes[1];
@@ -183,8 +178,6 @@ public class CreateLine : MonoBehaviour
         amplitudeArray[2] = amplitudeC;
         speedArray[2] = speedC;
 
-        amplitudeArray[3] = amplitudeD;
-        speedArray[3] = speedD;
     }
 
     private void CreatePoints(){    
@@ -405,7 +398,7 @@ public class CreateLine : MonoBehaviour
             if (currentIndex == 0 || currentIndex == pointsArray.Length - 1) { // don't move start and end point
                 movement = Vector3.zero;
             } else {
-                pointsArray[currentIndex].transform.position = startPointLocation[currentIndex] + movement;
+                pointsArray[currentIndex].transform.position = Vector3.MoveTowards(pointsArray[currentIndex].transform.position, startPointLocation[currentIndex] + movement, pointMovementSpeed);
             }
         }
     }

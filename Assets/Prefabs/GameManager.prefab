@@ -61,25 +61,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puppetAnimation: {fileID: 0}
-  createLine: {fileID: 2325180773715706848}
-  minAmplitude: 0
-  maxAmplitude: 5
-  minFrequency: 1
-  maxFrequency: 5
-  minSpeed: 0
-  maxSpeed: 2.5
-  globalAmplitude: 0
+  createLineScript: {fileID: 0}
   globalFrequency: 0
   globalSpeed: 0
-  waveType: 00000000000000000000000000000000
+  globalAmplitude: 0
+  waveType: 000000000000000000000000
   amplitudeA: 0
   speedA: 0
   amplitudeB: 0
   speedB: 0
   amplitudeC: 0
   speedC: 0
-  amplitudeD: 0
-  speedD: 0
 --- !u!114 &2135393879385534873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +457,8 @@ MonoBehaviour:
   globalAmplitude: 0.03
   globalFrequency: 2
   globalSpeed: 1
-  sliderAmount: 3
+  MaxAmplitudeClamper: 0
+  SliderAmount: 3
   pointsCount: 300
   pointsArray: []
   curveTypes:
@@ -606,8 +599,6 @@ MonoBehaviour:
   speedB: 1
   amplitudeC: 1
   speedC: 1
-  amplitudeD: 1
-  speedD: 1
 --- !u!120 &1600046383545866864
 LineRenderer:
   serializedVersion: 2

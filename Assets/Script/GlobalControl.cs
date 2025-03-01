@@ -20,11 +20,13 @@ public class GlobalControl : MonoBehaviour
 
 
     [Header("DEFAULT VALUES")]
-    float timeToDefault = 10.0f;
-    float defaultGlobalSpeed = 0.3f;
-    float defaultGlobalFrequency = 1.0f;
-    float defaultAmplitude = 0.1f;
-    float defaultFrequency = 1.0f;
+    private float lastChangeTime;
+    private bool valuesChanged = false;
+    private float timeToDefault = 10.0f;
+    private float defaultGlobalSpeed = 0.3f;
+    private float defaultGlobalFrequency = 1.0f;
+    private float defaultAmplitude = 0.1f;
+    private float defaultFrequency = 1.0f;
 
 
 
@@ -51,15 +53,13 @@ public class GlobalControl : MonoBehaviour
     [HideInInspector]
     [SerializeField] private float globalAmplitude;
     [Range(0, 3)]
-    [SerializeField] private int [] waveType =  {0, 0, 0, 0}; 
+    [SerializeField] private int [] waveType =  {0, 0, 0}; 
 
-    
     public int [] WaveType
     {
         get => waveType;
         set => waveType = value;
     }
-
     public float GlobalAmplitude
     {
         get => globalAmplitude;
@@ -125,22 +125,6 @@ public class GlobalControl : MonoBehaviour
         get => speedC;
         set => speedC = Mathf.Clamp(value, minSpeed, maxSpeed);
     }
-    //wave - curveD
-    [Header ("Curve D")]
-    [Range(0, 5)]
-    [SerializeField] private float amplitudeD;
-    [Range(0, 2.5f)]
-    [SerializeField] private float speedD;
-    public float AmplitudeD
-    {
-        get => amplitudeD;
-        set => amplitudeD = Mathf.Clamp(value, minAmplitude, maxAmplitude);
-    }
-    public float SpeedD
-    {
-        get => speedD;
-        set => speedD = Mathf.Clamp(value, minSpeed, maxSpeed);
-    }
 
 
     private void Awake()
@@ -162,7 +146,10 @@ public class GlobalControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Time.time-lastChangeTime > timeToDefault) {
+            ResetToDefaultValues();
+            ValuesChanged(false);
+        }
     }
 
     private void SetStartValues(){
@@ -181,8 +168,34 @@ public class GlobalControl : MonoBehaviour
         AmplitudeC = 1;
         SpeedC = 1;
 
-        AmplitudeD = 1;
-        SpeedD = 1;
+    }
+
+    private void ResetToDefaultValues(){
+        Debug.Log("Resetting to default values");
+        
+        float timeToLerp = 1.0f * Time.deltaTime;
+
+        //global values
+        GlobalFrequency = Mathf.Lerp(GlobalFrequency, defaultGlobalFrequency, timeToLerp);
+        GlobalSpeed = Mathf.Lerp(GlobalSpeed, defaultGlobalSpeed, timeToLerp);
+
+        //individual values
+        AmplitudeA = Mathf.Lerp(AmplitudeA, defaultAmplitude, timeToLerp);
+        SpeedA = Mathf.Lerp(SpeedA, defaultFrequency, timeToLerp);
+        AmplitudeB = Mathf.Lerp(AmplitudeB, defaultAmplitude, timeToLerp);
+        SpeedB = Mathf.Lerp(SpeedB, defaultFrequency, timeToLerp);
+        AmplitudeC = Mathf.Lerp(AmplitudeC, defaultAmplitude, timeToLerp);
+        SpeedC = Mathf.Lerp(SpeedC, defaultFrequency, timeToLerp);
+    }
+
+    private void ValuesChanged(bool valueChanged){
+        if(valueChanged){
+            valuesChanged = valueChanged;
+            lastChangeTime = Time.time;
+        }
+        if(!valueChanged){
+            valuesChanged = valueChanged;
+        }
     }
 
     public float GetMaxAmplitude(){
@@ -190,6 +203,9 @@ public class GlobalControl : MonoBehaviour
     }
 
     public void MidiGlobalWave(int controlNumber, float controlValue, float valueAmmount){
+        //check activity
+        ValuesChanged(true);
+
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
             controlValue -> waveType (amplitude of the curve)
@@ -201,9 +217,14 @@ public class GlobalControl : MonoBehaviour
             case 9: GlobalSpeed = controlValue / valueAmmount * (maxSpeed-(-maxSpeed)) + (-maxSpeed); break;
         }
 
+
+
     }
 
     public void MidiAmplitudeWave(int controlNumber, float controlValue, float maxValue){
+        //check activity
+        ValuesChanged(true);
+
         /*VALUE EXPLANATION
             controlNumber -> segment (which curve is selected)
             controlValue -> waveType (amplitude or speed of the curve)
@@ -215,11 +236,15 @@ public class GlobalControl : MonoBehaviour
             case 1: AmplitudeA = increments; break;
             case 2: AmplitudeB = increments; break;
             case 3: AmplitudeC = increments; break;
-            case 4: AmplitudeD = increments; break;
         }
+
+
     }
 
     public void MidiSpeedWave(int controlNumber, float controlValue, float valueAmmount){
+        //check activity
+        ValuesChanged(true);
+
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
             controlValue -> waveType (amplitude of the curve)
@@ -232,12 +257,16 @@ public class GlobalControl : MonoBehaviour
             case 10: speedA = increments; break;
             case 11: speedB = increments; break;
             case 12: speedC = increments; break;
-            case 13: speedD = increments; break;
         }
+
+
 
     }
 
     public void MidiWaveType(int controlNumber, float controlValue, float valueAmmount, bool fader){
+        //check activity
+        ValuesChanged(true);
+        
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
             controlValue -> waveType (amplitude of the curve)
@@ -282,6 +311,7 @@ public class GlobalControl : MonoBehaviour
                 }
             }
         }
+
     }
 
 
