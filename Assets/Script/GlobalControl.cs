@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class GlobalControl : MonoBehaviour
 {
 
     //Singleton Instance
     public static GlobalControl Instance {get; private set;}
+
+    [Header ("TESTING")]
+    [SerializeField] private bool resetToDefaultValues = false;
 
     [Header("EXTERNAL REFERENCES")]
     //ANIMATIONS-PARAMETERS
@@ -22,7 +21,7 @@ public class GlobalControl : MonoBehaviour
     [Header("DEFAULT VALUES")]
     private float lastChangeTime;
     private bool valuesChanged = false;
-    private float timeToDefault = 10.0f;
+    [SerializeField] private float timeToDefault = 10.0f;
     private float defaultGlobalSpeed = 0.3f;
     private float defaultGlobalFrequency = 1.0f;
     private float defaultAmplitude = 0.1f;
@@ -49,9 +48,14 @@ public class GlobalControl : MonoBehaviour
     //WAVE-PARAMETERS
     [Header("GLOBAL WAVE")]
     [SerializeField] private float globalFrequency;
+    private bool pickUpGlobalFrequency = false;
+
     [SerializeField] private float globalSpeed;
+    private bool pickUpGlobalSpeed = false;
+
     [HideInInspector]
     [SerializeField] private float globalAmplitude;
+
     [Range(0, 3)]
     [SerializeField] private int [] waveType =  {0, 0, 0}; 
 
@@ -77,12 +81,15 @@ public class GlobalControl : MonoBehaviour
     }
 
 
+
     //wave - curveA
     [Header ("Curve A")]
     [Range(0, 5)]
     [SerializeField] private float amplitudeA;
     [Range(0, 2.5f)]
     [SerializeField] private float speedA;
+    private bool pickUpAmplitudeA = false;
+    private bool pickUpSpeedA = false;
     public float AmplitudeA
     {
         get => amplitudeA;
@@ -93,12 +100,16 @@ public class GlobalControl : MonoBehaviour
         get => speedA;
         set => speedA = Mathf.Clamp(value, minSpeed, maxSpeed);
     }
+    
+    
     //wave - curveB
     [Header ("Curve B")]
     [Range(0, 5)]
     [SerializeField] private float amplitudeB;
     [Range(0, 2.5f)]
     [SerializeField] private float speedB;
+    private bool pickUpAmplitudeB = false;
+    private bool pickUpSpeedB = false;
     public float AmplitudeB
     {
         get => amplitudeB;
@@ -109,12 +120,16 @@ public class GlobalControl : MonoBehaviour
         get => speedB;
         set => speedB = Mathf.Clamp(value, minSpeed, maxSpeed);
     }
+    
+    
     //wave - curveC
     [Header ("Curve C")]
     [Range(0, 5)]
     [SerializeField] private float amplitudeC;
     [Range(0, 2.5f)]
     [SerializeField] private float speedC;
+    private bool pickUpAmplitudeC = false;
+    private bool pickUpSpeedC = false;
     public float AmplitudeC
     {
         get => amplitudeC;
@@ -146,9 +161,9 @@ public class GlobalControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time-lastChangeTime > timeToDefault) {
-            ResetToDefaultValues();
-            ValuesChanged(false);
+        if(resetToDefaultValues && Time.time-lastChangeTime > timeToDefault) {
+            ResetToDefaultValues(); //reset the values to default and activate pickUp bools
+            ValuesChanged(false);   //reset the valuesChanged bool
         }
     }
 
@@ -186,6 +201,16 @@ public class GlobalControl : MonoBehaviour
         SpeedB = Mathf.Lerp(SpeedB, defaultFrequency, timeToLerp);
         AmplitudeC = Mathf.Lerp(AmplitudeC, defaultAmplitude, timeToLerp);
         SpeedC = Mathf.Lerp(SpeedC, defaultFrequency, timeToLerp);
+
+        //pick up values
+        pickUpGlobalFrequency = true;
+        pickUpGlobalSpeed = true;
+        pickUpAmplitudeA = true;
+        pickUpAmplitudeB = true;
+        pickUpAmplitudeC = true;
+        pickUpSpeedA = true;
+        pickUpSpeedB = true;
+        pickUpSpeedC = true;
     }
 
     private void ValuesChanged(bool valueChanged){
@@ -198,6 +223,22 @@ public class GlobalControl : MonoBehaviour
         }
     }
 
+    private void PickUp(float targetProperty, bool pickUpBool, float midiControlValue){
+        //Picks up the value of the slider
+        //and ignores every midiInput until it reaches the treshHold
+
+        float treshHold = 0.1f;
+        
+        if(pickUpBool && Mathf.Abs(midiControlValue-targetProperty) <= treshHold){
+            targetProperty = midiControlValue;
+            pickUpBool = false;
+        }
+        else{
+            return;
+        }
+
+    }
+
     public float GetMaxAmplitude(){
         return maxAmplitude;
     }
@@ -206,24 +247,34 @@ public class GlobalControl : MonoBehaviour
         //check activity
         ValuesChanged(true);
 
+        //pick up the values of the sliders
+        switch(controlNumber){
+            case 8: PickUp(GlobalFrequency, pickUpGlobalFrequency, controlValue); break;
+            case 9: PickUp(GlobalSpeed, pickUpGlobalSpeed, controlValue); break;
+        }
+        
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
             controlValue -> waveType (amplitude of the curve)
             valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
         */
         switch(controlNumber){
-            //case 7: GlobalAmplitude = controlValue / valueAmmount * (maxGlobalAmplitude-minAmplitude) + minAmplitude; break;
             case 8: GlobalFrequency = controlValue / valueAmmount * (maxFrequency-minFrequency) + minFrequency; break;
             case 9: GlobalSpeed = controlValue / valueAmmount * (maxSpeed-(-maxSpeed)) + (-maxSpeed); break;
         }
-
-
 
     }
 
     public void MidiAmplitudeWave(int controlNumber, float controlValue, float maxValue){
         //check activity
         ValuesChanged(true);
+
+        //pick up the values of the sliders
+        switch(controlNumber){
+            case 1: PickUp(AmplitudeA, pickUpAmplitudeA, controlValue); break;
+            case 2: PickUp(AmplitudeB, pickUpAmplitudeB, controlValue); break;
+            case 3: PickUp(AmplitudeC, pickUpAmplitudeC, controlValue); break;
+        }
 
         /*VALUE EXPLANATION
             controlNumber -> segment (which curve is selected)
@@ -245,6 +296,13 @@ public class GlobalControl : MonoBehaviour
         //check activity
         ValuesChanged(true);
 
+        //pick up the values of the sliders
+        switch(controlNumber){
+            case 10: PickUp(SpeedA, pickUpSpeedA, controlValue); break;
+            case 11: PickUp(SpeedB, pickUpSpeedB, controlValue); break;
+            case 12: PickUp(SpeedC, pickUpSpeedC, controlValue); break;
+        }
+
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
             controlValue -> waveType (amplitude of the curve)
@@ -254,9 +312,9 @@ public class GlobalControl : MonoBehaviour
         float increments = controlValue / valueAmmount * (maxSpeed-minSpeed) + minSpeed;    //calculate the value of the slider / knob
 
         switch(controlNumber){
-            case 10: speedA = increments; break;
-            case 11: speedB = increments; break;
-            case 12: speedC = increments; break;
+            case 10: SpeedA = increments; break;
+            case 11: SpeedB = increments; break;
+            case 12: SpeedC = increments; break;
         }
 
 
