@@ -26,12 +26,12 @@ public class EdgeDetection : ScriptableRendererFeature
             material = edgeDetectionMaterial;
             renderPassEvent = settings.renderPassEvent;
 
-            material.SetFloat(OutlineThicknessProperty, settings.outlineThickness);
-            material.SetColor(OutlineColorProperty, settings.outlineColor);
-            material.SetFloat(AngleFactorProperty, settings.angleFactor);
-            material.SetFloat(DepthThresholdProperty, settings.depthThreshold);
-            material.SetFloat(NormalThresholdProperty, settings.normalThreshold);
-            material.SetFloat(LuminanceThresholdProperty, settings.luminanceThreshold);
+            // material.SetFloat(OutlineThicknessProperty, settings.outlineThickness);
+            // material.SetColor(OutlineColorProperty, settings.outlineColor);
+            // material.SetFloat(AngleFactorProperty, settings.angleFactor);
+            // material.SetFloat(DepthThresholdProperty, settings.depthThreshold);
+            // material.SetFloat(NormalThresholdProperty, settings.normalThreshold);
+            // material.SetFloat(LuminanceThresholdProperty, settings.luminanceThreshold);
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -73,7 +73,7 @@ public class EdgeDetection : ScriptableRendererFeature
     }
 
     [SerializeField] private EdgeDetectionSettings settings;
-    private Material edgeDetectionMaterial;
+    public Material edgeDetectionMaterial;
     private EdgeDetectionPass edgeDetectionPass;
 
     /// <summary>
@@ -84,7 +84,7 @@ public class EdgeDetection : ScriptableRendererFeature
     /// </summary>
     public override void Create()
     {
-        edgeDetectionPass ??= new EdgeDetectionPass();
+        edgeDetectionPass = new EdgeDetectionPass();
     }
 
     /// <summary>
@@ -95,16 +95,6 @@ public class EdgeDetection : ScriptableRendererFeature
     {
         // Don't render for some views.
         if (renderingData.cameraData.cameraType is CameraType.Preview or CameraType.Reflection) return;
-
-        if (edgeDetectionMaterial == null)
-        {
-            edgeDetectionMaterial = CoreUtils.CreateEngineMaterial(Shader.Find("Hidden/Edge Detection"));
-            if (edgeDetectionMaterial == null)
-            {
-                Debug.LogWarning("Not all required materials could be created. Edge Detection will not render.");
-                return;
-            }
-        }
 
         edgeDetectionPass.ConfigureInput(ScriptableRenderPassInput.Depth | ScriptableRenderPassInput.Normal | ScriptableRenderPassInput.Color);
         edgeDetectionPass.Setup(ref settings, ref edgeDetectionMaterial);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class ColorChange : MonoBehaviour
 {
@@ -12,11 +13,17 @@ public class ColorChange : MonoBehaviour
     private bool isColorChange1 = false;
     private bool isColorChange2 = false;
 
+
     [Header("Materials")]
     [SerializeField] private Material[] currentMaterials;
     [SerializeField] private Material[] baseMaterials;
     [SerializeField] private Material[] colorChange1Materials;
     [SerializeField] private Material[] colorChange2Materials;
+
+    [Header("Outline")]
+    [SerializeField] private Material outlineMaterial;
+    [SerializeField] private Color[] outlineColors;
+    [SerializeField] private Color currentOutlineColor;
 
     //Checks
     private bool isbaseColorApplied = false;
@@ -34,9 +41,12 @@ public class ColorChange : MonoBehaviour
     void Update()
     {
         ColorApplier();
-        if (isColorChange1 == false && isColorChange2 == false && isbaseColorApplied == false) BaseColor();
-        if (isColorChange1 && isColorChange1Applied == false) ColorEffectOne();
-        if (isColorChange2 && isColorChange2Applied == false) ColorEffectTwo();
+        if (isColorChange1 == false && isColorChange2 == false && isbaseColorApplied == false) BaseColor(); //default Color
+        if (isColorChange1 && isColorChange1Applied == false) ColorEffectOne(); //Color Effect 1
+        if (isColorChange2 && isColorChange2Applied == false) ColorEffectTwo(); //Color Effect 2
+
+        currentOutlineColor = outlineMaterial.GetColor("_OutlineColor");
+
     }
 
     private void ColorApplier()
@@ -75,6 +85,7 @@ public class ColorChange : MonoBehaviour
         }
         
         ApplyColor(baseMaterials);
+        ApplyOutlineColor(outlineColors[1]);
     }
 
     private void ColorEffectOne()
@@ -86,6 +97,7 @@ public class ColorChange : MonoBehaviour
         if(isColorChange2) isColorChange2 = false;
 
         ApplyColor(colorChange1Materials);
+        ApplyOutlineColor(outlineColors[0]);
     }
     private void ColorEffectTwo()
     {
@@ -96,6 +108,7 @@ public class ColorChange : MonoBehaviour
         if(isColorChange1) isColorChange1 = false;
 
         ApplyColor(colorChange2Materials);
+        ApplyOutlineColor(outlineColors[2]);
     }
 
     private void ApplyColor(Material[] colorUpdateMaterial)
@@ -104,5 +117,12 @@ public class ColorChange : MonoBehaviour
         {
             currentMaterials[i].color = colorUpdateMaterial[i].color;
         }
+    }
+
+    private void ApplyOutlineColor(Color outlineColor)
+    {
+        
+        outlineMaterial.SetColor("_OutlineColor", outlineColor);
+        
     }
 }

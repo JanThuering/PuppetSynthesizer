@@ -63,6 +63,8 @@ MonoBehaviour:
     depthThreshold: 0.005
     normalThreshold: 0.25
     luminanceThreshold: 0.5
+  edgeDetectionMaterial: {fileID: 2100000, guid: b7376d66017c3435db3591a41dc6cc32,
+    type: 2}
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
