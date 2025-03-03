@@ -677,7 +677,7 @@ PrefabInstance:
         type: 3}
       propertyPath: outlineMaterial
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: b7376d66017c3435db3591a41dc6cc32, type: 2}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.size
@@ -686,7 +686,7 @@ PrefabInstance:
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.data[0].b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
@@ -696,32 +696,32 @@ PrefabInstance:
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.data[0].r
-      value: 1
+      value: 0.020617366
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.data[1].b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[1].g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[1].r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
-      propertyPath: outlineColors.Array.data[2].b
+      propertyPath: outlineColors.Array.data[1].g
+      value: 0.8002429
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: outlineColors.Array.data[1].r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
+      propertyPath: outlineColors.Array.data[2].b
+      value: 0.9201374
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
       propertyPath: outlineColors.Array.data[2].g
-      value: 0.09920767
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
