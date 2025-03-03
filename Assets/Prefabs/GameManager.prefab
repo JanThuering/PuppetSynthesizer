@@ -103,12 +103,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f1095735a4875488a7c3798328d9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgMaterial: {fileID: 2100000, guid: 18e568d61791f41a59504937e625dca9, type: 2}
-  puppetBaseMaterial: {fileID: 2100000, guid: 3c1553cf54aa0409eb89888c9e2d8768, type: 2}
-  puppetAccentMaterial: {fileID: 2100000, guid: 49b35ac5f4759624298c5ab93fe70f01,
-    type: 2}
-  controlPointMaterial: {fileID: 2100000, guid: bab77d2286d824a07a1b8a463a0d1693,
-    type: 2}
+  baseMaterials:
+  - {fileID: 2100000, guid: 18e568d61791f41a59504937e625dca9, type: 2}
+  - {fileID: 2100000, guid: bab77d2286d824a07a1b8a463a0d1693, type: 2}
+  - {fileID: 2100000, guid: 49b35ac5f4759624298c5ab93fe70f01, type: 2}
+  - {fileID: 2100000, guid: 3c1553cf54aa0409eb89888c9e2d8768, type: 2}
+  - {fileID: 2100000, guid: 32006ab65aa08433b8a5e44c67fa199c, type: 2}
+  colorChange1Materials:
+  - {fileID: 2100000, guid: f0832436c1b804f449c726607490e093, type: 2}
+  - {fileID: 2100000, guid: 7c8c55033bd3bda4c95078dd3ffb5635, type: 2}
+  - {fileID: 2100000, guid: 647b92c3bd2e7204d8e190feb310ab06, type: 2}
+  - {fileID: 2100000, guid: 5ce061dc86a4dd048b7515e78cb68578, type: 2}
+  - {fileID: 2100000, guid: 8b56cad7b4697a644b4bbc1c7e551d08, type: 2}
+  colorChange2Materials:
+  - {fileID: 2100000, guid: e86d3cf81d4e1bc44b15cf45c27a04a4, type: 2}
+  - {fileID: 2100000, guid: 15614f71cf8989947810e2a06530b6b4, type: 2}
+  - {fileID: 2100000, guid: ccaddeda7a256f5439ede6e074e6f895, type: 2}
+  - {fileID: 2100000, guid: 07f1599c4d8e63549a9d0aa1af9d24b6, type: 2}
+  - {fileID: 2100000, guid: 0eeb132d691c0a3428d4add7917465e4, type: 2}
 --- !u!1 &3021875952772663878
 GameObject:
   m_ObjectHideFlags: 0

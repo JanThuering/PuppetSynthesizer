@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class ColorChange : MonoBehaviour
 {
-    [Header("Background Material")]
-    [SerializeField] private Material bgMaterial;
-    [Header("Puppet Materials")]
-    [SerializeField] private Material puppetBaseMaterial;
-    [SerializeField] private Material puppetAccentMaterial;
-    [Header("Control Points Materials")]
-    [SerializeField] private Material controlPointMaterial;
+    [Header("Materials")]
+    [SerializeField] private Material[] baseMaterials;
+    [Header("Color Change 1 Materials")]
+    [SerializeField] private Material[] colorChange1Materials;
+    [Header("Color Change 2 Materials")]
+    [SerializeField] private Material[] colorChange2Materials;
 
     // Start is called before the first frame update
     void Start()
