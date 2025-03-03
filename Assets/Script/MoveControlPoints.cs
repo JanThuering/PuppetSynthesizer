@@ -13,6 +13,8 @@ public class MoveControlPoints : MonoBehaviour
     [SerializeField] private float moveTowardsSpeed = 1;
     [SerializeField] private int xPosition;
     private int currentPos;
+    private int middlePosition;
+    public bool IsMovingToMiddle = false;
 
     [Header("Delay Variables")]
     // [SerializeField] private GameObject delayObj; //for visualizing the delay
@@ -33,6 +35,9 @@ public class MoveControlPoints : MonoBehaviour
         BaseIndex = ClosestPointIndex;
         xPosition = 0;
 
+        //Calculate the middle position of the wave
+        middlePosition = (linePointsArray.Length - 1) / 2;
+
         // Store the initial delay to ensure it always remains 50 when frequency is 1
         initialAnimationDelay = animationDelayPointOnWave;
     }
@@ -46,6 +51,7 @@ public class MoveControlPoints : MonoBehaviour
     {
         FrequencyMap();
         FindClosestPoint();
+        if(IsMovingToMiddle) MoveToTheMiddle();
         MoveHorizontally();
         CopyLineMovement();
     }
@@ -84,6 +90,13 @@ public class MoveControlPoints : MonoBehaviour
             ClosestPointIndex = closestIndex;
             closestPointDelayIndex = closestIndexDelay;
         }
+    }
+    private void MoveToTheMiddle()
+    {
+            //depending on the current position on the wave the new position is calculated
+            int newPos = middlePosition - BaseIndex;
+
+            ClosestPointIndex = newPos;
     }
 
     private void MoveHorizontally()
