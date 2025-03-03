@@ -247,71 +247,6 @@ public class CreateLine : MonoBehaviour
     }
 
 
-    // public void MidiDefineWaveType(int controlNumber, float controlValue, float valueAmmount){
-    //     /*VALUE EXPLANATION
-    //         controlNumber -> slider (for which slider the curve is)
-    //         controlValue -> waveType (which curve is selected)
-    //         valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
-    //     */
-
-    //     // int curveTypeIndex;
-    //     float steps = valueAmmount / SliderAmount;
-    //     int slider = 1;
-
-    //     switch(controlNumber){
-    //         case 21: slider = 1; break;
-    //         case 22: slider = 2; break;
-    //         case 23: slider = 3; break;
-    //         case 24: slider = 4; break;
-    //     }
-
-    //     //assign curve to slider depending on value
-    //     for(int i = 1; i <= SliderAmount; i++){
-    //         if(controlValue > (steps*i - steps) && controlValue < (steps*i)){
-    //             CurveTypeIndex[slider-1] = i-1;
-    //             curveArray[slider-1] = curveTypes[CurveTypeIndex[slider-1]];
-    //         }
-    //     }
-
-    // }
-    
-    // public void MidiSpeedWave(int controlNumber, float controlValue, float valueAmmount){
-    //     /*VALUE EXPLANATION
-    //         controlNumber -> slider (for which slider the curve is)
-    //         controlValue -> waveType (amplitude of the curve)
-    //         valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
-    //     */
-
-    //     float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
-
-    //     switch(controlNumber){
-    //         case 21: speedA = increments; break;
-    //         case 22: speedB = increments; break;
-    //         case 23: speedC = increments; break;
-    //         case 24: speedD = increments; break;
-    //     }
-
-    // }
-    
-    // public void MidiAmplitudeWave(int controlNumber, float controlValue, float valueAmmount){
-    //     /*VALUE EXPLANATION
-    //         controlNumber -> segment (which curve is selected)
-    //         controlValue -> waveType (amplitude or speed of the curve)
-    //         valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
-    //     */
-        
-    //     float increments = controlValue / valueAmmount * 5;    //calculate the value of the slider / knob
-
-    //     switch(controlNumber){
-    //         case 1: amplitudeA = increments; break;
-    //         case 2: amplitudeB = increments; break;
-    //         case 3: amplitudeC = increments; break;
-    //         case 4: amplitudeD = increments; break;
-    //     }
-
-    // }
-
-
 
     //SEGMENTED CURVES
     private void ControlSegmentedCurve(int slider, AnimationCurve curve, string curveName, float amplitude, float frequency){
@@ -378,7 +313,8 @@ public class CreateLine : MonoBehaviour
 
             //Combine all curves
             for (int j = 0; j < SliderAmount ; j++) {  // Evaluate the curve based on the current index and frequency
-                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * (globalFrequency * speedArray[j]) + accumulatedTime * speedArray[j]);
+                //float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * (globalFrequency * speedArray[j]) + accumulatedTime * speedArray[j]);
+                float curveEvaluation = curveArray[j].Evaluate((currentIndex / (float)pointsArray.Length) * (globalFrequency * speedArray[j]) + accumulatedTime);
                 //combinedCurveValue += curveEvaluation * amplitudeArray[j] * globalAmplitude;
                 combinedCurveValue += curveEvaluation * amplitudeArray[j] * MaxAmplitudeClamper;
             }

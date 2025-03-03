@@ -23,9 +23,9 @@ public class GlobalControl : MonoBehaviour
     private bool needsTimeUpdate = false;
     private bool valuesChanged = false;
     [SerializeField] private float timeToDefault = 10.0f;
-    private float defaultGlobalSpeed = 0.3f;
+    private float defaultGlobalSpeed = 0.5f;
     private float defaultGlobalFrequency = 1.0f;
-    private float defaultAmplitude = 0.1f;
+    private float defaultAmplitude = 0.5f;
     private float defaultFrequency = 1.0f;
 
 
@@ -41,7 +41,7 @@ public class GlobalControl : MonoBehaviour
     private float maxFrequency = 5;
 
     [Header("Speed")]
-    private float minSpeed = 0f;
+    private float minSpeed = 0.5f;
     private float maxSpeed = 2.5f;
 
 
@@ -78,7 +78,7 @@ public class GlobalControl : MonoBehaviour
     public float GlobalSpeed
     {
         get => globalSpeed;
-        set => globalSpeed = Mathf.Clamp(value, minSpeed, maxSpeed);
+        set => globalSpeed = Mathf.Clamp(value, -maxSpeed, maxSpeed);
     }
 
 
@@ -87,7 +87,7 @@ public class GlobalControl : MonoBehaviour
     [Header ("Curve A")]
     [Range(0, 5)]
     [SerializeField] private float amplitudeA;
-    [Range(0, 2.5f)]
+    [Range(0.5f, 2.5f)]
     [SerializeField] private float speedA;
     public bool pickUpAmplitudeA = false;
     [SerializeField] private bool pickUpSpeedA = false;
@@ -107,7 +107,7 @@ public class GlobalControl : MonoBehaviour
     [Header ("Curve B")]
     [Range(0, 5)]
     [SerializeField] private float amplitudeB;
-    [Range(0, 2.5f)]
+    [Range(0.5f, 2.5f)]
     [SerializeField] private float speedB;
     private bool pickUpAmplitudeB = false;
     private bool pickUpSpeedB = false;
@@ -127,7 +127,7 @@ public class GlobalControl : MonoBehaviour
     [Header ("Curve C")]
     [Range(0, 5)]
     [SerializeField] private float amplitudeC;
-    [Range(0, 2.5f)]
+    [Range(0.5f, 2.5f)]
     [SerializeField] private float speedC;
     private bool pickUpAmplitudeC = false;
     private bool pickUpSpeedC = false;
