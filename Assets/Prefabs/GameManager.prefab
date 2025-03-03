@@ -104,12 +104,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f1095735a4875488a7c3798328d9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMaterials:
+  CurrentColor: 63
+  currentMaterials:
   - {fileID: 2100000, guid: 18e568d61791f41a59504937e625dca9, type: 2}
   - {fileID: 2100000, guid: bab77d2286d824a07a1b8a463a0d1693, type: 2}
   - {fileID: 2100000, guid: 49b35ac5f4759624298c5ab93fe70f01, type: 2}
   - {fileID: 2100000, guid: 3c1553cf54aa0409eb89888c9e2d8768, type: 2}
   - {fileID: 2100000, guid: 32006ab65aa08433b8a5e44c67fa199c, type: 2}
+  baseMaterials:
+  - {fileID: 2100000, guid: 8534d518fae138741b89f831d0cd4643, type: 2}
+  - {fileID: 2100000, guid: a49d80957aec0d34da27d7e321e4fa8f, type: 2}
+  - {fileID: 2100000, guid: 51ebcb32fc6b4024fa8cbd5dbc918879, type: 2}
+  - {fileID: 2100000, guid: 2f257f85d7b3fc14792f3dc6428b1138, type: 2}
+  - {fileID: 2100000, guid: 476b8dd7c85d9ac4595e8f29b010c58f, type: 2}
   colorChange1Materials:
   - {fileID: 2100000, guid: f0832436c1b804f449c726607490e093, type: 2}
   - {fileID: 2100000, guid: 7c8c55033bd3bda4c95078dd3ffb5635, type: 2}
