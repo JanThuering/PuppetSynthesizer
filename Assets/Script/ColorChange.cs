@@ -7,8 +7,12 @@ using UnityEngine.Rendering.Universal;
 
 public class ColorChange : MonoBehaviour
 {
-    [Range(0, 127)]
-    public float CurrentColor = 127/2;
+
+    [Header("External References")]
+    GlobalControl globalControlScript;
+
+    [Range(0, 2)]
+    public int CurrentColor = 0;
     private int amountOfColorEffects = 3;
     private bool isColorChange1 = false;
     private bool isColorChange2 = false;
@@ -35,11 +39,14 @@ public class ColorChange : MonoBehaviour
     void Start()
     {
         if (isColorChange1 == false && isColorChange2 == false && isbaseColorApplied == false) BaseColor();
+        globalControlScript = GlobalControl.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        CurrentColor = globalControlScript.CurrentColor;
         ColorApplier();
         if (isColorChange1 == false && isColorChange2 == false && isbaseColorApplied == false) BaseColor(); //default Color
         if (isColorChange1 && isColorChange1Applied == false) ColorEffectOne(); //Color Effect 1
@@ -55,21 +62,13 @@ public class ColorChange : MonoBehaviour
         float baseRange = effectOneRange * 2;
         float effectTwoRange = effectOneRange * 3;
 
-        if (CurrentColor <= effectOneRange)
+        switch (CurrentColor)
         {
-            isColorChange1 = true;
-            isColorChange2 = false;
+            case 0: isColorChange1 = true; isColorChange2 = false; break;
+            case 1: isColorChange1 = false; isColorChange2 = false; break;
+            case 2: isColorChange1 = false; isColorChange2 = true; break;
         }
-        else if (CurrentColor <= baseRange)
-        {
-            isColorChange1 = false;
-            isColorChange2 = false;  
-        }
-        else if (CurrentColor <= effectTwoRange)
-        {
-            isColorChange1 = false;
-            isColorChange2 = true;
-        }
+
     }
 
     private void BaseColor()

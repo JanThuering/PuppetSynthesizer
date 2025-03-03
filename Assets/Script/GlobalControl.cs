@@ -17,6 +17,19 @@ public class GlobalControl : MonoBehaviour
     private float animationMultiplier; //effects the amount of movement of the puppet
     private float scaleMultiplier; //effects the amount of scaling of the controlpoints
 
+    [Header("EFFECTS-PARAMETERS")]
+    [Range(0, 2)]
+    [SerializeField] private int currentColor = 0;
+    public int CurrentColor {
+        get => currentColor;
+        set => currentColor = value;
+    }
+    [Range(0, 2)]
+    [SerializeField] private int currentCamera = 0;
+    public int CurrentCamera {
+        get => currentCamera;
+        set => currentCamera = value;
+    }
 
     [Header("DEFAULT VALUES")]
     private float lastChangeTime = 0.0f;
@@ -27,8 +40,6 @@ public class GlobalControl : MonoBehaviour
     private float defaultGlobalFrequency = 1.0f;
     private float defaultAmplitude = 0.5f;
     private float defaultFrequency = 1.0f;
-
-
 
     [Header("LIMITS")]
     [Header("Amplitude")]
@@ -43,8 +54,6 @@ public class GlobalControl : MonoBehaviour
     [Header("Speed")]
     private float minSpeed = 0.5f;
     private float maxSpeed = 2.5f;
-
-
 
     //WAVE-PARAMETERS
     [Header("GLOBAL WAVE")]
@@ -89,8 +98,8 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float amplitudeA;
     [Range(0.5f, 2.5f)]
     [SerializeField] private float speedA;
-    public bool pickUpAmplitudeA = false;
-    [SerializeField] private bool pickUpSpeedA = false;
+    private bool pickUpAmplitudeA = false;
+    private bool pickUpSpeedA = false;
     public float AmplitudeA
     {
         get => amplitudeA;
@@ -403,6 +412,24 @@ public class GlobalControl : MonoBehaviour
                     WaveType[index] = 0;
                 }
             }
+        }
+
+    }
+
+    public void MidiEffects(int controlNumber, float controlValue, float valueAmmount){
+
+        /*VALUE EXPLANATION
+            controlNumber -> slider (for which slider the curve is)
+            controlValue -> waveType (amplitude of the curve)
+            valueAmmount -> max value of the slider (how to distribute the waveTypes on the values)
+        */
+
+        int mappedValue = Mathf.FloorToInt(controlValue / (valueAmmount / 3));
+        mappedValue = Mathf.Clamp(mappedValue, 0, 2);
+        
+        switch(controlNumber){
+            case 20: CurrentColor = mappedValue; break;
+            case 21: CurrentCamera = mappedValue; break;
         }
 
     }

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085248416837100406}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c2d0817ed0e740a6940d7d6eb18b8da, type: 3}
   m_Name: 
@@ -65,6 +65,8 @@ MonoBehaviour:
   resetToDefaultValues: 1
   puppetAnimation: {fileID: 0}
   createLineScript: {fileID: 0}
+  currentColor: 1
+  currentCamera: 1
   timeToDefault: 5
   globalFrequency: 0
   globalSpeed: 0
@@ -72,8 +74,6 @@ MonoBehaviour:
   waveType: 000000000000000000000000
   amplitudeA: 1
   speedA: 0.5
-  pickUpAmplitudeA: 0
-  pickUpSpeedA: 0
   amplitudeB: 1
   speedB: 0.5
   amplitudeC: 1
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f1095735a4875488a7c3798328d9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentColor: 63
+  CurrentColor: 2
   currentMaterials:
   - {fileID: 2100000, guid: 18e568d61791f41a59504937e625dca9, type: 2}
   - {fileID: 2100000, guid: bab77d2286d824a07a1b8a463a0d1693, type: 2}
@@ -133,9 +133,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0eeb132d691c0a3428d4add7917465e4, type: 2}
   outlineMaterial: {fileID: 2100000, guid: b7376d66017c3435db3591a41dc6cc32, type: 2}
   outlineColors:
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.8962264, g: 0.11578912, b: 0, a: 0}
-  - {r: 1, g: 0.03875834, b: 0, a: 0}
+  - {r: 0.23529412, g: 0.9411765, b: 0.83042157, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.7106805, a: 1}
   currentOutlineColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2099493419463783164
 GameObject:
