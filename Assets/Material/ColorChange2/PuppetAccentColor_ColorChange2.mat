@@ -12,9 +12,10 @@ Material:
   m_Parent: {fileID: 2100000, guid: fb64181c3a2484e4ab47883a79790dea, type: 2}
   m_ModifiedSerializedProperties: 18
   m_ValidKeywords:
+  - _EMISSION
   - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
@@ -36,9 +37,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.7698112, g: 0.7698112, b: 0.7698112, a: 1}
-    - _Color: {r: 0.7698112, g: 0.7698112, b: 0.7698112, a: 1}
-    - _EmissionColor: {r: 0.3660378, g: 0.3660378, b: 0.3660378, a: 1}
+    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 1.9056604, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3639308525472386824
 MonoBehaviour:
