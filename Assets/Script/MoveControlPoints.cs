@@ -14,7 +14,7 @@ public class MoveControlPoints : MonoBehaviour
     [SerializeField] private int xPosition;
     private int currentPos;
     private int middlePosition;
-    public bool IsMovingToMiddle = false;
+    [HideInInspector] public bool IsMovingToMiddle = false; //Is set in PuppetStoreControlPoints
 
     [Header("Delay Variables")]
     // [SerializeField] private GameObject delayObj; //for visualizing the delay
@@ -114,13 +114,12 @@ public class MoveControlPoints : MonoBehaviour
                 closestPointIndex = newPos;
             }
         }
-        else if (IsMovingToMiddle!)
+        else if (IsMovingToMiddle == false)
         {
-            newPos = baseIndex;
-            closestPointIndex = newPos;
+            closestPointIndex = baseIndex;
         }
-        
-        currentPos = xPosition;
+
+        currentPos = closestPointIndex;
     }
 
     private void MoveHorizontally()
