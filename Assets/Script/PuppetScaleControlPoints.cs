@@ -7,6 +7,7 @@ public class PuppetScaleControlPoints : MonoBehaviour
 {
     //References
     private CreateLine createLineScript;
+    private PuppetStoreControlPoints puppetStoreControlPointsScript;
 
     //Nullpunkt und Abstand von der Linie
     private Transform lineStart;
@@ -17,15 +18,17 @@ public class PuppetScaleControlPoints : MonoBehaviour
     [Header("SCALEABLE CONTROLPOINTS")]
     [SerializeField] private bool affectScale = false;
     [SerializeField] public float ScaleMultiplier = 2;
-    [SerializeField] private GameObject[] scaledObjects;
-    private Vector3[] scaledObjStartScale;
-    private Vector3[] scaledObjStartPos;
+    private GameObject[] controlPoints;
+    private Vector3[] controlPointsStartScale;
+    private Vector3[] controlPointsStartPos;
 
     // Start is called before the first frame update
     void Start()
     {
         createLineScript = CreateLine.Instance;
         lineStart = createLineScript.LineStart.transform;
+        puppetStoreControlPointsScript = GetComponent<PuppetStoreControlPoints>();
+        controlPoints = puppetStoreControlPointsScript.ControlPoints;
         InitializeStartScale();
     }
 
@@ -33,8 +36,8 @@ public class PuppetScaleControlPoints : MonoBehaviour
     void Update()
     {
         //MultiplierToAmplitude();
-        if (affectScale) Scale(scaledObjects, scaledObjStartScale);
-        if (affectScale!) ScaleBack(scaledObjects, scaledObjStartScale);
+        if (affectScale) Scale(controlPoints, controlPointsStartScale);
+        if (affectScale!) ScaleBack(controlPoints, controlPointsStartScale);
     }
 
      private void MultiplierToAmplitude()
@@ -76,9 +79,9 @@ public class PuppetScaleControlPoints : MonoBehaviour
 
     private void InitializeStartScale()
     {
-        scaledObjStartScale = new Vector3[scaledObjects.Length];
-        scaledObjStartPos = new Vector3[scaledObjects.Length];
-        GetStartScale(scaledObjects, scaledObjStartScale, scaledObjStartPos);
+        controlPointsStartScale = new Vector3[controlPoints.Length];
+        controlPointsStartPos = new Vector3[controlPoints.Length];
+        GetStartScale(controlPoints, controlPointsStartScale, controlPointsStartPos);
     }
 
     private void GetStartScale(GameObject[] scaledObjScale, Vector3[] scales, Vector3[] positions)
