@@ -19,7 +19,8 @@ public class GlobalControl : MonoBehaviour
 
 
     [Header("DEFAULT VALUES")]
-    private float lastChangeTime;
+    private float lastChangeTime = 0.0f;
+    private bool needsTimeUpdate = false;
     private bool valuesChanged = false;
     [SerializeField] private float timeToDefault = 10.0f;
     private float defaultGlobalSpeed = 0.3f;
@@ -88,8 +89,8 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float amplitudeA;
     [Range(0, 2.5f)]
     [SerializeField] private float speedA;
-    private bool pickUpAmplitudeA = false;
-    private bool pickUpSpeedA = false;
+    public bool pickUpAmplitudeA = false;
+    [SerializeField] private bool pickUpSpeedA = false;
     public float AmplitudeA
     {
         get => amplitudeA;
@@ -165,6 +166,10 @@ public class GlobalControl : MonoBehaviour
             ResetToDefaultValues(); //reset the values to default and activate pickUp bools
             ValuesChanged(false);   //reset the valuesChanged bool
         }
+        if(needsTimeUpdate){
+            lastChangeTime = Time.time;
+            needsTimeUpdate = false;
+        }
     }
 
     private void SetStartValues(){
@@ -186,7 +191,6 @@ public class GlobalControl : MonoBehaviour
     }
 
     private void ResetToDefaultValues(){
-        Debug.Log("Resetting to default values");
         
         float timeToLerp = 1.0f * Time.deltaTime;
 
@@ -216,22 +220,23 @@ public class GlobalControl : MonoBehaviour
     private void ValuesChanged(bool valueChanged){
         if(valueChanged){
             valuesChanged = valueChanged;
-            lastChangeTime = Time.time;
+            needsTimeUpdate = valueChanged;
         }
         if(!valueChanged){
             valuesChanged = valueChanged;
         }
     }
 
-    private void PickUp(float targetProperty, bool pickUpBool, float midiControlValue){
+    private void PickUp(float targetProperty, ref bool pickUpBool, float midiControlValue){
         //Picks up the value of the slider
         //and ignores every midiInput until it reaches the treshHold
 
-        float treshHold = 0.1f;
+        float treshHold = 10f;
         
         if(pickUpBool && Mathf.Abs(midiControlValue-targetProperty) <= treshHold){
             targetProperty = midiControlValue;
             pickUpBool = false;
+
         }
         else{
             return;
@@ -249,9 +254,17 @@ public class GlobalControl : MonoBehaviour
 
         //pick up the values of the sliders
         switch(controlNumber){
-            case 8: PickUp(GlobalFrequency, pickUpGlobalFrequency, controlValue); break;
-            case 9: PickUp(GlobalSpeed, pickUpGlobalSpeed, controlValue); break;
+            case 8: PickUp(GlobalFrequency, ref pickUpGlobalFrequency, controlValue); break;
+            case 9: PickUp(GlobalSpeed, ref pickUpGlobalSpeed, controlValue); break;
         }
+
+        if (controlNumber == 8 && pickUpGlobalFrequency) {
+            return;
+        }
+        if (controlNumber == 9 && pickUpGlobalSpeed) {
+            return;
+        }
+
         
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
@@ -271,11 +284,22 @@ public class GlobalControl : MonoBehaviour
 
         //pick up the values of the sliders
         switch(controlNumber){
-            case 1: PickUp(AmplitudeA, pickUpAmplitudeA, controlValue); break;
-            case 2: PickUp(AmplitudeB, pickUpAmplitudeB, controlValue); break;
-            case 3: PickUp(AmplitudeC, pickUpAmplitudeC, controlValue); break;
+            case 1: PickUp(AmplitudeA, ref pickUpAmplitudeA, controlValue); break;
+            case 2: PickUp(AmplitudeB, ref pickUpAmplitudeB, controlValue); break;
+            case 3: PickUp(AmplitudeC, ref pickUpAmplitudeC, controlValue); break;
+        }
+            
+        if (controlNumber == 1 && pickUpAmplitudeA) {
+            return;
+        }
+        if (controlNumber == 2 && pickUpAmplitudeB) {
+            return;
+        }
+        if (controlNumber == 3 && pickUpAmplitudeC) {
+            return;
         }
 
+        
         /*VALUE EXPLANATION
             controlNumber -> segment (which curve is selected)
             controlValue -> waveType (amplitude or speed of the curve)
@@ -290,6 +314,7 @@ public class GlobalControl : MonoBehaviour
         }
 
 
+
     }
 
     public void MidiSpeedWave(int controlNumber, float controlValue, float valueAmmount){
@@ -298,9 +323,19 @@ public class GlobalControl : MonoBehaviour
 
         //pick up the values of the sliders
         switch(controlNumber){
-            case 10: PickUp(SpeedA, pickUpSpeedA, controlValue); break;
-            case 11: PickUp(SpeedB, pickUpSpeedB, controlValue); break;
-            case 12: PickUp(SpeedC, pickUpSpeedC, controlValue); break;
+            case 10: PickUp(SpeedA, ref pickUpSpeedA, controlValue); break;
+            case 11: PickUp(SpeedB, ref pickUpSpeedB, controlValue); break;
+            case 12: PickUp(SpeedC, ref pickUpSpeedC, controlValue); break;
+        }
+
+        if (controlNumber == 10 && pickUpSpeedA) {
+            return;
+        }
+        if (controlNumber == 11 && pickUpSpeedB) {
+            return;
+        }
+        if (controlNumber == 12 && pickUpSpeedC) {
+            return;
         }
 
         /*VALUE EXPLANATION
