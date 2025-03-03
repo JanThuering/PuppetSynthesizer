@@ -103,6 +103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f1095735a4875488a7c3798328d9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgMaterial: {fileID: 2100000, guid: 18e568d61791f41a59504937e625dca9, type: 2}
+  puppetBaseMaterial: {fileID: 2100000, guid: 3c1553cf54aa0409eb89888c9e2d8768, type: 2}
+  puppetAccentMaterial: {fileID: 2100000, guid: 49b35ac5f4759624298c5ab93fe70f01,
+    type: 2}
+  controlPointMaterial: {fileID: 2100000, guid: bab77d2286d824a07a1b8a463a0d1693,
+    type: 2}
 --- !u!1 &3021875952772663878
 GameObject:
   m_ObjectHideFlags: 0
