@@ -663,41 +663,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[0].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[0].g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[0].r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[1].b
-      value: 0.29017034
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[1].g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[1].r
-      value: 0.9150943
-      objectReference: {fileID: 0}
-    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
-        type: 3}
-      propertyPath: outlineColors.Array.data[2].b
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
