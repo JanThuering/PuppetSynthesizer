@@ -6,7 +6,7 @@ public class MoveControlPoints : MonoBehaviour
     private CreateLine createLineScript;
     private GameObject[] linePointsArray;
     private int closestPointIndex;
-    private int baseIndex;
+    public int BaseIndex;
 
 
     [Header("Movement")]
@@ -24,6 +24,8 @@ public class MoveControlPoints : MonoBehaviour
     private int delay;
 
     //Change Effect Variables
+    public int MostLeftPositionOfControlPoint;
+    public int MostRightPositionOfControlPoint;
     private bool isPosition1;
     private int middlePosition;
     private bool isPosition2;
@@ -36,7 +38,7 @@ public class MoveControlPoints : MonoBehaviour
         createLineScript = CreateLine.Instance;
         linePointsArray = createLineScript.pointsArray;
         FindClosestPoint();
-        baseIndex = closestPointIndex;
+        BaseIndex = closestPointIndex;
         xPosition = 0;
 
         //Calculate the middle position of the wave
@@ -56,7 +58,7 @@ public class MoveControlPoints : MonoBehaviour
         FrequencyMap();
         FindClosestPoint();
         ControlPointPositionApplier();
-        if (isPosition1 == false && isPosition2 == false && currentPos != baseIndex) BasePosition(); //default Position
+        if (isPosition1 == false && isPosition2 == false && currentPos != BaseIndex) BasePosition(); //default Position
         if (isPosition1 && currentPos != middlePosition) MoveToTheMiddle(); //Position Effect 1
         if (isPosition2 && currentPos != matchedLimbsPosition) MatchLimbs(); //Position Effect 2
         CopyLineMovement();
@@ -111,8 +113,8 @@ public class MoveControlPoints : MonoBehaviour
 
     private void BasePosition()
     {
-        if (baseIndex < closestPointIndex) closestPointIndex--;
-        else if (baseIndex > closestPointIndex) closestPointIndex++;
+        if (BaseIndex < closestPointIndex) closestPointIndex--;
+        else if (BaseIndex > closestPointIndex) closestPointIndex++;
 
         currentPos = closestPointIndex;
     }
@@ -128,9 +130,19 @@ public class MoveControlPoints : MonoBehaviour
 
     private void MatchLimbs()
     {
-        if(gameObject.name == "HandL")
+        if (gameObject.name == "LegR" || gameObject.name == "LegL")
         {
+            if ((BaseIndex - MostRightPositionOfControlPoint) * -1 > BaseIndex - MostLeftPositionOfControlPoint && currentPos != MostLeftPositionOfControlPoint)  //left
+            {
 
+                closestPointIndex--;
+            }
+            if ((BaseIndex - MostRightPositionOfControlPoint) * -1 < BaseIndex - MostLeftPositionOfControlPoint && currentPos != MostRightPositionOfControlPoint) //right
+            {
+                print(gameObject.name);
+                closestPointIndex++;
+            }
+            currentPos = closestPointIndex;
         }
     }
 
@@ -139,14 +151,14 @@ public class MoveControlPoints : MonoBehaviour
     private void MoveHorizontally()
     {
         //find the max and min position of the wave and apply it to the xPosition
-        int maxPos = linePointsArray.Length - 1 - baseIndex;
-        int minPos = baseIndex * -1;
+        int maxPos = linePointsArray.Length - 1 - BaseIndex;
+        int minPos = BaseIndex * -1;
         if (xPosition > maxPos) xPosition = maxPos;
         else if (xPosition < minPos) xPosition = minPos;
         int newPos;
 
         //depending on the parameter xPosition the closest point on the wave is calculated
-        newPos = baseIndex + xPosition;
+        newPos = BaseIndex + xPosition;
 
         if (currentPos != xPosition)
         {
