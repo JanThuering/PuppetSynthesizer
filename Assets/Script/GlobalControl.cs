@@ -31,7 +31,7 @@ public class GlobalControl : MonoBehaviour
         set => currentCamera = value;
     }
     [SerializeField] private int controlPointEffect = 0;
-    public int CurrentControlPointEffect {
+    public int ControlPointEffect {
         get => controlPointEffect;
         set => controlPointEffect = value;
     }
@@ -441,7 +441,7 @@ public class GlobalControl : MonoBehaviour
         switch(controlNumber){
             case 32: CurrentColor = (CurrentColor + 1) % 3; break;
             case 33: CurrentCamera = (CurrentCamera + 1) % 3; break;
-            case 34: CurrentControlPointEffect = (CurrentControlPointEffect + 1) % 3; break;
+            case 34: ControlPointEffect = (ControlPointEffect + 1) % 3; break;
         }
 
 
