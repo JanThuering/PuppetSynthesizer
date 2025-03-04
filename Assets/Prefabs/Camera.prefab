@@ -229,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110886919361106287}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.009394204, y: 0.00050000753, z: 0.000004697381, w: 0.9999558}
+  m_LocalRotation: {x: 0.008822747, y: 0.0005000101, z: -0.0000044116346, w: 0.99996096}
   m_LocalPosition: {x: 0, y: 0.89, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4422078636569158313}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0093942005, y: 0.0004999778, z: 0.0000046970995, w: 0.9999558}
+  m_LocalRotation: {x: 0.008822746, y: 0.0004999804, z: -0.000004411372, w: 0.99996096}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -477,7 +477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4594486292004901104}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.022767419, y: 0.0004998702, z: 0.000011383707, w: 0.99974066}
+  m_LocalRotation: {x: 0.0173933, y: 0.00049992424, z: -0.000008696648, w: 0.9998486}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -650,7 +650,7 @@ MonoBehaviour:
   m_HorizontalDamping: 0
   m_VerticalDamping: 0
   m_ScreenX: 0.5
-  m_ScreenY: 0.55
+  m_ScreenY: 0.482
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
@@ -683,7 +683,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5723873641819608153}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0039999094, y: 0.00049999583, z: -0.0000019999543, w: 0.9999919}
+  m_LocalRotation: {x: 0.010430157, y: 0.0004999727, z: -0.0000052150776, w: 0.9999455}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_HorizontalDamping: 0
   m_VerticalDamping: 0
   m_ScreenX: 0.5
-  m_ScreenY: 0.6
+  m_ScreenY: 0.45
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_HorizontalDamping: 0
   m_VerticalDamping: 0
   m_ScreenX: 0.5
-  m_ScreenY: 0.5
+  m_ScreenY: 0.476
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
