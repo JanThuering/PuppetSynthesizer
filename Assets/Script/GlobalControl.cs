@@ -423,6 +423,8 @@ public class GlobalControl : MonoBehaviour
     }
 
     public void MidiEffects(int controlNumber, float controlValue, float valueAmmount){
+        //check activity
+        ValuesChanged(true);
 
         /*VALUE EXPLANATION
             controlNumber -> slider (for which slider the curve is)
