@@ -1654,7 +1654,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.18
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -2304,7 +2304,7 @@ MonoBehaviour:
   MovementMultiplier: 3
   armRotationMultiplier: {x: 0, y: 0, z: 160}
   legRotationMultiplier: {x: 80, y: 10, z: 80}
-  torsoMultiplier: {x: -60, y: 50, z: 30}
+  torsoMultiplier: {x: 50, y: 0, z: 60}
   armLControlPoint: {fileID: 918701929169346446}
   armLEffectors:
   - {fileID: 4229666630624040015}
