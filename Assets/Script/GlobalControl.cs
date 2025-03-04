@@ -432,16 +432,12 @@ public class GlobalControl : MonoBehaviour
         int mappedValue = Mathf.FloorToInt(controlValue / (valueAmmount / 3));
         mappedValue = Mathf.Clamp(mappedValue, 0, 2);
 
-        // if (controlNumber == 32) {
-        //     CurrentColor = (CurrentColor + 1) % 3;
-        // } else if (controlNumber == 33) {
-        //     CurrentCamera = (CurrentCamera + 1) % 3;
-        // }
-
-        switch(controlNumber){
-            case 32: CurrentColor = (CurrentColor + 1) % 3; break;
-            case 33: CurrentCamera = (CurrentCamera + 1) % 3; break;
-            case 34: ControlPointEffect = (ControlPointEffect + 1) % 3; break;
+        if(controlValue == 127){
+            switch(controlNumber){
+                case 32: CurrentColor = (CurrentColor + 1) % 3; break;
+                case 33: CurrentCamera = (CurrentCamera + 1) % 3; break;
+                case 34: ControlPointEffect = (ControlPointEffect + 1) % 3; break;
+            }
         }
 
 
