@@ -2302,7 +2302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScaleMultiplier: 2
   MovementMultiplier: 3
-  armRotationMultiplier: {x: 0, y: 20, z: 160}
+  armRotationMultiplier: {x: 0, y: 0, z: 160}
   legRotationMultiplier: {x: 80, y: 10, z: 80}
   torsoMultiplier: {x: -60, y: 50, z: 30}
   armLControlPoint: {fileID: 918701929169346446}
