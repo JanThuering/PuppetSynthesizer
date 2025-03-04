@@ -52,7 +52,6 @@ public class MoveControlPoints : MonoBehaviour
         FrequencyMap();
         FindClosestPoint();
         MoveToTheMiddle();
-        MoveHorizontally();
         CopyLineMovement();
     }
 
@@ -93,26 +92,12 @@ public class MoveControlPoints : MonoBehaviour
     }
     private void MoveToTheMiddle()
     {
-        int newPos = 0;
 
-        if (IsMovingToMiddle)
+        if (IsMovingToMiddle && currentPos != middlePosition)
         {
-            //depending on the current position on the wave the new position is calculated
-            if (baseIndex < middlePosition) newPos = baseIndex + ((baseIndex - middlePosition) * -1);
-            else if (baseIndex == middlePosition) newPos = middlePosition;
-
-            if (currentPos != middlePosition)
-            {
-                if (newPos < 0) newPos = 0;
-                else if (newPos > linePointsArray.Length - 1) newPos = linePointsArray.Length - 1;
-
-                // //step by step move to the new position
-                // if (newPos < closestPointIndex) closestPointIndex--;
-                // else if (newPos > closestPointIndex) closestPointIndex++;
-
-                // apply the new position to the control point
-                closestPointIndex = newPos;
-            }
+            //step by step move to the new position
+            if (closestPointIndex > middlePosition) closestPointIndex--;
+            else if (closestPointIndex < middlePosition) closestPointIndex++;
         }
         else if (IsMovingToMiddle == false)
         {

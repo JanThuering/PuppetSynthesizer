@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PuppetStoreControlPoints : MonoBehaviour
 {
-    [SerializeField] public GameObject[] ControlPoints;
     public bool IsMovingToMiddle = false;
+    [SerializeField] public GameObject[] ControlPoints;
     private bool changeOnce = false;
     
     // Start is called before the first frame update
