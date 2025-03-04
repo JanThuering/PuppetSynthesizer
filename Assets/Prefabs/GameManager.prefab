@@ -133,9 +133,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0eeb132d691c0a3428d4add7917465e4, type: 2}
   outlineMaterial: {fileID: 2100000, guid: b7376d66017c3435db3591a41dc6cc32, type: 2}
   outlineColors:
-  - {r: 0.23529412, g: 0.9411765, b: 0.83042157, a: 1}
-  - {r: 0, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0.7106805, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.9150943, g: 0, b: 0.29017034, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
   currentOutlineColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2099493419463783164
 GameObject:
