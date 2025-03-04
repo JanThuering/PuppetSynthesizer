@@ -27,8 +27,8 @@ Material:
     m_Floats:
     - _AngleFactor: 0.05
     - _DepthThreshold: 0.005
-    - _LuminanceThreshold: 5.38
-    - _NormalThreshold: 0.49
+    - _LuminanceThreshold: 0.7
+    - _NormalThreshold: 0.41
     - _OutlineThickness: 5
     m_Colors:
     - _OutlineColor: {r: 0.9150943, g: 0, b: 0.29017034, a: 1}
