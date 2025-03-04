@@ -52,9 +52,15 @@ public class MidiInputControll : MonoBehaviour {
             }
 
             //TYPE - Control speed of the individual Waves
-            if(controlChange.ControlNumber >= 32 && controlChange.ControlNumber <= 35 || controlChange.ControlNumber >= 15 && controlChange.ControlNumber <= 18){
+            if(controlChange.ControlNumber >= 15 && controlChange.ControlNumber <= 18){
                 globalControlScript.MidiWaveType(controlChange.ControlNumber, controlChange.ControlValue, 127f, true);
             }
+
+            if(controlChange.ControlNumber >= 32 && controlChange.ControlNumber <= 34 ){
+                Debug.Log("Effekt Button");
+                globalControlScript.MidiEffects(controlChange.ControlNumber, controlChange.ControlValue, 127f);
+            }
+            
         }
         
         

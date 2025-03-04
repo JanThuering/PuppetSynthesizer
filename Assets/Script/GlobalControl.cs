@@ -30,6 +30,11 @@ public class GlobalControl : MonoBehaviour
         get => currentCamera;
         set => currentCamera = value;
     }
+    [SerializeField] private int controlPointEffect = 0;
+    public int CurrentControlPointEffect {
+        get => controlPointEffect;
+        set => controlPointEffect = value;
+    }
 
     [Header("DEFAULT VALUES")]
     private float lastChangeTime = 0.0f;
@@ -426,11 +431,19 @@ public class GlobalControl : MonoBehaviour
 
         int mappedValue = Mathf.FloorToInt(controlValue / (valueAmmount / 3));
         mappedValue = Mathf.Clamp(mappedValue, 0, 2);
-        
+
+        // if (controlNumber == 32) {
+        //     CurrentColor = (CurrentColor + 1) % 3;
+        // } else if (controlNumber == 33) {
+        //     CurrentCamera = (CurrentCamera + 1) % 3;
+        // }
+
         switch(controlNumber){
-            case 20: CurrentColor = mappedValue; break;
-            case 21: CurrentCamera = mappedValue; break;
+            case 32: CurrentColor = (CurrentColor + 1) % 3; break;
+            case 33: CurrentCamera = (CurrentCamera + 1) % 3; break;
+            case 34: CurrentControlPointEffect = (CurrentControlPointEffect + 1) % 3; break;
         }
+
 
     }
 
