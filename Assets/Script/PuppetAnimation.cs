@@ -90,21 +90,13 @@ public class PuppetAnimation : MonoBehaviour
 
     private void Rotate(GameObject[] effectors, Vector3[] startRot, Vector3[] startPos, Transform controlPoint, Vector3 rotationMultiplier)
     {
-
+        Vector3 adjustedrotationMultiplier = rotationMultiplier * MovementMultiplier;
 
         for (int i = 0; i < effectors.Length; i++)
         {
             // y distanz von der welle zum controlpoint
             if (i == 0) distanceZeroToLine = lineStart.position.y - controlPoint.position.y;
             else distanceZeroToLine = lineStart.position.y - controlPoint.GetComponent<MoveControlPoints>().DelayPosition.y;
-
-            // if (effectors[i].name == "TorsoEffectorTop" && distanceZeroToLine < 0 || effectors[i].name == "TorsoEffectorBottom" && distanceZeroToLine < 0)
-            // {
-            //     rotationMultiplier = rotationMultiplier * -1;
-            // }
-
-            Vector3 adjustedrotationMultiplier = rotationMultiplier * MovementMultiplier;
-            // print(adjustedrotationMultiplier);
 
             // bewegungsrichtung von links und rechts gedreht
             // if (startPos[i].x < 0) multiplier = new Vector3(rotationMultiplier.x, rotationMultiplier.y * -1, rotationMultiplier.z * -1);
