@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScenes/Jan_Rotation.unity
     guid: 923b75220660e43edb2246ebdebd5e76
+  - enabled: 1
+    path: Assets/Scenes/Build_Scene_250304.unity
+    guid: e19d9c5c19aa941bbbe745a718700069
   m_configObjects: {}

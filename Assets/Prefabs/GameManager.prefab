@@ -68,7 +68,7 @@ MonoBehaviour:
   currentColor: 1
   currentCamera: 1
   controlPointEffect: 1
-  timeToDefault: 5
+  timeToDefault: 20
   globalFrequency: 0
   globalSpeed: 0
   globalAmplitude: 0
