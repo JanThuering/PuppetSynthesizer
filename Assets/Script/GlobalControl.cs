@@ -30,6 +30,7 @@ public class GlobalControl : MonoBehaviour
         get => currentCamera;
         set => currentCamera = value;
     }
+    [Range(0, 2)]
     [SerializeField] private int controlPointEffect = 0;
     public int ControlPointEffect {
         get => controlPointEffect;

@@ -13,8 +13,6 @@ public class MoveControlPoints : MonoBehaviour
     [SerializeField] private float moveTowardsSpeed = 1;
     [SerializeField] private int xPosition;
     private int currentPos;
-    private int middlePosition;
-    [HideInInspector] public bool IsMovingToMiddle = false; //Is set in PuppetStoreControlPoints
 
     [Header("Delay Variables")]
     // [SerializeField] private GameObject delayObj; //for visualizing the delay
@@ -24,6 +22,12 @@ public class MoveControlPoints : MonoBehaviour
     private int closestPointDelayIndex;
     private float mapFreq;
     private int delay;
+
+    //Change Effect Variables
+    private bool isPosition1;
+    private int middlePosition;
+    private bool isPosition2;
+    private int matchedLimbsPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +55,10 @@ public class MoveControlPoints : MonoBehaviour
     {
         FrequencyMap();
         FindClosestPoint();
-        MoveToTheMiddle();
+        ControlPointPositionApplier();
+        if (isPosition1 == false && isPosition2 == false && currentPos != baseIndex) BasePosition(); //default Position
+        if (isPosition1 && currentPos != middlePosition) MoveToTheMiddle(); //Position Effect 1
+        if (isPosition2 && currentPos != matchedLimbsPosition) MatchLimbs(); //Position Effect 2
         CopyLineMovement();
     }
 
@@ -90,22 +97,44 @@ public class MoveControlPoints : MonoBehaviour
             closestPointDelayIndex = closestIndexDelay;
         }
     }
-    private void MoveToTheMiddle()
-    {
 
-        if (IsMovingToMiddle && currentPos != middlePosition)
+    private void ControlPointPositionApplier()
+    {
+        switch (GlobalControl.Instance.ControlPointEffect)
         {
-            //step by step move to the new position
-            if (closestPointIndex > middlePosition) closestPointIndex--;
-            else if (closestPointIndex < middlePosition) closestPointIndex++;
+            case 0: isPosition1 = true; isPosition2 = false; break; //effect 1
+            case 1: isPosition1 = false; isPosition2 = false; break; //base
+            case 2: isPosition1 = false; isPosition2 = true; break; //effect 2
         }
-        else if (IsMovingToMiddle == false)
-        {
-            closestPointIndex = baseIndex;
-        }
+
+    }
+
+    private void BasePosition()
+    {
+        if (baseIndex < closestPointIndex) closestPointIndex--;
+        else if (baseIndex > closestPointIndex) closestPointIndex++;
 
         currentPos = closestPointIndex;
     }
+
+    private void MoveToTheMiddle()
+    {
+        //step by step move to the new position
+        if (closestPointIndex > middlePosition) closestPointIndex--;
+        else if (closestPointIndex < middlePosition) closestPointIndex++;
+
+        currentPos = closestPointIndex;
+    }
+
+    private void MatchLimbs()
+    {
+        if(gameObject.name == "HandL")
+        {
+
+        }
+    }
+
+
 
     private void MoveHorizontally()
     {

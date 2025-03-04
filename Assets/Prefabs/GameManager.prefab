@@ -67,7 +67,7 @@ MonoBehaviour:
   createLineScript: {fileID: 0}
   currentColor: 1
   currentCamera: 1
-  controlPointEffect: 0
+  controlPointEffect: 1
   timeToDefault: 5
   globalFrequency: 0
   globalSpeed: 0
