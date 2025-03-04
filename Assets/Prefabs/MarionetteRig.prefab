@@ -234,10 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosestPointIndex: 0
-  BaseIndex: 0
   moveTowardsSpeed: 55
   xPosition: 0
+  IsMovingToMiddle: 0
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &691439115655334134
 GameObject:
@@ -411,10 +410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosestPointIndex: 0
-  BaseIndex: 0
   moveTowardsSpeed: 55
   xPosition: 0
+  IsMovingToMiddle: 0
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1130818522860776948
 GameObject:
@@ -713,10 +711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosestPointIndex: 0
-  BaseIndex: 0
   moveTowardsSpeed: 55
   xPosition: 0
+  IsMovingToMiddle: 0
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &2564406420934798024
 GameObject:
@@ -1264,10 +1261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosestPointIndex: 0
-  BaseIndex: 0
   moveTowardsSpeed: 55
   xPosition: 0
+  IsMovingToMiddle: 0
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &7280311301035103401
 GameObject:
@@ -1429,10 +1425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosestPointIndex: 0
-  BaseIndex: 0
   moveTowardsSpeed: 55
   xPosition: 0
+  IsMovingToMiddle: 0
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &8498719814996123248
 GameObject:
@@ -1530,10 +1525,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8548292ed7aa14add8060a90bd89560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosestPointIndex: 0
-  BaseIndex: 0
   moveTowardsSpeed: 55
   xPosition: 0
+  IsMovingToMiddle: 0
   DelayPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &8854056015655102077
 GameObject:
@@ -2097,10 +2091,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3253611747768437240}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 171ea688bd0529c43a471de7e48484ad,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3497660791963558702}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -2334,19 +2324,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectScale: 1
   ScaleMultiplier: 0.6
---- !u!114 &3253611747768437240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8679564036945609960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554547c949925e84b825bc93e42811ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsMovingToMiddle: 0
 --- !u!95 &3497660791963558702
 Animator:
   serializedVersion: 5
