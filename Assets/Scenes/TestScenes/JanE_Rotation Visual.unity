@@ -681,17 +681,17 @@ PrefabInstance:
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.data[1].b
-      value: 0.9056604
+      value: 0.29017034
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.data[1].g
-      value: 0.35030276
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: outlineColors.Array.data[1].r
-      value: 0.07262372
+      value: 0.9150943
       objectReference: {fileID: 0}
     - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
