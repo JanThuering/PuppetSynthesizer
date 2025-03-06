@@ -11,7 +11,7 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private bool resetToDefaultValues = false;
     [SerializeField] private bool testEvent = false;
 
-    public static event Action <int> CallEasteregg;
+    public static event Action  CallEasteregg;
 
     [Header("EXTERNAL REFERENCES")]
     //ANIMATIONS-PARAMETERS
@@ -260,7 +260,7 @@ public class GlobalControl : MonoBehaviour
 
     private void CheckForEasterEgg(int chosenEasterEgg){
         if(testEvent){
-            CallEasteregg?.Invoke(chosenEasterEgg);
+            CallEasteregg?.Invoke();
             testEvent = false;
         }
     }
