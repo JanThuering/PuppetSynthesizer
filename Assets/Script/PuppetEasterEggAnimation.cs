@@ -15,12 +15,12 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     void OnEnable()
     {
-        GlobalControl.CallEasteregg += PirouetteStart;
+        GlobalControl.CallEasteregg += EasterEggDances;
     }
 
     void OnDisable()
     {
-        GlobalControl.CallEasteregg -= PirouetteStart;
+        GlobalControl.CallEasteregg -= EasterEggDances;
     }
 
     void Start()
@@ -32,6 +32,19 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void EasterEggDances(int danceType){
+        switch (danceType)
+        {
+            case 1: PirouetteStart(); break;
+            case 2: TestDance(); break;
+            default: break;
+        }
+    }
+
+    private void TestDance(){
+        Debug.Log("Test Dance");
     }
 
     private void PirouetteStart()

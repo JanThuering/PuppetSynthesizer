@@ -11,7 +11,7 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private bool resetToDefaultValues = false;
     [SerializeField] private bool testEvent = false;
 
-    public static event Action  CallEasteregg;
+    public static event Action <int> CallEasteregg;
 
     [Header("EXTERNAL REFERENCES")]
     //ANIMATIONS-PARAMETERS
@@ -189,7 +189,7 @@ public class GlobalControl : MonoBehaviour
             needsTimeUpdate = false;
         }
 
-        CheckForEasterEgg(1);
+        CheckForEasterEgg();
         
     }
 
@@ -258,9 +258,13 @@ public class GlobalControl : MonoBehaviour
         }
     }
 
-    private void CheckForEasterEgg(int chosenEasterEgg){
+    private void CheckForEasterEgg(){
+        if(amplitudeA == 5 && amplitudeB == 5 && amplitudeC == 5){
+            CallEasteregg?.Invoke(1);
+            testEvent = false;
+        }
         if(testEvent){
-            CallEasteregg?.Invoke();
+            CallEasteregg?.Invoke(2);
             testEvent = false;
         }
     }
