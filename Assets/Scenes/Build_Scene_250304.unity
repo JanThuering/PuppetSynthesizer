@@ -313,23 +313,28 @@ PrefabInstance:
     - target: {fileID: 176481583961681092, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.01470357
+      value: 0.014703494
       objectReference: {fileID: 0}
     - target: {fileID: 176481583961681092, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -4.1488388e-10
+      value: 0.000000012737896
       objectReference: {fileID: 0}
     - target: {fileID: 176481583961681092, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.100933e-12
+      value: -1.8731185e-10
       objectReference: {fileID: 0}
     - target: {fileID: 384111750412986335, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 523902128}
+    - target: {fileID: 384111750412986335, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 29.9999
+      objectReference: {fileID: 0}
     - target: {fileID: 456015810738542553, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_Name
@@ -338,17 +343,32 @@ PrefabInstance:
     - target: {fileID: 2016722026263944518, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.01470357
+      value: 0.014703494
       objectReference: {fileID: 0}
     - target: {fileID: 2016722026263944518, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -4.1488388e-10
+      value: 0.000000012737896
       objectReference: {fileID: 0}
     - target: {fileID: 2016722026263944518, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.100933e-12
+      value: -1.8731185e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261538298542285428, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 29.9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419359976663869527, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: field of view
+      value: 29.9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5297989905976612813, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 29.9999
       objectReference: {fileID: 0}
     - target: {fileID: 5498251538957638861, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
@@ -370,6 +390,11 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 523902128}
+    - target: {fileID: 5855661150435740664, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 29.9999
+      objectReference: {fileID: 0}
     - target: {fileID: 6578526420000567457, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -458,17 +483,17 @@ PrefabInstance:
     - target: {fileID: 9011310620389328849, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.01470357
+      value: 0.014703486
       objectReference: {fileID: 0}
     - target: {fileID: 9011310620389328849, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -4.1488388e-10
+      value: -4.1488382e-10
       objectReference: {fileID: 0}
     - target: {fileID: 9011310620389328849, guid: a09fb8acc412e4957bb0bb0e4f5e0607,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.100933e-12
+      value: 6.1008967e-12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -538,6 +563,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: outlineColors.Array.data[2].b
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: outlineColors.Array.data[2].g
+      value: 0.9137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277304858169042751, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
+      propertyPath: outlineColors.Array.data[2].r
+      value: 0.8784314
+      objectReference: {fileID: 0}
     - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
       propertyPath: puppetAnimation
@@ -556,6 +596,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 783960158519323830, guid: cd7c9a416eeb640f5adb9e05c48d9918,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6512830926496243082, guid: cd7c9a416eeb640f5adb9e05c48d9918,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190026561108198257, guid: cd7c9a416eeb640f5adb9e05c48d9918,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8304586232350269010, guid: cd7c9a416eeb640f5adb9e05c48d9918,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -610,6 +665,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MarionetteRig
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692560979313879058, guid: cd7c9a416eeb640f5adb9e05c48d9918,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094960310466839697, guid: cd7c9a416eeb640f5adb9e05c48d9918,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
