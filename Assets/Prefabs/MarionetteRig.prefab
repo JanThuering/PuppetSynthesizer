@@ -1664,7 +1664,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -1674,7 +1674,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -1689,7 +1689,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -2343,6 +2343,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d150c34c4a7994c9da7b76d01c43af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationRigs:
+  - {fileID: 691439115655334134}
+  - {fileID: 3166320765720456593}
+  - {fileID: 4333201691623312129}
+  - {fileID: 6772545268174105073}
+  - {fileID: 182467444099801439}
 --- !u!114 &2730744146558457712
 MonoBehaviour:
   m_ObjectHideFlags: 0
