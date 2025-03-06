@@ -13,6 +13,8 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     AnimatorStateInfo animStateInfo;
     private float NTime;
     private bool animationFinished;
+    private bool isWeightOff;
+    private bool isWeightOn;
 
     // Start is called before the first frame update
 
@@ -34,10 +36,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     private void EasterEggDances(int danceType)
     {
         //TODO lerp
-        for (int i = 0; i < animationRigs.Length; i++)
-        {
-            animationRigs[i].GetComponent<TwistChainConstraint>().weight = 0;
-        }
+
 
         switch (danceType)
         {
@@ -51,21 +50,14 @@ public class PuppetEasterEggAnimation : MonoBehaviour
         StartCoroutine(GetEndOfAnimation());
     }
 
-    private void HandStandAnimation()
-    {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("HandStand"))
-        {
-            animator.SetBool("isHandStand", true);
-        }
-
-        animator.SetBool("isHandStand", false);
-    }
-
     private void PirouetteAnimation()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Pirouette"))
         {
+
             animator.SetBool("isPirouette", true);
+
+            StartCoroutine(ConstraintWeightOff());
 
             //turn Marionette 360degree
 
@@ -78,11 +70,20 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     private void PirouetteStop()
     {
-        for (int i = 0; i < animationRigs.Length; i++)
-        {
-            animationRigs[i].GetComponent<TwistChainConstraint>().weight = 1;
-        }
+        StartCoroutine(ConstraintWeightOff());
         animator.SetBool("isPirouette", false);
+    }
+
+    private void HandStandAnimation()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("HandStand"))
+        {
+            StartCoroutine(ConstraintWeightOff());
+
+            animator.SetBool("isHandStand", true);
+            // print(animator.GetBool("isHandStand"));
+            // animator.SetBool("isHandStand", false);
+        }
     }
 
     IEnumerator GetEndOfAnimation()
@@ -94,12 +95,51 @@ public class PuppetEasterEggAnimation : MonoBehaviour
             if (NTime > 1.0f)
             {
                 animationFinished = true;
-                for (int i = 0; i < animationRigs.Length; i++)
-                {
-                    animationRigs[i].GetComponent<TwistChainConstraint>().weight = 1;
-                }
+                StartCoroutine(ConstraintWeightOn());
             }
             yield return null;
         }
+    }
+
+    IEnumerator ConstraintWeightOn()
+    {
+        float lerpedWeight;
+        float lerpT = 2;
+
+        while (isWeightOff)
+        {
+            lerpedWeight = Mathf.Lerp(0, 1, Time.deltaTime * lerpT);
+
+            for (int i = 0; i < animationRigs.Length; i++)
+            {
+                animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
+            }
+
+            yield return null;
+
+        }
+
+        isWeightOff = false;
+
+    }
+
+    IEnumerator ConstraintWeightOff()
+    {
+        float lerpedWeight;
+        float lerpT = 2;
+
+        while (isWeightOff == false)
+        {
+            lerpedWeight = Mathf.Lerp(1, 2, Time.deltaTime * lerpT);
+
+            for (int i = 0; i < animationRigs.Length; i++)
+            {
+                animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
+            }
+
+            yield return null;
+        }
+
+        isWeightOff = true;
     }
 }
