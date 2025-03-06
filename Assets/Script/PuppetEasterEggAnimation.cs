@@ -10,7 +10,6 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     private Animator animator;
     private GlobalControl globalControl;
     [SerializeField] private GameObject[] animationRigs;
-    public bool isPirouetting;
 
     // Start is called before the first frame update
 
@@ -32,7 +31,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isPirouetting) PirouetteStart();
+
     }
 
     private void PirouetteStart()
@@ -44,7 +43,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
                 animationRigs[i].GetComponent<TwistChainConstraint>().weight = 0;
             }
             animator.SetBool("isPirouette", true);
-            gameObject.transform.DORotate(Vector3.one * 360, 4, RotateMode.FastBeyond360)
+            gameObject.transform.DORotate(new Vector3(0, 360, 0), 4, RotateMode.FastBeyond360)
             .SetRelative()
             .SetEase(Ease.OutExpo)
             .OnComplete(() => PirouetteStop());
@@ -54,7 +53,6 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     private void PirouetteStop()
     {
-        isPirouetting = false;
         for (int i = 0; i < animationRigs.Length; i++)
         {
             animationRigs[i].GetComponent<TwistChainConstraint>().weight = 1;
