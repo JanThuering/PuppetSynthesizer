@@ -9,12 +9,14 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 {
     private Animator animator;
     private GlobalControl globalControl;
+    [SerializeField] private float pirouetteLength;
     [SerializeField] private GameObject[] animationRigs;
     AnimatorStateInfo animStateInfo;
     private float NTime;
     private bool animationFinished;
     private bool isWeightOff;
     private bool isWeightOn;
+    bool triggerOnce = true;
 
     // Start is called before the first frame update
 
@@ -36,120 +38,144 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     //Event picked die richtige funktion
     private void EasterEggDances(int danceType)
     {
-        //TODO lerp
-
-
         switch (danceType)
         {
             case 1: PirouetteAnimation(); break;
             case 2: HandStandAnimation(); break;
             default: break;
         }
-
-        //Check if Animation finished
-        animationFinished = false;
-        StartCoroutine(GetEndOfAnimation());
     }
 
     private void PirouetteAnimation()
     {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Pirouette"))
+        //TODO doesn't rotate to 360 - overshoots, but why? maybe i just lerp that shit
+
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Pirouette") & triggerOnce)
         {
-
-            animator.SetBool("isPirouette", true);
-
+            triggerOnce = false;
             //animation rigging off
             StartCoroutine(ConstraintWeightOff());
 
-            //turn Marionette 360degree
-            gameObject.transform.DORotate(new Vector3(0, 360, 0), 4, RotateMode.FastBeyond360)
-            .SetRelative()
-            .SetEase(Ease.InOutExpo)
-            .OnComplete(() => PirouetteStop());
-        }
-    }
+            //start animation
+            animator.SetBool("isPirouette", true);
 
-    private void PirouetteStop()
-    {
-        //animation rigging on
-        StartCoroutine(ConstraintWeightOn());
-        //Stopa animation
-        animator.SetBool("isPirouette", false);
+            //turn Marionette 360degree
+            gameObject.transform.DORotate(new Vector3(0, 360, 0), 3, RotateMode.FastBeyond360)
+            .SetRelative()
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+                //animation rigging on
+                StartCoroutine(ConstraintWeightOn());
+                //stop animation
+                animator.SetBool("isPirouette", false);
+            });
+        }
     }
 
     private void HandStandAnimation()
     {
+        //TODO can't be spammed, or breaks
+
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("HandStand"))
         {
             //animation rigging off
             StartCoroutine(ConstraintWeightOff());
 
-            //animations bool kurz on setzen damit animation nur einmal abgespielt wird
-            animator.SetBool("isHandStand", true);
-            animator.SetBool("isHandStand", false);
+            //trigger animation
+            animator.SetTrigger("handStandTrigger");
+
+            StartCoroutine(WaitForAnimationToEnd("HandStand reversed"));
         }
     }
 
     //Check ob animation läuft
-    IEnumerator GetEndOfAnimation()
+    IEnumerator WaitForAnimationToEnd(string animationName)
     {
-        while (animationFinished == false)
+        AnimatorStateInfo animStateInfo;
+
+        while (true)
         {
             animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            NTime = animStateInfo.normalizedTime;
-            if (NTime > 1.0f)
+            if (!animStateInfo.IsName(animationName) || !animStateInfo.IsName(animationName) && animStateInfo.normalizedTime < 1.0f)
             {
-                animationFinished = true;
-                StartCoroutine(ConstraintWeightOn());
+                yield return null; // Keep waiting
             }
-            yield return null;
+            else 
+            {
+                StartCoroutine(ConstraintWeightOn());
+                break; // Animation finished, exit loop
+            }
+
+            // Once animation finishes, turn animation rigging back on
         }
     }
 
-    //animationrigging on
-    IEnumerator ConstraintWeightOn()
-    {
-        float lerpedWeight;
-        float lerpT = 2;
 
-        while (isWeightOff)
+
+    //animationrigging off
+    IEnumerator ConstraintWeightOff()
+    {
+        float lerpedWeight = 1;
+        float duration = 0f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
             //lerp weight value
-            lerpedWeight = Mathf.Lerp(0, 1, Time.deltaTime * lerpT);
+            lerpedWeight = Mathf.Lerp(1, 0, elapsedTime / duration);
 
             //apply weight
             for (int i = 0; i < animationRigs.Length; i++)
             {
                 animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
             }
-            
+
+            elapsedTime += Time.deltaTime;
             yield return null;
+        }
+
+        // Ensure final value is correctly set
+        foreach (var rig in animationRigs)
+        {
+            rig.GetComponent<TwistChainConstraint>().weight = 0;
+        }
+
+        isWeightOff = true;
+    }
+
+    //animationrigging on - 
+    //!! Duration is set to 2f which makes the turn off smoother, but makes the animations need a cool off
+    IEnumerator ConstraintWeightOn()
+    {
+        float lerpedWeight;
+        float duration = 2f;
+        float elapsedTime = 0;
+
+        while (elapsedTime < duration)
+        {
+            //lerp weight value
+            lerpedWeight = Mathf.Lerp(0, 1, elapsedTime / duration);
+
+            //apply weight
+            for (int i = 0; i < animationRigs.Length; i++)
+            {
+                animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure final value is correctly set
+        foreach (var rig in animationRigs)
+        {
+            rig.GetComponent<TwistChainConstraint>().weight = 1;
         }
 
         isWeightOff = false;
 
     }
 
-    //animationrigging off
-    IEnumerator ConstraintWeightOff()
-    {
-        float lerpedWeight;
-        float lerpT = 2;
 
-        while (isWeightOff == false)
-        {
-            //lerp weight value
-            lerpedWeight = Mathf.Lerp(1, 2, Time.deltaTime * lerpT);
-
-            //apply weight
-            for (int i = 0; i < animationRigs.Length; i++)
-            {
-                animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
-            }
-            
-            yield return null;
-        }
-
-        isWeightOff = true;
-    }
 }
