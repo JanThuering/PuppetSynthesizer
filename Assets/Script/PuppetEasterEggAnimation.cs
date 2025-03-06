@@ -10,6 +10,9 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     private Animator animator;
     private GlobalControl globalControl;
     [SerializeField] private GameObject[] animationRigs;
+    AnimatorStateInfo animStateInfo;
+    private float NTime;
+    private bool animationFinished;
 
     // Start is called before the first frame update
 
@@ -28,39 +31,48 @@ public class PuppetEasterEggAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void EasterEggDances(int danceType)
     {
+        //TODO lerp
+        for (int i = 0; i < animationRigs.Length; i++)
+        {
+            animationRigs[i].GetComponent<TwistChainConstraint>().weight = 0;
+        }
 
-    }
-
-    private void EasterEggDances(int danceType){
         switch (danceType)
         {
-            case 1: PirouetteStart(); break;
-            case 2: TestDance(); break;
+            case 1: PirouetteAnimation(); break;
+            case 2: HandStandAnimation(); break;
             default: break;
         }
+
+        //Check if Animation finished
+        animationFinished = false;
+        StartCoroutine(GetEndOfAnimation());
     }
 
-    private void TestDance(){
-        Debug.Log("Test Dance");
+    private void HandStandAnimation()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("HandStand"))
+        {
+            animator.SetBool("isHandStand", true);
+        }
+
+        animator.SetBool("isHandStand", false);
     }
 
-    private void PirouetteStart()
+    private void PirouetteAnimation()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Pirouette"))
         {
-            for (int i = 0; i < animationRigs.Length; i++)
-            {
-                animationRigs[i].GetComponent<TwistChainConstraint>().weight = 0;
-            }
             animator.SetBool("isPirouette", true);
+
+            //turn Marionette 360degree
+
             gameObject.transform.DORotate(new Vector3(0, 360, 0), 4, RotateMode.FastBeyond360)
             .SetRelative()
-            .SetEase(Ease.OutExpo)
+            .SetEase(Ease.InOutExpo)
             .OnComplete(() => PirouetteStop());
-
         }
     }
 
@@ -71,5 +83,23 @@ public class PuppetEasterEggAnimation : MonoBehaviour
             animationRigs[i].GetComponent<TwistChainConstraint>().weight = 1;
         }
         animator.SetBool("isPirouette", false);
+    }
+
+    IEnumerator GetEndOfAnimation()
+    {
+        while (animationFinished == false)
+        {
+            animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            NTime = animStateInfo.normalizedTime;
+            if (NTime > 1.0f)
+            {
+                animationFinished = true;
+                for (int i = 0; i < animationRigs.Length; i++)
+                {
+                    animationRigs[i].GetComponent<TwistChainConstraint>().weight = 1;
+                }
+            }
+            yield return null;
+        }
     }
 }
