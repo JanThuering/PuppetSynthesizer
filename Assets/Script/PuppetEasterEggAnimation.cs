@@ -33,6 +33,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    //Event picked die richtige funktion
     private void EasterEggDances(int danceType)
     {
         //TODO lerp
@@ -57,10 +58,10 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
             animator.SetBool("isPirouette", true);
 
+            //animation rigging off
             StartCoroutine(ConstraintWeightOff());
 
             //turn Marionette 360degree
-
             gameObject.transform.DORotate(new Vector3(0, 360, 0), 4, RotateMode.FastBeyond360)
             .SetRelative()
             .SetEase(Ease.InOutExpo)
@@ -70,7 +71,9 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     private void PirouetteStop()
     {
-        StartCoroutine(ConstraintWeightOff());
+        //animation rigging on
+        StartCoroutine(ConstraintWeightOn());
+        //Stopa animation
         animator.SetBool("isPirouette", false);
     }
 
@@ -78,14 +81,16 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("HandStand"))
         {
+            //animation rigging off
             StartCoroutine(ConstraintWeightOff());
 
+            //animations bool kurz on setzen damit animation nur einmal abgespielt wird
             animator.SetBool("isHandStand", true);
-            // print(animator.GetBool("isHandStand"));
-            // animator.SetBool("isHandStand", false);
+            animator.SetBool("isHandStand", false);
         }
     }
 
+    //Check ob animation läuft
     IEnumerator GetEndOfAnimation()
     {
         while (animationFinished == false)
@@ -101,6 +106,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
         }
     }
 
+    //animationrigging on
     IEnumerator ConstraintWeightOn()
     {
         float lerpedWeight;
@@ -108,21 +114,23 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
         while (isWeightOff)
         {
+            //lerp weight value
             lerpedWeight = Mathf.Lerp(0, 1, Time.deltaTime * lerpT);
 
+            //apply weight
             for (int i = 0; i < animationRigs.Length; i++)
             {
                 animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
             }
-
+            
             yield return null;
-
         }
 
         isWeightOff = false;
 
     }
 
+    //animationrigging off
     IEnumerator ConstraintWeightOff()
     {
         float lerpedWeight;
@@ -130,13 +138,15 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
         while (isWeightOff == false)
         {
+            //lerp weight value
             lerpedWeight = Mathf.Lerp(1, 2, Time.deltaTime * lerpT);
 
+            //apply weight
             for (int i = 0; i < animationRigs.Length; i++)
             {
                 animationRigs[i].GetComponent<TwistChainConstraint>().weight = lerpedWeight;
             }
-
+            
             yield return null;
         }
 
