@@ -48,7 +48,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     private void PirouetteAnimation()
     {
-        //TODO doesn't rotate to 360 - overshoots, but why? maybe i just lerp that shit
+        //TODO rotation of whole thing doesn't work obviously, because the controlpoints dont rotate with - needs to be in the animation and needs to end up right where it startet.
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Pirouette") & triggerOnce)
         {
@@ -174,8 +174,5 @@ public class PuppetEasterEggAnimation : MonoBehaviour
         }
 
         isWeightOff = false;
-
     }
-
-
 }
