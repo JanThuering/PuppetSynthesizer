@@ -2304,7 +2304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ec595bb29742048852f9063f11e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScaleMultiplier: 2
   MovementMultiplier: 3
   armRotationMultiplier: {x: 0, y: 0, z: 160}
   legRotationMultiplier: {x: 80, y: 10, z: 80}
@@ -2382,7 +2381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affectScale: 1
   controlPointsInvisible: 0
-  ScaleMultiplier: 0.6
+  minScale: 0.07
+  maxScale: 0.2
 --- !u!95 &3497660791963558702
 Animator:
   serializedVersion: 5

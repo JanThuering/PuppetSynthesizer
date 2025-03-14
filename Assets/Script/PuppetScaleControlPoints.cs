@@ -7,20 +7,29 @@ public class PuppetScaleControlPoints : MonoBehaviour
 {
     //References
     private CreateLine createLineScript;
+    private GlobalControl globalControl;
     private PuppetStoreControlPoints puppetStoreControlPointsScript;
 
-    //Nullpunkt und Abstand von der Linie
+    //Nullpunkt der Linie
     private Transform lineStart;
-    private float distanceZeroToLine;
-
     private float lerpT = 15f;
 
     [Header("SCALEABLE CONTROLPOINTS")]
+    //enable and disable scaling
     [SerializeField] private bool affectScale;
     private bool scaleSetBack;
+
+    //enable and disable visibility
     [SerializeField] private bool controlPointsInvisible;
     private bool invisibilitySet;
-    [SerializeField] public float ScaleMultiplier = 2;
+
+    //scale logic
+    private float currentTotalWaveAmp;
+    float normalDistToLine;
+    private float maxDistanceZeroToLine = 0;
+    [SerializeField] public float minScale = 0.05f;
+    [SerializeField] public float maxScale = 0.2f;
+
     private GameObject[] controlPoints;
     private Vector3[] controlPointsStartScale;
     private Vector3[] controlPointsStartPos;
@@ -29,6 +38,7 @@ public class PuppetScaleControlPoints : MonoBehaviour
     void Start()
     {
         createLineScript = CreateLine.Instance;
+        globalControl = GlobalControl.Instance;
         lineStart = createLineScript.LineStart.transform;
         puppetStoreControlPointsScript = GetComponent<PuppetStoreControlPoints>();
         controlPoints = puppetStoreControlPointsScript.ControlPoints;
@@ -44,18 +54,13 @@ public class PuppetScaleControlPoints : MonoBehaviour
         Visibility();
     }
 
-    private void MultiplierToAmplitude()
-    {
-        ScaleMultiplier = Mathf.Lerp(0.5f, 0.52f, Mathf.InverseLerp(0, 15, createLineScript.MaxAmplitudeClamper));
-        print(ScaleMultiplier);
-    }
+
     private void Visibility()
     {
         bool shouldDisable = controlPointsInvisible && !invisibilitySet;
         bool shouldEnable = !controlPointsInvisible && invisibilitySet;
 
-        // enable and disable meshrenderer
-
+        // enable and disable Meshrenderer
         if (shouldDisable || shouldEnable)
         {
             invisibilitySet = controlPointsInvisible;
@@ -70,22 +75,50 @@ public class PuppetScaleControlPoints : MonoBehaviour
 
     private void Scale(GameObject[] scaleableObj, Vector3[] startScale)
     {
-        Vector3 scaleMultiplierVec = new Vector3(ScaleMultiplier, ScaleMultiplier, ScaleMultiplier);
+        //mapping the current wave amplitude to the maximum amplitude (15)
+        float normalWaveAmp = Mathf.InverseLerp(0, 15, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC);
+        //determening what the average scale of the control points is with the current wave amplitude
+        float defaultScaleAtAmp = Mathf.Lerp(minScale, maxScale, normalWaveAmp);
+        //making it a vector3
+        Vector3 defaultScaleVector = Vector3.one * defaultScaleAtAmp;
+
+        //if the wave amplitude changed enter this code
+        if (currentTotalWaveAmp != normalWaveAmp)
+        {
+            //reset max distance
+            maxDistanceZeroToLine = 0;
+
+            for (int i = 0; i < scaleableObj.Length; i++)
+            {
+                // y distance from wave to the control point
+                float distanceZeroToLine = Mathf.Abs(lineStart.position.y - scaleableObj[i].transform.position.y);
+
+                // Track the maximum distance
+                if (distanceZeroToLine > maxDistanceZeroToLine)
+                {
+                    maxDistanceZeroToLine = distanceZeroToLine;
+                }
+            }
+        }
 
         for (int i = 0; i < scaleableObj.Length; i++)
         {
-            // y distanz von der welle zum controlpoint
-            distanceZeroToLine = MathF.Abs(lineStart.position.y - scaleableObj[i].transform.position.y);
+            // y distance from wave to the control point
+            float distanceZeroToLine = Mathf.Abs(lineStart.position.y - scaleableObj[i].transform.position.y);
+            
+            //mapping the distance from wave to control point from 0 to 1 (1 being the max distance)
+            normalDistToLine = Mathf.InverseLerp(0, maxDistanceZeroToLine, distanceZeroToLine);
 
-            //print(distanceZeroToLine);
-
-            Vector3 targetScale = (scaleMultiplierVec * distanceZeroToLine) + startScale[i];
-            //Vector3 mappedScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one * 1.5f, Mathf.InverseLerp(0, 0.2f, distanceZeroToLine));
+            //making the control points scale up and down with their default scale as maximum
+            Vector3 targetScale = Vector3.Lerp(defaultScaleVector / 3, defaultScaleVector, normalDistToLine);
 
             //lerp between scales 
             Vector3 lerpedScale = Vector3.Lerp(scaleableObj[i].transform.localScale, targetScale, Time.deltaTime * lerpT);
             scaleableObj[i].transform.localScale = lerpedScale;
         }
+
+        //saving the total wave amplitude
+        currentTotalWaveAmp = normalWaveAmp;
     }
 
     private void ScaleBack(GameObject[] scaleableObj, Vector3[] startScale)

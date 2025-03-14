@@ -11,7 +11,6 @@ public class PuppetAnimation : MonoBehaviour
     //References
     private CreateLine createLineScript;
     private PuppetScaleControlPoints puppetScaleControlPoints;
-    public float ScaleMultiplier;
 
     //Nullpunkt und Abstand von der Linie
     private Transform lineStart;
@@ -65,7 +64,6 @@ public class PuppetAnimation : MonoBehaviour
         lineStart = createLineScript.LineStart.transform;
         InitializeStartTransformForRotation();
         puppetScaleControlPoints = GetComponent<PuppetScaleControlPoints>();
-        ScaleMultiplier = puppetScaleControlPoints.ScaleMultiplier;
     }
 
     // Update is called once per frame
