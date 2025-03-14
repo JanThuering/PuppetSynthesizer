@@ -12,7 +12,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     //Pirouette Animation
     private string pirouetteAnimation = "Pirouette";
     private string pirouetteTrigger = "pirouetteTrigger";
-    
+
     //HandStand Animation
     private string handStandAnimation = "HandStand";
     private string handStandTrigger = "handStandTrigger";
@@ -39,8 +39,8 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     {
         switch (danceType)
         {
-            case 1: PlayAnimation(pirouetteAnimation, pirouetteTrigger); break;
-            case 2: PlayAnimation(handStandAnimation, handStandTrigger); break;
+            case 1: PlayAnimation(handStandAnimation, handStandTrigger); break;
+            case 2: PlayAnimation(pirouetteAnimation, pirouetteTrigger); break;
             default: break;
         }
     }
@@ -113,7 +113,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     IEnumerator ConstraintWeightOn()
     {
         float lerpedWeight;
-        float duration = 2f;
+        float duration = 1.5f;
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
