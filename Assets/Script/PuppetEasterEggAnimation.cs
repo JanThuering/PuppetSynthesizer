@@ -1,22 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Animations.Rigging;
-using DG.Tweening;
 
 public class PuppetEasterEggAnimation : MonoBehaviour
 {
     private Animator animator;
-    private GlobalControl globalControl;
-    [SerializeField] private float pirouetteLength;
     [SerializeField] private GameObject[] animationRigs;
-    AnimatorStateInfo animStateInfo;
-    private float NTime;
-    private bool animationFinished;
-    private bool isWeightOff;
-    private bool isWeightOn;
-    bool triggerOnce = true;
+
+    private bool animationIsTriggered = false;
+
+    //Pirouette Animation
+    private string pirouetteAnimation = "Pirouette";
+    private string pirouetteTrigger = "pirouetteTrigger";
+    
+    //HandStand Animation
+    private string handStandAnimation = "HandStand";
+    private string handStandTrigger = "handStandTrigger";
 
     // Start is called before the first frame update
 
@@ -40,78 +39,46 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     {
         switch (danceType)
         {
-            case 1: PirouetteAnimation(); break;
-            case 2: HandStandAnimation(); break;
+            case 1: PlayAnimation(pirouetteAnimation, pirouetteTrigger); break;
+            case 2: PlayAnimation(handStandAnimation, handStandTrigger); break;
             default: break;
         }
     }
 
-    private void PirouetteAnimation()
+    //AnimationControl
+    private void PlayAnimation(string animationName, string triggerParameterName)
     {
-        //TODO rotation of whole thing doesn't work obviously, because the controlpoints dont rotate with - needs to be in the animation and needs to end up right where it startet.
-
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Pirouette") & triggerOnce)
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) & !animationIsTriggered)
         {
-            triggerOnce = false;
-            //animation rigging off
-            StartCoroutine(ConstraintWeightOff());
+            animationIsTriggered = true; // check that whole easter egg only is triggered once until it's done
+            StartCoroutine(ConstraintWeightOff()); //animation rigging off
 
-            //start animation
-            animator.SetBool("isPirouette", true);
-
-            //turn Marionette 360degree
-            gameObject.transform.DORotate(new Vector3(0, 360, 0), 3, RotateMode.FastBeyond360)
-            .SetRelative()
-            .SetEase(Ease.OutQuad)
-            .OnComplete(() =>
-            {
-                //animation rigging on
-                StartCoroutine(ConstraintWeightOn());
-                //stop animation
-                animator.SetBool("isPirouette", false);
-            });
+            animator.SetTrigger(triggerParameterName); //start animation
+            StartCoroutine(WaitForAnimationToEnd(animationName)); //check if animation is still running, and if not -> animation rigging on
         }
     }
 
-    private void HandStandAnimation()
-    {
-        //TODO can't be spammed, or breaks
-
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("HandStand"))
-        {
-            //animation rigging off
-            StartCoroutine(ConstraintWeightOff());
-
-            //trigger animation
-            animator.SetTrigger("handStandTrigger");
-
-            StartCoroutine(WaitForAnimationToEnd("HandStand reversed"));
-        }
-    }
-
-    //Check ob animation läuft
     IEnumerator WaitForAnimationToEnd(string animationName)
     {
         AnimatorStateInfo animStateInfo;
 
-        while (true)
+        // Wait for animation to start
+        do
         {
             animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (!animStateInfo.IsName(animationName) || !animStateInfo.IsName(animationName) && animStateInfo.normalizedTime < 1.0f)
-            {
-                yield return null; // Keep waiting
-            }
-            else 
-            {
-                StartCoroutine(ConstraintWeightOn());
-                break; // Animation finished, exit loop
-            }
+            yield return null;
+        } while (!animStateInfo.IsName(animationName));
 
-            // Once animation finishes, turn animation rigging back on
-        }
+        // Wait for animation to finish
+        do
+        {
+            animStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            yield return null;
+        } while (animStateInfo.normalizedTime < 1f);
+
+        //turn constraint back on
+        StartCoroutine(ConstraintWeightOn());
     }
-
-
 
     //animationrigging off
     IEnumerator ConstraintWeightOff()
@@ -140,12 +107,9 @@ public class PuppetEasterEggAnimation : MonoBehaviour
         {
             rig.GetComponent<TwistChainConstraint>().weight = 0;
         }
-
-        isWeightOff = true;
     }
 
-    //animationrigging on - 
-    //!! Duration is set to 2f which makes the turn off smoother, but makes the animations need a cool off
+    //animationrigging on
     IEnumerator ConstraintWeightOn()
     {
         float lerpedWeight;
@@ -173,6 +137,6 @@ public class PuppetEasterEggAnimation : MonoBehaviour
             rig.GetComponent<TwistChainConstraint>().weight = 1;
         }
 
-        isWeightOff = false;
+        animationIsTriggered = false; //make animation triggerable again
     }
 }
