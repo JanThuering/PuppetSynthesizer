@@ -9,13 +9,13 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     private bool animationIsTriggered = false;
 
-    //Pirouette Animation
-    private string pirouetteAnimation = "Pirouette";
-    private string pirouetteTrigger = "pirouetteTrigger";
-
     //HandStand Animation
     private string handStandAnimation = "HandStand";
     private string handStandTrigger = "handStandTrigger";
+
+    //Pirouette Animation
+    private string pirouetteAnimation = "Pirouette";
+    private string pirouetteTrigger = "pirouetteTrigger";
 
     // Start is called before the first frame update
 
