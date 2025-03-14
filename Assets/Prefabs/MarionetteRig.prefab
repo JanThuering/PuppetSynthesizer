@@ -1689,7 +1689,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 171ea688bd0529c43a471de7e48484ad,
         type: 3}
@@ -2381,6 +2381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   affectScale: 1
+  controlPointsInvisible: 0
   ScaleMultiplier: 0.6
 --- !u!95 &3497660791963558702
 Animator:

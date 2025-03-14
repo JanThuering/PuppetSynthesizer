@@ -13,10 +13,13 @@ public class PuppetScaleControlPoints : MonoBehaviour
     private Transform lineStart;
     private float distanceZeroToLine;
 
-     private float lerpT = 15f;
+    private float lerpT = 15f;
 
     [Header("SCALEABLE CONTROLPOINTS")]
-    [SerializeField] private bool affectScale = false;
+    [SerializeField] private bool affectScale;
+    private bool scaleSetBack;
+    [SerializeField] private bool controlPointsInvisible;
+    private bool invisibilitySet;
     [SerializeField] public float ScaleMultiplier = 2;
     private GameObject[] controlPoints;
     private Vector3[] controlPointsStartScale;
@@ -37,13 +40,32 @@ public class PuppetScaleControlPoints : MonoBehaviour
     {
         //MultiplierToAmplitude();
         if (affectScale) Scale(controlPoints, controlPointsStartScale);
-        if (affectScale!) ScaleBack(controlPoints, controlPointsStartScale);
+        if (affectScale == false && scaleSetBack == false) ScaleBack(controlPoints, controlPointsStartScale);
+        Visibility();
     }
 
-     private void MultiplierToAmplitude()
+    private void MultiplierToAmplitude()
     {
         ScaleMultiplier = Mathf.Lerp(0.5f, 0.52f, Mathf.InverseLerp(0, 15, createLineScript.MaxAmplitudeClamper));
         print(ScaleMultiplier);
+    }
+    private void Visibility()
+    {
+        bool shouldDisable = controlPointsInvisible && !invisibilitySet;
+        bool shouldEnable = !controlPointsInvisible && invisibilitySet;
+
+        // enable and disable meshrenderer
+
+        if (shouldDisable || shouldEnable)
+        {
+            invisibilitySet = controlPointsInvisible;
+
+            for (int i = 0; i < controlPoints.Length; i++)
+            {
+                MeshRenderer renderer = controlPoints[i].GetComponent<MeshRenderer>();
+                renderer.enabled = controlPointsInvisible ? false : true;
+            }
+        }
     }
 
     private void Scale(GameObject[] scaleableObj, Vector3[] startScale)
@@ -70,10 +92,7 @@ public class PuppetScaleControlPoints : MonoBehaviour
     {
         for (int i = 0; i < scaleableObj.Length; i++)
         {
-            //lerp between scales 
-            //if (i == 0) print("current scale " + scaleableObj[i].transform.localScale + "start scale " + startScale[i]);
-            Vector3 lerpedScale = Vector3.Lerp(scaleableObj[i].transform.localScale, startScale[i], Time.deltaTime * lerpT);
-            scaleableObj[i].transform.localScale = lerpedScale;
+            scaleableObj[i].transform.localScale = startScale[i];
         }
     }
 
@@ -90,7 +109,6 @@ public class PuppetScaleControlPoints : MonoBehaviour
         {
             scales[i] = scaledObjScale[i].transform.localScale;
             positions[i] = scaledObjScale[i].transform.position;
-            // print(scaledObjScale[i].transform.position);
         }
     }
 }
