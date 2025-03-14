@@ -228,7 +228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110886919361106287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014703546, y: -8.8039087e-10, z: 1.2946089e-11, w: 0.99989194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.89, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -389,7 +389,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4422078636569158313}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014703575, y: -4.1488363e-10, z: 6.1007974e-12, w: 0.99989194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -468,7 +468,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4594486292004901104}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014703575, y: -4.1488363e-10, z: 6.1007974e-12, w: 0.99989194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -674,7 +674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5723873641819608153}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0147035895, y: -4.1488385e-10, z: 6.1009327e-12, w: 0.99989194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -864,6 +864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6875763948077928750}
+  - component: {fileID: 1508373653146696316}
   - component: {fileID: 345780347970439597}
   - component: {fileID: 4702270722902794347}
   m_Layer: 0
@@ -888,6 +889,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6578526420000567457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1508373653146696316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696733460585759065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!20 &345780347970439597
 Camera:
   m_ObjectHideFlags: 0
