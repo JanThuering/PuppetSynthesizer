@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{90158844-e604-4fdf-8bd6-928158c0b7b6}">
+		<property name="assetPath">
+			<value>25DB02LP_rev_tri.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>139.63637499999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{5045e514-0a5b-4821-b1f6-b72555e61c28}</destination>
+		</relationship>
+	</object>
+</objects>
