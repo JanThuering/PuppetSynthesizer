@@ -33,14 +33,21 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, UpdateParameter(totalAmplitude, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC, 3, 15));
-        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateParameter(totalFrequency, globalControl.GlobalFrequency, 1, 5));
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, UpdateAmplitude(totalAmplitude, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC, 10, 15));
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateFrequency(totalFrequency, globalControl.GlobalSpeed, -4, 4));
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Sinus, (float)globalControl.WaveType[1]);
     }
 
-    private float UpdateParameter(float newFMODValue, float currentValue, float minValue, float maxValue)
+    private float UpdateAmplitude(float newFMODValue, float currentValue, float minValue, float maxValue)
     {
         currentValue = Mathf.InverseLerp(minValue, maxValue, currentValue);
+        if (newFMODValue != currentValue) newFMODValue = currentValue;
+        return newFMODValue;
+    }
+
+    private float UpdateFrequency(float newFMODValue, float currentValue, float minValue, float maxValue)
+    {
+        currentValue = Mathf.Lerp(0, 2, Mathf.InverseLerp(minValue, maxValue, currentValue));
         if (newFMODValue != currentValue) newFMODValue = currentValue;
         return newFMODValue;
     }
