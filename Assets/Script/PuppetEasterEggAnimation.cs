@@ -8,6 +8,7 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     [SerializeField] private GameObject[] animationRigs;
 
     private bool animationIsTriggered = false;
+    private bool animationBool = false;
 
     //HandStand Animation
     private string handStandAnimation = "HandStand";
@@ -16,6 +17,10 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     //Pirouette Animation
     private string pirouetteAnimation = "Pirouette";
     private string pirouetteTrigger = "pirouetteTrigger";
+
+    //Relaxed Animation
+    private string relaxAnimation = "Relax";
+    private string relaxBool = "isRelaxed";
 
     // Start is called before the first frame update
 
@@ -39,22 +44,37 @@ public class PuppetEasterEggAnimation : MonoBehaviour
     {
         switch (danceType)
         {
-            case 1: PlayAnimation(handStandAnimation, handStandTrigger); break;
-            case 2: PlayAnimation(pirouetteAnimation, pirouetteTrigger); break;
+            case 1: PlayAnimationViaTrigger(handStandAnimation, handStandTrigger); break;
+            case 2: PlayAnimationViaTrigger(pirouetteAnimation, pirouetteTrigger); break;
+            case 3: PlayAnimationViaBool(relaxAnimation, relaxBool); break;
             default: break;
         }
     }
 
     //AnimationControl
-    private void PlayAnimation(string animationName, string triggerParameterName)
+    private void PlayAnimationViaTrigger(string animationName, string animationTriggerParameterName)
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) & !animationIsTriggered)
         {
             animationIsTriggered = true; // check that whole easter egg only is triggered once until it's done
             StartCoroutine(ConstraintWeightOff()); //animation rigging off
 
-            animator.SetTrigger(triggerParameterName); //start animation
+            animator.SetTrigger(animationTriggerParameterName); //start animation
             StartCoroutine(WaitForAnimationToEnd(animationName)); //check if animation is still running, and if not -> animation rigging on
+        }
+    }
+
+    private void PlayAnimationViaBool(string animationName, string animationBoolParameter)
+    {
+        animationBool = !animationBool; //switch bool to the opposite
+
+        if (animationBool != animator.GetBool(animationBoolParameter))
+        {
+            animationIsTriggered = true; // check that whole easter egg only is triggered once until it's done
+            StartCoroutine(ConstraintWeightOff()); //animation rigging off 
+            
+            if (animationBool == false) StartCoroutine(WaitForAnimationToEnd(animationName)); //if animation turned off -> animation rigging on
+            animator.SetBool(animationBoolParameter, animationBool); //start animation
         }
     }
 
