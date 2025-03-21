@@ -78,11 +78,10 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float globalFrequency;
     private bool pickUpGlobalFrequency = false;
 
-    [SerializeField] private float globalSpeed;
+    [Range(-4, 4)] [SerializeField] private float globalSpeed;
     private bool pickUpGlobalSpeed = false;
 
-    [HideInInspector]
-    [SerializeField] private float globalAmplitude;
+    private float globalAmplitude;
 
     [Range(0, 3)]
     [SerializeField] private int[] waveType = { 0, 0, 0 };
