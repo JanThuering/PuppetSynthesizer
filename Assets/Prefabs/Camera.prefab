@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: 1
-  lerpTime: 0.01
+  lerpTime: 100
   xValues:
   - 38.6
   - 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 30.0001
+    FieldOfView: 20
     OrthographicSize: 0.62
     NearClipPlane: 0.1
     FarClipPlane: 5000.36
@@ -228,7 +228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110886919361106287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.011955565, y: 0.000000024301796, z: -2.9056316e-10, w: 0.99992853}
   m_LocalPosition: {x: 0, y: 0.89, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -268,7 +268,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000.36
-  field of view: 30.0001
+  field of view: 20
   orthographic: 0
   orthographic size: 0.62
   m_Depth: 2
@@ -389,8 +389,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4422078636569158313}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.011955565, y: 0.000000024301796, z: -2.9056316e-10, w: 0.99992853}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00000023841858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 30.0001
+    FieldOfView: 20
     OrthographicSize: 0.62
     NearClipPlane: 0.1
     FarClipPlane: 5000.36
@@ -468,8 +468,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4594486292004901104}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.011955565, y: 0.000000024301796, z: -2.9056316e-10, w: 0.99992853}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00000023841858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 30.0001
+    FieldOfView: 20
     OrthographicSize: 0.62
     NearClipPlane: 0.1
     FarClipPlane: 5000.36
@@ -674,7 +674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5723873641819608153}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.011955565, y: -4.14899e-10, z: 4.960696e-12, w: 0.99992853}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -710,7 +710,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 30.0001
+    FieldOfView: 20
     OrthographicSize: 0.62
     NearClipPlane: 0.1
     FarClipPlane: 5000.36

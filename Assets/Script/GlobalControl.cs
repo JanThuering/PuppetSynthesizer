@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlobalControl : MonoBehaviour
@@ -10,6 +11,11 @@ public class GlobalControl : MonoBehaviour
     [Header("TESTING")]
     [SerializeField] private bool resetToDefaultValues = false;
     [SerializeField] private bool testEvent = false;
+    
+    [Header("EasterEggs")]
+    [SerializeField] private bool easterEggCalled = false;
+    [SerializeField] private float threshhold = 0.1f;
+    private bool allValuesWereZero = false;
 
     public static event Action<int> CallEasteregg;
 
@@ -200,17 +206,6 @@ public class GlobalControl : MonoBehaviour
         CheckForEasterEgg();
 
     }
-
-    void OnEnable()
-    {
-
-    }
-
-    void OnDisable()
-    {
-
-    }
-
     private void SetStartValues()
     {
         createLineScript = CreateLine.Instance;
@@ -271,18 +266,55 @@ public class GlobalControl : MonoBehaviour
         }
     }
 
+    
+    
     private void CheckForEasterEgg()
     {
-        if (amplitudeA == 5 && amplitudeB == 5 && amplitudeC == 5)
+        bool allValuesZero = (InRange(amplitudeA, 0, threshhold) && InRange(amplitudeB, 0, threshhold) && InRange(amplitudeC, 0, threshhold));
+        bool allValuesMiddle = (InRange(amplitudeA, 2.5f, threshhold) && InRange(amplitudeB, 2.5f, threshhold) && InRange(amplitudeC, 2.5f, threshhold));
+        bool allValuesMaxed = (InRange(amplitudeA, 5, threshhold) && InRange(amplitudeB, 5, threshhold) && InRange(amplitudeC, 5, threshhold));
+
+
+        // Original Easter egg conditions
+        if (!easterEggCalled && allValuesMaxed)
         {
             CallEasteregg?.Invoke(1);
-            testEvent = false;
+            easterEggCalled = true;
         }
-        if (testEvent)
+        
+        if (!easterEggCalled && allValuesMiddle)
         {
             CallEasteregg?.Invoke(2);
-            testEvent = false;
+            easterEggCalled = true;
         }
+
+        // Easter egg when all values reach zero
+        if (!easterEggCalled && !allValuesWereZero && allValuesZero)
+        {
+            CallEasteregg?.Invoke(3);
+            easterEggCalled = true;
+            allValuesWereZero = true;
+        }
+        
+        // Easter egg when values are no longer zero after being zero
+        if (allValuesWereZero && !allValuesZero)
+        {
+            CallEasteregg?.Invoke(3);
+            allValuesWereZero = false;
+            easterEggCalled = false;
+        }
+    }
+
+    /// <summary>
+    /// Checks if the values are in range.
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="t">Treshhold </param>
+    /// <returns></returns>
+    private bool InRange(float a, float b, float t = 0)
+    {
+        return Mathf.Abs(a - b) < t ? true : false;
     }
 
     private void PickUp(float targetProperty, ref bool pickUpBool, float midiControlValue)
@@ -314,6 +346,7 @@ public class GlobalControl : MonoBehaviour
     {
         //check activity
         ValuesChanged(true);
+        easterEggCalled = false;    //reset the easterEgg bool if the player changes the amplitudeslider
 
         //pick up the values of the sliders
         switch (controlNumber)
