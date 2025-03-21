@@ -253,7 +253,7 @@ public class GlobalControl : MonoBehaviour
         pickUpSpeedC = true;
     }
 
-    private void ValuesChanged(bool valueChanged)
+    public void ValuesChanged(bool valueChanged)
     {
         if (valueChanged)
         {

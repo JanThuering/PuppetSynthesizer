@@ -8,32 +8,52 @@ public class AudioManager : MonoBehaviour
     private GlobalControl globalControl;
 
     //FMOD
-    private EventInstance eventInstance; 
-    public string fmodEvent;
-    public string parameterName = "MyParameter";
-    
+    private string fmodpara_Amplitude = "amp";
+    private string fmodpara_Frequency = "freq";
+    private string fmodpara_Wavetype_SawTooth = "saw";
+    private string fmodpara_Wavetype_Sinus = "sin";
+    private string fmodpara_Wavetype_Square = "squ";
+    private string fmodpara_Wavetype_Triangle = "amp";
 
     //Variables
-    private float parameterValue;
+    private float totalAmplitude;
+    private float totalFrequency;
+    private float wavetypeSawTooth;
+    private float wavetypeSinus;
+    private float wavetypeSquare;
+    private float wavetyüeTriangle;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        eventInstance = RuntimeManager.CreateInstance(fmodEvent);
-        eventInstance.start();
+        globalControl = GlobalControl.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Update the FMOD parameter using the Unity variable.
-        eventInstance.setParameterByName(parameterName, parameterValue);
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, UpdateParameter(totalAmplitude, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC, 3, 15));
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateParameter(totalFrequency, globalControl.GlobalFrequency, 1, 5));
     }
 
-    private void OnDestroy()
+    private float UpdateParameter(float newFMODValue, float currentValue, float minValue, float maxValue)
     {
-        // Stop and release the FMOD event instance.
-        eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        eventInstance.release();
+        currentValue = Mathf.InverseLerp(minValue, maxValue, currentValue);
+        if (newFMODValue != currentValue) newFMODValue = currentValue;
+        return newFMODValue;
+    }
+
+    //TODO new global int in fmod "wavetype" - range from 1 to 4; 
+    private float UpdateWaveForm(float currentValue)
+    {
+        float newFMODValue = 0;
+
+        if (currentValue == 1)
+        {
+            newFMODValue = wavetypeSinus;
+        }
+        //value from 1-4? if 1, return wavetype Sinus
+        return newFMODValue;
     }
 }
