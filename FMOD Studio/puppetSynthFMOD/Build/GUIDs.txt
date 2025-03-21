@@ -1,0 +1,11 @@
+{6e5f4c39-c026-4b21-97be-40a53cabace1} bank:/Master
+{f6426ced-b15d-0763-11f7-ca5bcd58aa79} bank:/Master.strings
+{8354358c-a4d2-453c-9883-f8aef63bb458} bus:/
+{458bfc35-9c9a-4faa-b4a7-89eaed168e51} bus:/Reverb
+{bb6e74af-e6ad-4a73-beaf-61c2a05fd743} event:/waveforms_v0.2
+{4d27c073-5894-47ec-830e-158a7b422c5b} parameter:/amp
+{96cbaec7-87b1-4293-9eb5-671938e86f4a} parameter:/freq
+{e84444d2-3b86-4c11-9be2-10328fbdd012} parameter:/saw
+{f3f0cc57-c040-44e5-afc0-9b04826d3245} parameter:/sin
+{09549feb-642d-412b-bf64-81f53244f5a8} parameter:/squ
+{bd1d8885-47f2-4baf-b1b8-32b8025dcf7d} parameter:/tri
