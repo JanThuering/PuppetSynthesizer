@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
     {
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, UpdateParameter(totalAmplitude, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC, 3, 15));
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateParameter(totalFrequency, globalControl.GlobalFrequency, 1, 5));
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Sinus, (float)globalControl.WaveType[1]);
     }
 
     private float UpdateParameter(float newFMODValue, float currentValue, float minValue, float maxValue)
@@ -44,7 +45,7 @@ public class AudioManager : MonoBehaviour
         return newFMODValue;
     }
 
-    //TODO new global int in fmod "wavetype" - range from 1 to 4; 
+    //TODO Wave combinaion logic 
     private float UpdateWaveForm(float currentValue)
     {
         float newFMODValue = 0;
