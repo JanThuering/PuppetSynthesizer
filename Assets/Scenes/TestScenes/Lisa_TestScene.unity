@@ -585,6 +585,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
         type: 3}
+      propertyPath: currentColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920915931408000488, guid: cac651673da584dbbb7b79d64a385ea2,
+        type: 3}
       propertyPath: puppetAnimation
       value: 
       objectReference: {fileID: 6089857904622872201}
