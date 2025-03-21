@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, UpdateAmplitude(totalAmplitude, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC, 10, 15));
-        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateFrequency(totalFrequency, globalControl.GlobalSpeed, -4, 4));
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateFrequency(totalFrequency, globalControl.GlobalSpeed, -3, 3));
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Sinus, (float)globalControl.WaveType[1]);
     }
 

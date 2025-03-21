@@ -78,7 +78,7 @@ public class GlobalControl : MonoBehaviour
     [SerializeField] private float globalFrequency;
     private bool pickUpGlobalFrequency = false;
 
-    [Range(-4, 4)] [SerializeField] private float globalSpeed;
+    [Range(-3, 3)] [SerializeField] private float globalSpeed;
     private bool pickUpGlobalSpeed = false;
 
     private float globalAmplitude;
