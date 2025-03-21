@@ -21,8 +21,7 @@ public class AudioManager : MonoBehaviour
     private float wavetypeSawTooth;
     private float wavetypeSinus;
     private float wavetypeSquare;
-    private float wavetyüeTriangle;
-
+    private float wavetypeTriangle;
 
     // Start is called before the first frame update
     void Start()
