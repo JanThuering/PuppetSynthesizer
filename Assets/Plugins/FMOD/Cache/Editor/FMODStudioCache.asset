@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: FMOD Studio/puppetSynthFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638781618226551945
+  lastModified: 638781685188704838
   FileSizes:
   - Name: Desktop
     Value: 1002
@@ -216,7 +216,7 @@ MonoBehaviour:
   - {fileID: 484156561117951547}
   StringsBanks:
   - {fileID: -8987169300313986748}
-  cacheTime: 638781618226551945
+  cacheTime: 638781709367463061
   cacheVersion: 131622
 --- !u!114 &461294198805122651
 MonoBehaviour:
@@ -257,7 +257,7 @@ MonoBehaviour:
   Path: FMOD Studio/puppetSynthFMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638781618226551945
+  lastModified: 638781709367463061
   FileSizes:
   - Name: Desktop
     Value: 14038272
