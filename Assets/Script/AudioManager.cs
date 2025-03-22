@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     private GlobalControl globalControl;
 
     //FMOD
+    private EventInstance eventInstance;
     private string fmodpara_Amplitude = "amp";
     private string fmodpara_Frequency = "freq";
     private string fmodpara_Wavetype_SawTooth = "saw";
@@ -27,6 +28,9 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         globalControl = GlobalControl.Instance;
+        eventInstance = RuntimeManager.CreateInstance("event:/waveforms_v0.2");
+        eventInstance.start();
+
     }
 
     // Update is called once per frame
@@ -34,7 +38,7 @@ public class AudioManager : MonoBehaviour
     {
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, UpdateAmplitude(totalAmplitude, globalControl.AmplitudeA + globalControl.AmplitudeB + globalControl.AmplitudeC, 10, 15));
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateFrequency(totalFrequency, globalControl.GlobalSpeed, -4, 4));
-        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Sinus, (float)globalControl.WaveType[1]);
+        UpdateWaveFormParameter();
     }
 
     private float UpdateAmplitude(float newFMODValue, float currentValue, float minValue, float maxValue)
@@ -52,15 +56,59 @@ public class AudioManager : MonoBehaviour
     }
 
     //TODO Wave combinaion logic 
-    private float UpdateWaveForm(float currentValue)
+    private void UpdateWaveFormParameter()
     {
-        float newFMODValue = 0;
 
-        if (currentValue == 1)
+        // Normalize individual amplitudes.
+        // Assuming your amplitude values range from 0 to 5.
+        float normA = Mathf.InverseLerp(0, 5, globalControl.AmplitudeA);
+        float normB = Mathf.InverseLerp(0, 5, globalControl.AmplitudeB);
+        float normC = Mathf.InverseLerp(0, 5, globalControl.AmplitudeC);
+
+        // Prepare accumulators for each FMOD waveform parameter.
+        float sinAmp = 0f;
+        float squAmp = 0f;
+        float triAmp = 0f;
+        float sawAmp = 0f;
+
+        // Curve A (index 0)
+        switch (globalControl.WaveType[0])
         {
-            newFMODValue = wavetypeSinus;
+            case 0: sinAmp += normA; break;
+            case 1: squAmp += normA; break;
+            case 2: triAmp += normA; break;
+            case 3: sawAmp += normA; break;
         }
-        //value from 1-4? if 1, return wavetype Sinus
-        return newFMODValue;
+
+        // Curve B (index 1)
+        switch (globalControl.WaveType[1])
+        {
+            case 0: sinAmp += normB; break;
+            case 1: squAmp += normB; break;
+            case 2: triAmp += normB; break;
+            case 3: sawAmp += normB; break;
+        }
+
+        // Curve C (index 2)
+        switch (globalControl.WaveType[2])
+        {
+            case 0: sinAmp += normC; break;
+            case 1: squAmp += normC; break;
+            case 2: triAmp += normC; break;
+            case 3: sawAmp += normC; break;
+        }
+
+        // Optionally, clamp to ensure the FMOD parameter is within [0,1] in case multiple curves add up.
+        sinAmp = Mathf.Clamp01(sinAmp);
+        squAmp = Mathf.Clamp01(squAmp);
+        triAmp = Mathf.Clamp01(triAmp);
+        sawAmp = Mathf.Clamp01(sawAmp);
+
+        // Now update the FMOD parameters with the corresponding normalized amplitude.
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Sinus, sinAmp);
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Square, squAmp);
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Triangle, triAmp);
+        RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_SawTooth, sawAmp);
     }
+
 }
