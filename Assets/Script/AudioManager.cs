@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
     private string fmodpara_Wavetype_SawTooth = "saw";
     private string fmodpara_Wavetype_Sinus = "sin";
     private string fmodpara_Wavetype_Square = "squ";
-    private string fmodpara_Wavetype_Triangle = "amp";
+    private string fmodpara_Wavetype_Triangle = "tri";
 
     //Variables
     private float totalAmplitude;
