@@ -19,10 +19,6 @@ public class AudioManager : MonoBehaviour
     //Variables
     private float totalAmplitude;
     private float totalFrequency;
-    private float wavetypeSawTooth;
-    private float wavetypeSinus;
-    private float wavetypeSquare;
-    private float wavetypeTriangle;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +26,6 @@ public class AudioManager : MonoBehaviour
         globalControl = GlobalControl.Instance;
         eventInstance = RuntimeManager.CreateInstance("event:/waveforms_v0.2");
         eventInstance.start();
-
     }
 
     // Update is called once per frame
