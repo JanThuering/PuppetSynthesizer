@@ -48,10 +48,11 @@ public class AudioManager : MonoBehaviour
         if (count == 0)
             return 0f;
 
-        // Determine the maximum output value based on how many curves contribute.
+        // Determine the maximum output value based on how many curves contribute
+        // Ternary operator syntax: condition ? value_if_true : value_if_false
         float maxMapping = count == 1 ? 0.7f : (count == 2 ? 0.8f : 1.0f);
 
-        // Using the average of the normalized amplitudes.
+        // Using the average of the normalized amplitudes
         return (sum / count) * maxMapping;
     }
 
@@ -108,10 +109,10 @@ public class AudioManager : MonoBehaviour
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_Triangle, triVal);
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Wavetype_SawTooth, sawVal);
 
-        print("sinewave " + sinVal);
-        print("squarewave " + squVal);
-        print("trianglewave " + triVal);
-        print("sawtoothwave " + sawVal);
+        // print("sinewave " + sinVal);
+        // print("squarewave " + squVal);
+        // print("trianglewave " + triVal);
+        // print("sawtoothwave " + sawVal);
     }
 
 }
