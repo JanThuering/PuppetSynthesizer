@@ -139,7 +139,6 @@ public class MoveControlPoints : MonoBehaviour
             }
             if ((BaseIndex - MostRightPositionOfControlPoint) * -1 < BaseIndex - MostLeftPositionOfControlPoint && currentPos != MostRightPositionOfControlPoint) //right
             {
-                print(gameObject.name);
                 closestPointIndex++;
             }
             currentPos = closestPointIndex;
