@@ -66,15 +66,23 @@ public class PuppetEasterEggAnimation : MonoBehaviour
 
     private void PlayAnimationViaBool(string animationName, string animationBoolParameter)
     {
-        animationBool = !animationBool; //switch bool to the opposite
-
-        if (animationBool != animator.GetBool(animationBoolParameter))
+        // Only toggle if animation isn't already playing or we're returning to procedural
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) || animationBool)
         {
-            animationIsTriggered = true; // check that whole easter egg only is triggered once until it's done
-            StartCoroutine(ConstraintWeightOff()); //animation rigging off 
+            animationBool = !animationBool;
+            animationIsTriggered = true;
+            animator.SetBool(animationBoolParameter, animationBool);
+            StartCoroutine(ConstraintWeightOff());
             
-            if (animationBool == false) StartCoroutine(WaitForAnimationToEnd(animationName)); //if animation turned off -> animation rigging on
-            animator.SetBool(animationBoolParameter, animationBool); //start animation
+            // Only wait for animation end when playing the animation, not when returning to procedural
+            if (!animationBool)
+            {
+                StartCoroutine(ConstraintWeightOn());
+            }
+            else
+            {
+                StartCoroutine(WaitForAnimationToEnd(animationName));
+            }
         }
     }
 

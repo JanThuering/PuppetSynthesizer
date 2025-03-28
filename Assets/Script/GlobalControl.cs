@@ -14,7 +14,7 @@ public class GlobalControl : MonoBehaviour
     
     [Header("EasterEggs")]
     [SerializeField] private bool easterEggCalled = false;
-    [SerializeField] private float threshhold = 0.1f;
+    [SerializeField] private float easterEggThreshhold = 0.3f;
     private bool allValuesWereZero = false;
 
     public static event Action<int> CallEasteregg;
@@ -269,9 +269,9 @@ public class GlobalControl : MonoBehaviour
     
     private void CheckForEasterEgg()
     {
-        bool allValuesZero = (InRange(amplitudeA, 0, threshhold) && InRange(amplitudeB, 0, threshhold) && InRange(amplitudeC, 0, threshhold));
-        bool allValuesMiddle = (InRange(amplitudeA, 2.5f, threshhold) && InRange(amplitudeB, 2.5f, threshhold) && InRange(amplitudeC, 2.5f, threshhold));
-        bool allValuesMaxed = (InRange(amplitudeA, 5, threshhold) && InRange(amplitudeB, 5, threshhold) && InRange(amplitudeC, 5, threshhold));
+        bool allValuesZero = (InRange(amplitudeA, 0, easterEggThreshhold) && InRange(amplitudeB, 0, easterEggThreshhold) && InRange(amplitudeC, 0, easterEggThreshhold));
+        bool allValuesMiddle = (InRange(amplitudeA, 2.5f, easterEggThreshhold) && InRange(amplitudeB, 2.5f, easterEggThreshhold) && InRange(amplitudeC, 2.5f, easterEggThreshhold));
+        bool allValuesMaxed = (InRange(amplitudeA, 5, easterEggThreshhold) && InRange(amplitudeB, 5, easterEggThreshhold) && InRange(amplitudeC, 5, easterEggThreshhold));
 
 
         // Original Easter egg conditions
