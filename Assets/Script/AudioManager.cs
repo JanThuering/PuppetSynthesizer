@@ -15,10 +15,13 @@ public class AudioManager : MonoBehaviour
     private string fmodpara_Wavetype_Sinus = "sin";
     private string fmodpara_Wavetype_Square = "squ";
     private string fmodpara_Wavetype_Triangle = "tri";
+    private string fmodpara_Camera = "camera";
+    private string fmodpara_Color = "color";
 
     //Variables
     private float totalAmplitude;
     private float totalFrequency;
+    private int[] videoSettings = {1, 1};
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,15 @@ public class AudioManager : MonoBehaviour
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Amplitude, 1);
         RuntimeManager.StudioSystem.setParameterByName(fmodpara_Frequency, UpdateFrequency(totalFrequency, globalControl.GlobalSpeed, -4, 4));
         UpdateWaveFormParameter();
+
+        if (globalControl.CurrentCamera != videoSettings[0]){
+            RuntimeManager.StudioSystem.setParameterByName(fmodpara_Camera, globalControl.CurrentCamera);
+            videoSettings[0] = globalControl.CurrentCamera;
+        }
+        if (globalControl.CurrentColor != videoSettings[1]){
+            RuntimeManager.StudioSystem.setParameterByName(fmodpara_Color, globalControl.CurrentColor);
+            videoSettings[1] = globalControl.CurrentColor;
+        }
     }
 
     private float UpdateFrequency(float newFMODValue, float currentValue, float minValue, float maxValue)
